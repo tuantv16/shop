@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 class ProductControler extends Controller
 {
 
+    public function __construct()
+    {
+
+    }
+
     public function someEndpoint() {
         dd('aaaaaaaa');
         return [
@@ -35,7 +40,10 @@ class ProductControler extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $inputDatas = $request->validated();
+
+        $data = $this->customItemReponsitory->create($inputDatas);
+        return $this->responseSuccess(new CustomItem($data));
     }
 
     /**

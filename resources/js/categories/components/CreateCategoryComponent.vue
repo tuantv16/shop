@@ -5,7 +5,7 @@ import * as yup from 'yup';
 import InputComponent from '../../common/Form/InputComponent.vue';
 import SelectBoxComponent from '../../common/Form/SelectBoxComponent.vue';
 import YesNoComponent from '../../common/Form/YesNoComponent.vue';
-
+import {dataAction} from '../services/dataActions.js';
 
 export default {
     name: 'CreateCategoryComponent',
@@ -37,14 +37,14 @@ export default {
     methods: {
 
         onSubmit(dataInputs) {
-            console.log(dataInputs);
-            debugger;
-            // customItem.saveData(dataInputs).then(res => {
-            //     if (res.data.status == 'success') {
-            //         this.msgSuccess('情報を追加しました。');
-            //         this.goToPageEdit(res.data.data.item_id, this.getFormId());
-            //     }
-            // });
+            dataAction.saveData(dataInputs).then(res => {
+
+                 if (res.status == 'success') {
+                    window.location.href = '/manage/categories';
+                    //  this.msgSuccess('情報を追加しました。');
+                    //  this.goToPageEdit(res.data.data.item_id, this.getFormId());
+                 }
+            });
 
         },
     },
@@ -104,7 +104,7 @@ export default {
 
                                                     <select-box-component
                                                         title="Thuộc danh mục" id="parent_id" name="parent_id" data="">
-                                                        <option value=""></option>
+                                                        <option value="0"></option>
                                                         <option v-for="item in categoryIds" :key="item.id" :value="item.id" >{{ item.category_name }}</option>
                                                     </select-box-component>
 

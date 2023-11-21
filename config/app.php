@@ -168,6 +168,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Prettus\Repository\Providers\RepositoryServiceProvider::class,
+        \App\Providers\RepositoryServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -182,6 +184,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
+        'Repository' => Prettus\Repository\Facades\Repository::class,
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 

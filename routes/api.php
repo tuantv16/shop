@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Backend\CategoryController;
 use App\Http\Controllers\Api\ProductControler;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,4 +21,8 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/some-endpoint2', [ProductControler::class, 'someEndpoint'])->name('someEndpoint');
+
+Route::prefix('backend')->group(function () {
+    Route::resource('categories', CategoryController::class);
+});
 
