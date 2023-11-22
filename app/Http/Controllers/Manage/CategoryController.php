@@ -3,10 +3,19 @@
 namespace App\Http\Controllers\Manage;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Categories\Category;
+use App\Http\Resources\Categories\CategoryCollection;
+use App\Services\CategoryService;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+
+    protected $categoryService;
+    public function __construct(CategoryService $categoryService)
+    {
+        $this->categoryService = $categoryService;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -20,7 +29,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('backend.categories.create');
+        $data = $this->categoryService->getInitData();
+       // $data['cbCategory'] = json_decode($data['cbCategory']);
+        return view('backend.categories.create', $data);
     }
 
     /**

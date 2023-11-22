@@ -18,8 +18,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-
 // Route::prefix('manage')->group(function () {
 //     //Route::resource('dashboard', DashboardController::class);
 //     Route::get('dashboard', [DashboardController::class, 'index']);

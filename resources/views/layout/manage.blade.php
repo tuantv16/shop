@@ -76,7 +76,7 @@
     <div class="left-sidebar-pro">
         <nav id="sidebar" class="">
             <div class="sidebar-header">
-                <a href="index.html"><img class="main-logo" src="img/logo/logo.png" alt="" /></a>
+                <a href="index.html"><img class="main-logo" src="{{ asset('/manage/img/logo/logo.png') }}" alt="" /></a>
                 <strong><img src="img/logo/logosn.png" alt="" /></strong>
             </div>
 			<div class="nalika-profile">
@@ -103,7 +103,7 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="logo-pro">
-                        <a href="index.html"><img class="main-logo" src="{{ asset('manage/img/logo/logo.png') }}" alt="" /></a>
+                        <a href="index.html"><img class="main-logo" src="{{ asset('/manage/img/logo/logo.png') }}" alt="" /></a>
                     </div>
                 </div>
             </div>
@@ -145,7 +145,7 @@
                                                             <li>
                                                                 <a href="#">
                                                                     <div class="message-img">
-                                                                        <img src="img/contact/1.jpg" alt="">
+                                                                        <img src="{{ asset('/manage/img/contact/1222.jpg') }}" alt="">
                                                                     </div>
                                                                     <div class="message-content">
                                                                         <span class="message-date">16 Sept</span>

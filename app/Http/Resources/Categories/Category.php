@@ -15,7 +15,7 @@ class Category extends JsonResource
     public function toArray(Request $request): array
     {
         $data = parent::toArray($request);
-        $data['category_name'] = $data['category_name'].'hihi';
+        //$data['category_name'] = $data['category_name'].'hihi';
 
         return $data;
         // return [

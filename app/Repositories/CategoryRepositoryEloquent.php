@@ -38,17 +38,10 @@ class CategoryRepositoryEloquent extends BaseRepositoryEloquent implements Categ
      * @param array $data
      * @return mixed
      */
-    public function createCategory($category, $data) {
-        dd(333);
-        if ($data['category'] == 'columns') {
-            $data['category'] = 'column';
-        }
-
-        $data['disp_order'] = $this->getDispOrder($data['category']);
-        $data['created_at'] = Carbon::now();
-        $data['updated'] = Carbon::now();
-        return $this->model->create($data);
+    public function getDataDispOrder() {
+        return $this->model->where('disp', 1)
+        ->orderBy('level')
+        ->get();
     }
-
 
 }

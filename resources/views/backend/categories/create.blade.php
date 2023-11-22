@@ -38,7 +38,8 @@
 @stop
 @section('content')
 <div id="category">
-    <create-category-component />
+
+    <create-category-component :cb-category='@json($cbCategory)'/>
 </div>
 
 @stop

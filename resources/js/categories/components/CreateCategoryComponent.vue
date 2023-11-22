@@ -20,15 +20,10 @@ export default {
         return {
             objData: {
                 category_name: '',
-                parent_id: '',
+                parent_id: 0,
                 level : '',
-                disp : ''
+                disp : 1
             },
-            categoryIds: [
-                { id: 1, category_name: 'Đồ ngủ'},
-                { id: 2, category_name: 'Đồ nam'},
-                { id: 3, category_name: 'Đồ gia dụng'},
-            ]
         }
     },
     created() {
@@ -37,16 +32,40 @@ export default {
     methods: {
 
         onSubmit(dataInputs) {
+
+            if (dataInputs.parent_id == 0) {
+                dataInputs.level = 1;
+            }
+
             dataAction.saveData(dataInputs).then(res => {
 
-                 if (res.status == 'success') {
-                    window.location.href = '/manage/categories';
+                // console.log(res);
+                // debugger;
+                 if (res.data.status == 'success') {
+                    //window.location.href = '/manage/categories';
+                    location.reload();
                     //  this.msgSuccess('情報を追加しました。');
                     //  this.goToPageEdit(res.data.data.item_id, this.getFormId());
                  }
             });
 
         },
+        setValueLevel(value) {
+            if (value == 0) {
+                this.objData.level = 1;
+            }
+
+            if (value > 0) {
+                const selectedItem = this.cbCategory.find(item => item.id === value);
+                this.objData.level = selectedItem.level + 1;
+            }
+        }
+    },
+    props: {
+        cbCategory: {
+            type: Object,
+            default : null
+        }
     },
     computed: {
         schema() {
@@ -54,7 +73,7 @@ export default {
             let obj = {
                 category_name: yup.string().max(150).required(msg),
                 parent_id: yup.string().nullable(),
-                level: yup.string().required(msg),
+                level: yup.string().nullable(),
                 disp: yup.string().max(1),
 
             };
@@ -96,16 +115,19 @@ export default {
                                                 <div class="review-content-section">
                                                     <input-component title="Tên danh mục"
                                                         id="category_name"
-                                                        limit="5"
+                                                        :limit="255"
                                                         name="category_name"
                                                         :required="true"
                                                         placeholder=""
                                                     />
 
-                                                    <select-box-component
-                                                        title="Thuộc danh mục" id="parent_id" name="parent_id" data="">
+                                                    <select-box-component title="Thuộc danh mục" id="parent_id" name="parent_id" :data="this.objData.parent_id" @change="setValueLevel">
                                                         <option value="0"></option>
-                                                        <option v-for="item in categoryIds" :key="item.id" :value="item.id" >{{ item.category_name }}</option>
+                                                        <option v-for="item in this.cbCategory" :key="item.id" :value="item.id">
+                                                            <span v-if="item.level == 2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                                            <span v-if="item.level == 3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                                            {{ item.category_name }}
+                                                        </option>
                                                     </select-box-component>
 
                                                 </div>
@@ -118,13 +140,17 @@ export default {
                                                         id="level"
                                                         name="level"
                                                         :required="true"
+                                                        :data="this.objData.level"
                                                         placeholder=""
+                                                        disabled=""
+                                                        class="input-disabled"
+
                                                     />
 
                                                     <yes-no-component
                                                         title="Trạng thái"
                                                         :data="this.objData.disp"
-                                                        required="true"
+                                                        :required="true"
                                                         name="disp"
                                                         id="disp"
                                                         labelFirst = "Kích hoạt"

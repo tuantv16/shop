@@ -3722,3 +3722,8 @@ span[role="alert"] {
     display: inline-flex;
     margin-top: 8px
 }
+
+
+.input-disabled {
+    color: #1b2a47"
+}

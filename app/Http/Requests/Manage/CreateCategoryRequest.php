@@ -25,9 +25,9 @@ class CreateCategoryRequest extends FormRequest
     {
         return [
             'category_name'      => 'string|required|max:255',
-            'parent_id'         => 'string|nullable|max:50',
+            'parent_id'         => 'integer|nullable|max:50',
             'level'          => 'integer|required',
-            'disp'      => 'nullable|integer'
+            'disp'      => 'integer|nullable|in:0,1'
         ];
     }
 }
