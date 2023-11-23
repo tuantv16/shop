@@ -11,8 +11,6 @@ class CategoryService extends BaseService
 {
 
     protected $categoryRepository;
-    protected $columnRepository;
-    protected $newsRepository;
 
     /**
      *

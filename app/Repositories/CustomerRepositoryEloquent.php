@@ -2,18 +2,16 @@
 
 namespace App\Repositories;
 
-use App\Constants\Constant;
-use App\Models\Category;
-use App\Repositories\Interfaces\CategoryRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Prettus\Repository\Exceptions\RepositoryException;
-use Illuminate\Support\Carbon;
+use App\Models\Customer;
+use App\Repositories\Interfaces\CustomerRepository;
+
 /**
- * Class AreaRepositoryEloquent.
  *
  * @package namespace App\Repositories;
  */
-class CategoryRepositoryEloquent extends BaseRepositoryEloquent implements CategoryRepository
+class CustomerRepositoryEloquent extends BaseRepositoryEloquent implements CustomerRepository
 {
 
     /**
@@ -23,7 +21,7 @@ class CategoryRepositoryEloquent extends BaseRepositoryEloquent implements Categ
      */
     public function model(): string
     {
-        return Category::class;
+        return Customer::class;
     }
 
     /**
@@ -39,10 +37,8 @@ class CategoryRepositoryEloquent extends BaseRepositoryEloquent implements Categ
      * @param array $data
      * @return mixed
      */
-    public function getDataDispOrder() {
-        return $this->model->where('disp', Constant::DISPLAY)
-        ->orderBy('level')
-        ->get();
-    }
+    // public function getDataDispOrder() {
+    //     return $this->model->where('disp', Constant::DISPLAY)->get();
+    // }
 
 }

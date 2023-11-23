@@ -34,6 +34,35 @@
                 </ul>
             </li>
             <li>
+                <a class="has-arrow" href="index.html">
+                       <i class="icon nalika-home icon-wrap"></i>
+                       <span class="mini-click-non">Thương hiệu</span>
+                    </a>
+                <ul class="submenu-angle" aria-expanded="true">
+                    <li><a title="Danh sách nhãn hàng" href="{{ url('/manage/brands')}}"><span class="mini-sub-pro">Danh sách nhãn hàng</span></a></li>
+                    <li><a title="Thêm nhãn hàng" href="{{ url('/manage/brands/create')}}"><span class="mini-sub-pro">Thêm nhãn hàng</span></a></li>
+                </ul>
+            </li>
+            <li>
+                <a class="has-arrow" href="index.html">
+                       <i class="icon nalika-home icon-wrap"></i>
+                       <span class="mini-click-non">Đơn hàng</span>
+                    </a>
+                <ul class="submenu-angle" aria-expanded="true">
+                    <li><a title="Danh sách nhãn hàng" href="{{ url('/manage/orders')}}"><span class="mini-sub-pro">Danh sách đơn hàng</span></a></li>
+                </ul>
+            </li>
+            <li>
+                <a class="has-arrow" href="index.html">
+                       <i class="icon nalika-home icon-wrap"></i>
+                       <span class="mini-click-non">Khách hàng</span>
+                    </a>
+                <ul class="submenu-angle" aria-expanded="true">
+                    <li><a title="Danh sách nhãn hàng" href="{{ url('/manage/customers')}}"><span class="mini-sub-pro">Danh sách khách hàng</span></a></li>
+                </ul>
+            </li>
+            <!--
+            <li>
                 <a class="has-arrow" href="mailbox.html" aria-expanded="false"><i class="icon nalika-mail icon-wrap"></i> <span class="mini-click-non">Mailbox</span></a>
                 <ul class="submenu-angle" aria-expanded="false">
                     <li><a title="Inbox" href="mailbox.html"><span class="mini-sub-pro">Inbox</span></a></li>
@@ -105,6 +134,7 @@
                     <li><a title="Accordion" href="accordion.html"><span class="mini-sub-pro">Accordion</span></a></li>
                 </ul>
             </li>
+            -->
             <li id="removable">
                 <a class="has-arrow" href="#" aria-expanded="false"><i class="icon nalika-new-file icon-wrap"></i> <span class="mini-click-non">Pages</span></a>
                 <ul class="submenu-angle" aria-expanded="false">

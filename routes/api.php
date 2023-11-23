@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Backend\BrandController;
 use App\Http\Controllers\Api\Backend\CategoryController;
 use App\Http\Controllers\Api\ProductControler;
 use Illuminate\Http\Request;
@@ -24,5 +25,6 @@ Route::get('/some-endpoint2', [ProductControler::class, 'someEndpoint'])->name('
 
 Route::prefix('backend')->group(function () {
     Route::resource('categories', CategoryController::class);
+    Route::resource('brands', BrandController::class);
 });
 

@@ -2,18 +2,20 @@
 
 namespace App\Repositories;
 
-use App\Constants\Constant;
-use App\Models\Category;
-use App\Repositories\Interfaces\CategoryRepository;
+use App\Models\Brand;
+
 use Prettus\Repository\Criteria\RequestCriteria;
 use Prettus\Repository\Exceptions\RepositoryException;
-use Illuminate\Support\Carbon;
+use App\Constants\Constant;
+use App\Models\Product;
+use App\Repositories\Interfaces\BrandRepository;
+use App\Repositories\Interfaces\ProductRepository;
+
 /**
- * Class AreaRepositoryEloquent.
  *
  * @package namespace App\Repositories;
  */
-class CategoryRepositoryEloquent extends BaseRepositoryEloquent implements CategoryRepository
+class ProductRepositoryEloquent extends BaseRepositoryEloquent implements ProductRepository 
 {
 
     /**
@@ -23,7 +25,7 @@ class CategoryRepositoryEloquent extends BaseRepositoryEloquent implements Categ
      */
     public function model(): string
     {
-        return Category::class;
+        return Product::class;
     }
 
     /**
@@ -35,14 +37,5 @@ class CategoryRepositoryEloquent extends BaseRepositoryEloquent implements Categ
         $this->pushCriteria(app(RequestCriteria::class));
     }
 
-    /**
-     * @param array $data
-     * @return mixed
-     */
-    public function getDataDispOrder() {
-        return $this->model->where('disp', Constant::DISPLAY)
-        ->orderBy('level')
-        ->get();
-    }
 
 }

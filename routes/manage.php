@@ -1,7 +1,11 @@
 <?php
 
+use App\Http\Controllers\Manage\BrandController;
+use App\Http\Controllers\Manage\CartController;
 use App\Http\Controllers\Manage\CategoryController;
+use App\Http\Controllers\Manage\CustomerController;
 use App\Http\Controllers\Manage\DashboardController;
+use App\Http\Controllers\Manage\OrderController;
 use App\Http\Controllers\Manage\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +24,28 @@ Route::prefix('manage')->group(function () {
     Route::resource('dashboard', DashboardController::class);
     Route::resource('products', ProductController::class);
 
-    Route::resource('categories', CategoryController::class);
+    Route::resource('categories', CategoryController::class)->names([
+        'index' => 'category.index',
+        'create' => 'category.create',
+        'store' => 'category.store',
+        'show' => 'category.show',
+        'edit' => 'category.edit',
+        'update' => 'category.update',
+        'destroy' => 'category.destroy',
+    ]);
+
+    Route::resource('brands', BrandController::class)->names([
+        'index' => 'brand.index',
+        'create' => 'brand.create',
+        'store' => 'brand.store',
+        'show' => 'brand.show',
+        'edit' => 'brand.edit',
+        'update' => 'brand.update',
+        'destroy' => 'brand.destroy',
+    ]);
+    
+    Route::resource('customers', CustomerController::class);
+    Route::resource('carts', CartController::class);
+    Route::resource('orders', OrderController::class);
 });
 
