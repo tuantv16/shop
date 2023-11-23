@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Manage;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Categories\Category;
 use App\Http\Resources\Categories\CategoryCollection;
+use App\Repositories\Interfaces\CategoryRepository;
 use App\Services\CategoryService;
 use Illuminate\Http\Request;
 
@@ -12,16 +13,26 @@ class CategoryController extends Controller
 {
 
     protected $categoryService;
-    public function __construct(CategoryService $categoryService)
+    protected $categoryRepository;
+
+    public function __construct(CategoryService $categoryService, CategoryRepository $categoryRepository)
     {
         $this->categoryService = $categoryService;
+        $this->categoryRepository = $categoryRepository;
     }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        // $config
+        $configs = config('web.config.sizes');
+        dd($configs);
+        $data = $this->categoryRepository->all();
 
+        return view('backend.categories.list', [
+            'categories' => $data
+        ]);
     }
 
     /**

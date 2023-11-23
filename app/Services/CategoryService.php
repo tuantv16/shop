@@ -37,7 +37,6 @@ class CategoryService extends BaseService
         }
 
 
-
         $results = [
             //'cbCategory' => $categories->isNotEmpty() ?  json_encode($categories->toArray()) : []
             'cbCategory' => $flattenedArray ?? $categories
