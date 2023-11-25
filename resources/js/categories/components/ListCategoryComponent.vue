@@ -6,6 +6,7 @@ import InputComponent from '../../common/Form/InputComponent.vue';
 import SelectBoxComponent from '../../common/Form/SelectBoxComponent.vue';
 import YesNoComponent from '../../common/Form/YesNoComponent.vue';
 import {dataAction} from '../services/dataActions.js';
+import moment from 'moment'
 
 export default {
     name: 'CreateCategoryComponent',
@@ -27,25 +28,14 @@ export default {
         }
     },
     created() {
-        console.log(this.categories)
+
     },
     methods: {
 
         onSubmit(dataInputs) {
 
-            if (dataInputs.parent_id == 0) {
-                dataInputs.level = 1;
-            }
-
-            dataAction.saveData(dataInputs).then(res => {
-                 if (res.data.status == 'success') {
-                    //window.location.href = '/manage/categories';
-                    location.reload();
-                 }
-            });
-
         },
-        
+
     },
     props: {
         categories: {
@@ -54,19 +44,7 @@ export default {
         }
     },
     computed: {
-        schema() {
-            let msg = 'Đây là trường bắt buộc';
-            let obj = {
-                category_name: yup.string().max(150).required(msg),
-                parent_id: yup.string().nullable(),
-                level: yup.string().nullable(),
-                disp: yup.string().max(1),
 
-            };
-
-            //Object.assign(obj, validateCustoms);
-            return yup.object(obj);
-        }
     }
 }
 
@@ -76,21 +54,61 @@ export default {
 
     <div class="single-product-tab-area mg-b-30">
             <!-- Single pro tab review Start-->
-            <div class="single-pro-review-area">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="review-tab-pro-inner">
-                                <ul id="myTab3" class="tab-review-design">
-                                    <li class="active"><a href="#description"><i class="icon nalika-edit" aria-hidden="true"></i> Khu vực thêm sản phẩm</a></li>
-                                </ul>
-                                
+
+            <div class="product-status mg-b-30">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="product-status-wrap">
+                            <h4>Products List</h4>
+                            <div class="add-product">
+                                <a href="product-edit.html">Thêm danh mục</a>
+                            </div>
+                            <table>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Tên danh mục</th>
+                                    <th>Status</th>
+                                    <th>Cấp độ</th>
+                                    <th>Ngày tạo</th>
+                                    <th>Ngày cập nhật</th>
+                                    <th></th>
+                                </tr>
+                                <tr v-for="(item, key) in this.categories" :key="key">
+                                    <td>{{  item.id }}</td>
+                                    <td>{{  item.category_name }}</td>
+                                    <td>
+                                        <button class="pd-setting" v-if="item.disp == 1">Active</button>
+                                        <button class="ds-setting" v-if="item.disp == 0">Disabled</button>
+                                    </td>
+                                    <td>{{ item.level }}</td>
+                                    <td>{{ item.created_at }}</td>
+                                    <td>{{item.updated_at }}</td>
+
+                                    <td>
+                                        <a data-toggle="tooltip" title="Edit" class="pd-setting-ed btn" href="manage/categories/item.id/edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                        <a data-toggle="tooltip" title="Trash" class="pd-setting-ed btn"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="custom-pagination">
+								<ul class="pagination">
+									<li class="page-item"><a class="page-link" href="#">Previous</a></li>
+									<li class="page-item"><a class="page-link" href="#">1</a></li>
+									<li class="page-item"><a class="page-link" href="#">2</a></li>
+									<li class="page-item"><a class="page-link" href="#">3</a></li>
+									<li class="page-item"><a class="page-link" href="#">Next</a></li>
+								</ul>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        </div>
+
+
 </template>
 
 <style>

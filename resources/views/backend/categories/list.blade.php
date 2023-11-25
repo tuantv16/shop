@@ -37,12 +37,12 @@
 </div>
 @stop
 @section('content')
-    <div id="category">
+    <div id="category-list">
         <list-category-component :categories='@json($categories)'/>
     </div>
 @stop
 
 @section('vite-manage')
-    @vite('resources/js/categories/category.js')
+    @vite('resources/js/categories/category-list.js')
 @stop
 

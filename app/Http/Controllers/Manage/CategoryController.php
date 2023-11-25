@@ -27,7 +27,7 @@ class CategoryController extends Controller
     {
         // $config
         $configs = config('web.config.sizes');
-        dd($configs);
+
         $data = $this->categoryRepository->all();
 
         return view('backend.categories.list', [

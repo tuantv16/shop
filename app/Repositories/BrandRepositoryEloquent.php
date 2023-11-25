@@ -40,7 +40,7 @@ class BrandRepositoryEloquent extends BaseRepositoryEloquent implements BrandRep
      * @return mixed
      */
     public function getDataDispOrder() {
-        return $this->model->where('disp', Constant::DISPLAY)->get();
+        return $this->model->where('disp', Constant::DISPLAY)->orderBy('disp_order')->get();
     }
 
 }

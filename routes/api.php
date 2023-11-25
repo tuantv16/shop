@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Api\Backend\BrandController;
 use App\Http\Controllers\Api\Backend\CategoryController;
-use App\Http\Controllers\Api\ProductControler;
+use App\Http\Controllers\Api\Backend\ProductControler;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,10 +21,11 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::get('/some-endpoint2', [ProductControler::class, 'someEndpoint'])->name('someEndpoint');
-
 Route::prefix('backend')->group(function () {
     Route::resource('categories', CategoryController::class);
     Route::resource('brands', BrandController::class);
+
+    Route::resource('products', ProductControler::class);
+
 });
 

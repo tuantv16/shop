@@ -66,21 +66,6 @@ export default {
 
 <template>
 
-<!-- <div class="group-item">
-            <p class="p-normal">Trạng thái<span></span></p>
-            <div class="group-radio">
-                <div class="form-check">
-                    <input type="radio" name="disp" id="option1" value="1">
-                    <label for="option1" class="form-check-label">Kích hoạt</label>
-                </div>
-                <div class="form-check">
-                    <input type="radio" name="disp" id="option2" value="0">
-                    <label for="option2" class="form-check-label">Vô hiệu hóa</label>
-                </div>
-            </div>
-
-        </div> -->
-
     <div class="group-item">
         <p class="p-normal" data-toggle="tooltip" :title="tooltip">
             {{ title }}

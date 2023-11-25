@@ -24,6 +24,18 @@ class CategoryService extends BaseService
     }
 
     public function getInitData() {
+        $cbCategory = $this->getCbCategory();
+
+        $results = [
+            'cbCategory' =>  $cbCategory
+        ];
+
+        return $results;
+
+    }
+
+
+    public function getCbCategory() {
         $categories = $this->categoryRepository->getDataDispOrder();
         if ($categories->isNotEmpty()) {
             $data = $this->recursive($categories->toArray());
@@ -34,14 +46,7 @@ class CategoryService extends BaseService
             $this->flattenArray($data, $flattenedArray);
         }
 
-
-        $results = [
-            //'cbCategory' => $categories->isNotEmpty() ?  json_encode($categories->toArray()) : []
-            'cbCategory' => $flattenedArray ?? $categories
-        ];
-
-        return $results;
-
+        return $flattenedArray ?? $categories;
     }
 
     public function recursive($arr, $p = 0)

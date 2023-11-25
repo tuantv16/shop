@@ -16,6 +16,7 @@
         "vue": "^3.2.37"
     },
     "dependencies": {
+        "moment": "^2.29.4",
         "vee-validate": "^4.11.8",
         "yup": "^1.3.2"
     }

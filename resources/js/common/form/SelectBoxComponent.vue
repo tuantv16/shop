@@ -64,7 +64,7 @@ export default {
 
 <template>
 
-    <div class="group-item">
+    <div class="group-item" >
         <p class="p-normal" data-toggle="tooltip" :title="tooltip">
             {{ title }}
             <i v-if="tooltip" class="far fa-question-circle"></i>

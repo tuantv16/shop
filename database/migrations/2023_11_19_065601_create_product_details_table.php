@@ -19,6 +19,8 @@ return new class extends Migration
             $table->foreign('size_id')->references('id')->on('sizes');
             $table->unsignedBigInteger('color_id');
             $table->foreign('color_id')->references('id')->on('colors');
+            $table->unsignedBigInteger('brand_id');
+            $table->foreign('brand_id')->references('id')->on('brands');
             $table->integer('quantity');
             $table->integer('disp');
             $table->timestamps();

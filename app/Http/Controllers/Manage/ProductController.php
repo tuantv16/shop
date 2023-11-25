@@ -3,10 +3,24 @@
 namespace App\Http\Controllers\Manage;
 
 use App\Http\Controllers\Controller;
+use App\Services\ProductService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
+
+    protected $productService;
+    public function __construct(ProductService $productService)
+    {
+        //dd(App::environment());
+        Storage::disk('public')->put('testfile_tuantv.txt', 'This is a test file');
+        // Storage::disk('public')->put('tuan_tt.txt', 'Contents');
+        // dd(1111);
+        $this->productService = $productService;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -20,7 +34,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        dd('Thêm sản phẩm');
+        $data = $this->productService->getInitData();
+         return view('backend.products.create', $data);
     }
 
     /**
