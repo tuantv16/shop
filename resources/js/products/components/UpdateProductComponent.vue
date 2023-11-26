@@ -9,7 +9,7 @@ import TextareaComponent from '../../common/Form/TextareaComponent.vue';
 import {dataAction} from '../services/dataActions.js';
 
 export default {
-    name: 'CreateProductComponent',
+    name: 'UpdateProductComponent',
     components: {
         Form, Field, ErrorMessage,
         InputComponent,
@@ -21,19 +21,22 @@ export default {
     data() {
         return {
             objData: {
+                id: '',
                 category_id: '',
                 brand_id: '',
                 category_id: '',
                 description : '',
                 price : '',
                 image : '',
-                disp : 1
+                disp : ''
             },
             imageFile: null
         }
     },
     created() {
 
+        this.objData = this.products;
+        console.log(this.objData);
     },
     methods: {
 
@@ -42,35 +45,12 @@ export default {
 
             if (file) {
                 this.imageFile = file; // Gắn file với objData để gửi lên server
-                console.log('Tên tệp: ', file.name);
-
-                console.log('Kích thước: ', file.size); // Lấy size của file
-
-                // let url = window.URL.createObjectURL(file);
-                // console.log('Đường dẫn: ', url); // Lấy đường dẫn tạm thời của file
-
-                let extension = file.name.split('.').pop();
-                console.log('Đuôi mở rộng: ', extension); // Lấy đuôi mở rộng của file
-
-                // Các xử lý khác...
             }
-
-
-            // if (event.target.files.length > 0) {
-            //         const file = event.target.files[0];
-            //         let url = URL.createObjectURL(file);
-            //         console.log('Đường dẫn: ', url);
-            //         // Các xử lý khác...
-            //     } else {
-            //         console.log('Không có file nào được chọn');
-            //     }
-
         },
 
         onSubmit(dataInputs) {
 
             let formData = new FormData();
-
             // Thêm các trường dữ liệu vào formData
             for (let key in dataInputs) {
                 formData.append(key, dataInputs[key]);
@@ -78,13 +58,11 @@ export default {
 
             formData.append('image', this.imageFile); // append dữ liệu this.imageFile vào item imâge
 
-
-
             // console.log(formData);
             // debugger;
-            dataAction.saveData(formData).then(res => {
-
-
+            dataAction.updateData(formData, this.products.id, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            }).then(res => {
                  if (res.data.status == 'success') {
                     //window.location.href = '/manage/categories';
                     location.reload();
@@ -100,6 +78,10 @@ export default {
             default : null
         },
         brands: {
+            type: Object,
+            default : null
+        },
+        products: {
             type: Object,
             default : null
         }
@@ -150,9 +132,10 @@ export default {
                                                         name="product_name"
                                                         :required="true"
                                                         placeholder=""
+                                                        :data="this.objData.product_name"
                                                     />
 
-                                                    <select-box-component title="Danh mục sản phẩm" :required="true" id="category_id" name="category_id">
+                                                    <select-box-component title="Danh mục sản phẩm" :required="true" id="category_id" name="category_id"  :data="this.objData.category_id">
                                                         <option value="0"></option>
                                                         <option v-for="item in this.categories" :key="item.id" :value="item.id">
                                                             <span v-if="item.level == 2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
@@ -161,27 +144,26 @@ export default {
                                                         </option>
                                                     </select-box-component>
 
-                                                    <!-- <input-component title="Ảnh"
-                                                        id="image"
-                                                        :limit="255"
-                                                        name="image"
-                                                        placeholder=""
-                                                    /> -->
+                                                    <div class="group-item">
+                                                        <label>Hình ảnh</label>
+                                                        <div id="show_image" style="width:100%; margin-bottom:10px">
+                                                            <img src="https://png.pngtree.com/png-clipart/20230616/ourlarge/pngtree-people-wear-work-clothes-spirit-to-work-png-image_7152327.png" width="150"/>
+                                                        </div>
 
-                                                    <!-- <Field name="file" v-slot="{ handleChange, handleBlur }">
-
-                                                        <input type="file" @change="handleChange" @blur="handleBlur" />
-                                                    </Field> -->
-                                                    <Field name="image" v-slot="{ field }">
-                                                        <input type="file" @change="handleChange" :ref="field.ref" />
-                                                    </Field>
+                                                        <div class="input-group input-normal">
+                                                        <Field name="image" v-slot="{ field }">
+                                                            <input type="file" @change="handleChange" :ref="field.ref" />
+                                                        </Field>
+                                                        </div>
+                                                    </div>
 
 
                                                     <textarea-component
                                                         title="Mô tả"
                                                         id="description"
-                                                        limit="500"
+                                                        :limit="500"
                                                         name="description"
+                                                        :data="this.objData.description"
                                                    />
 
                                                 </div>
@@ -189,7 +171,7 @@ export default {
                                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                 <div class="review-content-section">
 
-                                                    <select-box-component title="Thương hiệu" :required="true" id="brand_id" name="brand_id">
+                                                    <select-box-component title="Thương hiệu" :required="true" id="brand_id" name="brand_id" :data="this.objData.brand_id">
                                                         <option value="0"></option>
                                                         <option v-for="item in this.brands" :key="item.id" :value="item.id">
                                                             {{ item.name }}
@@ -202,6 +184,7 @@ export default {
                                                         name="price"
                                                         :required="true"
                                                         placeholder=""
+                                                        :data="this.objData.price"
                                                     />
 
                                                     <yes-no-component

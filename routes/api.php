@@ -26,6 +26,8 @@ Route::prefix('backend')->group(function () {
     Route::resource('brands', BrandController::class);
 
     Route::resource('products', ProductControler::class);
+    Route::post('products/update-product', [ProductControler::class,'updateProduct'])->name('product.update');
+
 
 });
 

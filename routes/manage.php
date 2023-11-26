@@ -22,7 +22,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('manage')->group(function () {
     Route::resource('dashboard', DashboardController::class);
-    Route::resource('products', ProductController::class);
+    Route::resource('products', ProductController::class)->names([
+        'index' => 'product.index',
+        'create' => 'product.create',
+        'store' => 'product.store',
+        'show' => 'product.show',
+        'edit' => 'product.edit',
+        'update' => 'product.update2',
+        'destroy' => 'product.destroy',
+    ]);
 
     Route::resource('categories', CategoryController::class)->names([
         'index' => 'category.index',
@@ -43,7 +51,7 @@ Route::prefix('manage')->group(function () {
         'update' => 'brand.update',
         'destroy' => 'brand.destroy',
     ]);
-    
+
     Route::resource('customers', CustomerController::class);
     Route::resource('carts', CartController::class);
     Route::resource('orders', OrderController::class);

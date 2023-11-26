@@ -1,4 +1,4 @@
-<?php 
+<?php
     /*
         S
         1m55 - 1m59
@@ -40,8 +40,15 @@
     ];
 
 
+    // Thư mục lưu trữ hình ảnh
+    $uploads = [
+        'products' => 'product_images'
+    ];
+
+
     return [
         'sizes' => $sizes,
-        'colors' => $colors
+        'colors' => $colors,
+        'uploads' => $uploads
     ];
 ?>

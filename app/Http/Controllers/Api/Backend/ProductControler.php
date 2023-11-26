@@ -39,63 +39,20 @@ class ProductControler extends ApiController
      * Store a newly created resource in storage.
      */
     //public function store(FormProductRequest $request)
-    public function store(Request $request)
+    public function store(FormProductRequest $request)
     {
 
+        $inputDatas = $request->validated();
 
-        $inputDatas = $request->all();
-
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-
-            // Lấy thông tin file
-            $filename = $file->getClientOriginalName(); // Tên file gốc
-            $extension = $file->getClientOriginalExtension(); // Đuôi file
-            $path = $file->getRealPath(); // Đường dẫn tạm thời tới file
-            $size = $file->getSize(); // Kích thước file
-
-            // Xử lý upload file, ví dụ lưu vào thư mục 'uploads'
-            $destinationPath = 'image_products';
-
-            $slug = 'hang-dep-nha';
-            $extension  = request()->file('image')->getClientOriginalExtension(); //This is to get the extension of the image file just uploaded
-           // $image_name = time() .'_' . $slug . '.' . $extension;
-
-            if (app()->environment('local')) {
-
-                try {
-                    if ($request->hasFile('image')) {
-                        Log::info('Starting upload to S3');
-                        $file = $request->file('image');
-                        $slug = time() . $file->getClientOriginalName();
-                        //$filePath = 'image_products/' . $name;
+        // Xử lý upload file, ví dụ lưu vào thư mục 'uploads'
 
 
-                        $extension  = request()->file('image')->getClientOriginalExtension(); //This is to get the extension of the image file just uploaded
-                        $image_name = time() .'_' . $slug;
-                        $path = $request->file('image')->storeAs(
-                            $destinationPath,
-                            $image_name,
-                            's3'
-                        );
+        //$existsFileImage = $request->hasFile('image'); // true or false
+        // if ($existsFileImage) {
 
-                        Log::info('Upload completed to S3');
-                    }
-                } catch (\Exception $e) {
-                    Log::error('Error uploading to S3: ' . $e->getMessage());
-                    // Handle the error
-                }
-
-            } else {
-                $path = $file->storeAs(
-                    $destinationPath, // tên thư mục chứa ảnh
-                    $image_name,
-                    'public' // (public hoặc s3) sử dụng lưu ảnh dưới public dưới môi trường phát triển hoặc môi trường aws (s3)
-                );
-
-            }
-
-            dd($path);
+        //     $inputDatas['fileImage'] = $request->file('image');
+        //     dd($inputDatas);
+        // }
             // if (app()->environment('local')) {
             //     // Môi trường local: Lưu vào Storage local
             //     $path = $file->store('uploads_tuantv'); // tự động lưu file ảnh vào thư mục uploads_tuantv, nếu chưa có thư mục này thì tự động tạo
@@ -114,25 +71,21 @@ class ProductControler extends ApiController
             //     'size' => $size,
             //     'extension' => $extension
             // ]);
-        }
-
-
-        //die('troi oi');
-
 
         //$inputDatas = $request->validated();
-        $data = $this->productService->saveData($inputDatas);
+        $data = $this->productService->saveData($inputDatas, $request);
         return $this->responseSuccess(new Product($data));
     }
-
-
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(FormProductRequest $request, $id)
     {
-        //
+        // $inputDatas = $request->validated();
+
+        // $data = $this->productService->saveData($inputDatas, $request);
+        // return $this->responseSuccess(new Product($data));
     }
 
     /**
@@ -142,4 +95,11 @@ class ProductControler extends ApiController
     {
         //
     }
+
+    public function updateProduct(FormProductRequest $request) {
+        $inputDatas = $request->validated();
+        $data = $this->productService->updateData($inputDatas, $request);
+        return $this->responseSuccess(new Product($data));
+    }
+
 }

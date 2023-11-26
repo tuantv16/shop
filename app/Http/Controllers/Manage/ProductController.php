@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Manage;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\Interfaces\ProductRepository;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -12,13 +13,13 @@ class ProductController extends Controller
 {
 
     protected $productService;
-    public function __construct(ProductService $productService)
+    protected $productRepository;
+
+    public function __construct(ProductRepository $productRepository, ProductService $productService)
     {
         //dd(App::environment());
-        Storage::disk('public')->put('testfile_tuantv.txt', 'This is a test file');
-        // Storage::disk('public')->put('tuan_tt.txt', 'Contents');
-        // dd(1111);
         $this->productService = $productService;
+        $this->productRepository = $productRepository;
     }
 
     /**
@@ -35,7 +36,7 @@ class ProductController extends Controller
     public function create()
     {
         $data = $this->productService->getInitData();
-         return view('backend.products.create', $data);
+        return view('backend.products.create', $data);
     }
 
     /**
@@ -59,7 +60,11 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+
+        $data = $this->productService->getInitData();
+        $data['products'] = $this->productRepository->find(intval($id));
+
+        return view('backend.products.edit', $data);
     }
 
     /**
