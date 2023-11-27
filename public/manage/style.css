@@ -3733,3 +3733,9 @@ span[role="alert"] {
     color: #0077B5 !important;
     background-color: white !important;;
 }
+
+.flex-container {
+    display: flex;
+    justify-content: space-around; /* Tùy chọn: căn chỉnh các item */
+    align-items: center; 
+}

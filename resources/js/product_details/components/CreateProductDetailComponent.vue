@@ -12,26 +12,26 @@ export default {
         Form, Field, ErrorMessage,
         InputComponent,
         SelectBoxComponent,
-        YesNoComponent,
-        TextareaComponent
 
     },
     data() {
         return {
-            objData: {
-                category_id: '',
-                brand_id: '',
-                category_id: '',
-                description : '',
-                price : '',
-                image : '',
-                disp : 1
-            },
-            imageFile: null
+            // objData: {
+            //     category_id: '',
+            //     brand_id: '',
+            //     category_id: '',
+            //     description : '',
+            //     price : '',
+            //     image : '',
+            //     disp : 1
+            // },
+            
+            rows: []
         }
     },
     created() {
 
+     
     },
     methods: {
         onSubmit(dataInputs) {
@@ -47,10 +47,23 @@ export default {
                  }
             });
 
+        },
+        addRow() {
+            this.rows.push({
+                size_id: null,
+                color_id: null,
+                brand_id: null,
+                quantity: null,
+                disp: 1
+            });
         }
     },
     props: {
-        categories: {
+        sizes: {
+            type: Object,
+            default : null
+        },
+        colors: {
             type: Object,
             default : null
         },
@@ -65,7 +78,7 @@ export default {
             let msg = 'Đây là trường bắt buộc';
             let obj = {
                 product_name: yup.string().max(255).required(msg),
-                category_id: yup.string().required(msg),
+                color_id: yup.string().required(msg),
                 brand_id: yup.string().required(msg),
                 description: yup.string().nullable().max(500),
                 price: yup.string().nullable().required(msg),
@@ -93,40 +106,97 @@ export default {
                                 <ul id="myTab3" class="tab-review-design">
                                     <li class="active"><a href="#description"><i class="icon nalika-edit" aria-hidden="true"></i> Cài đặt thuộc tính</a></li>
                                 </ul>
+                                <button class="btn btn-primary" @click="addRow">Add</button>
                                 <Form @submit="onSubmit" :initial-values="this.objData" :validation-schema="schema" >
                                 <div id="myTabContent" class="tab-content">
                                     <div class="product-tab-list tab-pane fade active in" id="description-product">
                                         <div class="row">
-                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                                <div class="review-content-section">
-                                                    <input-component title="Tên sản phẩm"
-                                                        id="product_name"
-                                                        :limit="255"
-                                                        name="product_name"
-                                                        :required="true"
-                                                        placeholder=""
-                                                    />
+                                            
+                                            <div class="review-content-section flex-container">
+                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
+                                                    Kích cỡ
+                                                </div>
 
-                                                    <select-box-component title="Danh mục sản phẩm" :required="true" id="category_id" name="category_id">
-                                                        <option value="0"></option>
-                                                        <option v-for="item in this.categories" :key="item.id" :value="item.id">
-                                                            <span v-if="item.level == 2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                                            <span v-if="item.level == 3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                                            {{ item.category_name }}
-                                                        </option>
-                                                    </select-box-component>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
+                                                    Màu sắc
+                                                </div>
 
-                                     
-                                                    <textarea-component
-                                                        title="Mô tả"
-                                                        id="description"
-                                                        limit="500"
-                                                        name="description"
-                                                   />
+                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
+                                                    Thương hiệu
+                                                </div>
+
+                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
+                                                    Số lượng
+                                                </div>
+
+                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
+                                                    Hiển thị
+                                                </div>
+
+                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
 
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="row" v-for="(row, rowIndex) in rows" :key="rowIndex">                             
+                                                <div class="review-content-section flex-container">
+                                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
+                                                        <select-box-component :required="true" id="size_id" name="size_id">
+                                                            <option value=""></option>
+                                                            <option v-for="(value, key) in this.sizes" :key="key" :value="key">
+                                                                {{ value }}
+                                                            </option>
+                                                        </select-box-component>
+                                                    </div>
+                                                    
+                                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
+                                                        <select-box-component :required="true" id="color_id" name="color_id">
+                                                            <option value=""></option>
+                                                            <option v-for="(value, key) in this.colors" :key="key" :value="key">
+                                                                {{ value }}
+                                                            </option>
+                                                        </select-box-component>
+                                                    </div>
+
+                                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
+                                                        <select-box-component :required="true" id="brand_id" name="brand_id">
+                                                            <option value=""></option>
+                                                            <option v-for="item in this.brands" :key="item.id" :value="item.id">
+                                                                {{ item.name }}
+                                                            </option>
+                                                        </select-box-component>
+                                                    </div>
+
+                                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
+                                                        <input-component 
+                                                            type="number"
+                                                            id="quantity"
+                                                            :limit="255"
+                                                            name="quantity"
+                                                            :required="true"
+                                                            placeholder=""
+                                                        />
+                                                    </div>
+
+                                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
+                                                        <select-box-component :required="true" id="disp" name="disp">
+                                                            <option value="1">Hiển thị</option>
+                                                            <option value="0">Vô hiệu hóa</option>
+                                                        </select-box-component>
+                                                    </div>
+
+                                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
+                                                        <div class="group-item">
+                                                            <button class="btn btn-danger">Delete</button>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                </div>
+                                            
+                                        </div>
+
                                     </div>
 
 

@@ -40,10 +40,9 @@
 <div id="product-detail-create">
 
     <create-product-detail-component
-        {{-- :sizes='@json($sizes)'
-        :colors='@json($colors)' --}}
+        :sizes='@json($sizes)'
+        :colors='@json($colors)'
         :brands='@json($brands)'
-        :categories='@json($categories)'
     />
 
 </div>

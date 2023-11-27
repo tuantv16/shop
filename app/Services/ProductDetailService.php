@@ -33,15 +33,13 @@ class ProductDetailService extends BaseService
     }
 
     public function getInitData() {
-        // $sizes = config('web.config.sizes');
-        // $colors = config('web.config.colors');
+        $sizes = config('web.config.sizes');
+        $colors = config('web.config.colors');
         $brands = $this->brandRepository->getDataDispOrder();
-        $categories = $this->categoryService->getCbCategory();
         $results = [
-            // 'sizes' => $sizes,
-            // 'colors' => $colors,
-            'brands' => $brands,
-            'categories' => $categories
+            'sizes' => $sizes,
+            'colors' => $colors,
+            'brands' => $brands
         ];
 
         return $results;

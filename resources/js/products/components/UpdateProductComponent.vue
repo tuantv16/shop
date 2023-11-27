@@ -15,7 +15,7 @@ export default {
         InputComponent,
         SelectBoxComponent,
         YesNoComponent,
-        TextareaComponent
+        TextareaComponentnpm
 
     },
     data() {
@@ -58,8 +58,6 @@ export default {
 
             formData.append('image', this.imageFile); // append dữ liệu this.imageFile vào item imâge
 
-            // console.log(formData);
-            // debugger;
             dataAction.updateData(formData, this.products.id, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             }).then(res => {

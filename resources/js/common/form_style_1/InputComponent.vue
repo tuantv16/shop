@@ -94,12 +94,6 @@ export default {
 <template>
 
     <div class="group-item">
-        <p class="p-normal" data-toggle="tooltip" :title="tooltip" v-if="title || tooltip || required || limit">
-            {{ title }}
-            <i v-if="tooltip" class="far fa-question-circle"></i>
-            <span v-if="limit" class="count-character ml-1">[{{ (value) ? value?.length : '0' }} / {{ limit }} ký tự ] </span>
-            <span class="required ml-1" v-if="required">(*)</span>
-        </p>
         <div class="input-group input-normal">
             <Field v-slot="{field, errors}" :name="name" >
                 <input

@@ -64,12 +64,7 @@ export default {
 
 <template>
 
-    <div class="group-item" >
-        <p class="p-normal" data-toggle="tooltip" :title="tooltip">
-            {{ title }}
-            <i v-if="tooltip" class="far fa-question-circle"></i>
-            <span class="required ml-1" v-if="required">(*)</span>
-        </p>
+    <div class="group-item">
         <Field :name="name" v-model="value" v-slot="{ field, errors }">
             <select class="form-control pro-edt-select form-control-primary"
                 :disabled="disabled"
