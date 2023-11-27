@@ -11,8 +11,10 @@ use App\Repositories\Interfaces\CartRepository;
 use App\Repositories\Interfaces\CategoryRepository;
 use App\Repositories\Interfaces\CustomerRepository;
 use App\Repositories\Interfaces\OrderRepository;
+use App\Repositories\Interfaces\ProductDetailRepository;
 use App\Repositories\Interfaces\ProductRepository;
 use App\Repositories\OrderRepositoryEloquent;
+use App\Repositories\ProductDetailRepositoryEloquent;
 use App\Repositories\ProductRepositoryEloquent;
 use Illuminate\Support\ServiceProvider;
 
@@ -29,6 +31,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(CartRepository::class, CartRepositoryEloquent::class);
         $this->app->bind(ProductRepository::class, ProductRepositoryEloquent::class);
         $this->app->bind(OrderRepository::class, OrderRepositoryEloquent::class);
+        $this->app->bind(ProductDetailRepository::class, ProductDetailRepositoryEloquent::class);
     }
 
 

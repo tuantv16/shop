@@ -26,7 +26,7 @@ class CategoryController extends Controller
     public function index()
     {
         // $config
-        $configs = config('web.config.sizes');
+        //$configs = config('web.config.sizes');
 
         $data = $this->categoryRepository->all();
 
@@ -43,38 +43,6 @@ class CategoryController extends Controller
         $data = $this->categoryService->getInitData();
        // $data['cbCategory'] = json_decode($data['cbCategory']);
         return view('backend.categories.create', $data);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
     }
 
     /**

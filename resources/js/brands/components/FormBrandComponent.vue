@@ -2,9 +2,9 @@
 <script>
 import {ErrorMessage, Field, Form, useForm} from "vee-validate";
 import * as yup from 'yup';
-import InputComponent from '../../common/Form/InputComponent.vue';
-import SelectBoxComponent from '../../common/Form/SelectBoxComponent.vue';
-import YesNoComponent from '../../common/Form/YesNoComponent.vue';
+import InputComponent from '../../common/form/InputComponent.vue';
+import SelectBoxComponent from '../../common/form/SelectBoxComponent.vue';
+import YesNoComponent from '../../common/form/YesNoComponent.vue';
 import {dataAction} from '../services/dataActions.js';
 
 export default {

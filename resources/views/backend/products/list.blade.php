@@ -1,6 +1,6 @@
 @extends('layout.manage')
 
-@section('title', 'Page products')
+@section('title', 'Danh sách sản phẩm')
 
 @section('sidebar')
     @parent
@@ -19,8 +19,8 @@
                                     <i class="icon nalika-home"></i>
                                 </div>
                                 <div class="breadcomb-ctn">
-                                    <h2>Product List</h2>
-                                    <p>Description about Product List - tuantv <span class="bread-ntd">Hehe Template</span></p>
+                                    <h2>Danh sách sản phẩm</h2>
+                                    <p>Mô tả danh sách sản phẩm</p>
                                 </div>
                             </div>
                         </div>
@@ -37,14 +37,12 @@
 </div>
 @stop
 @section('content')
-<div id="product">
-    <product-component />
-</div>
-
-
+    <div id="product-list">
+        <list-product-component :products='@json($products)'/>
+    </div>
 @stop
 
 @section('vite-manage')
-    @vite('resources/js/products/product.js')
+    @vite('resources/js/products/product-list.js')
 @stop
 

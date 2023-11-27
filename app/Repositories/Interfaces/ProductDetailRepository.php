@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Interfaces;
 
-interface ProductRepository extends BaseRepository
+interface ProductDetailRepository extends BaseRepository
 {
     public function getList($params);
 }

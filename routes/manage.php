@@ -7,6 +7,7 @@ use App\Http\Controllers\Manage\CustomerController;
 use App\Http\Controllers\Manage\DashboardController;
 use App\Http\Controllers\Manage\OrderController;
 use App\Http\Controllers\Manage\ProductController;
+use App\Http\Controllers\Manage\ProductDetailController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,6 +33,8 @@ Route::prefix('manage')->group(function () {
         'destroy' => 'product.destroy',
     ]);
 
+    Route::resource('product-details', ProductDetailController::class);
+
     Route::resource('categories', CategoryController::class)->names([
         'index' => 'category.index',
         'create' => 'category.create',
@@ -55,5 +58,7 @@ Route::prefix('manage')->group(function () {
     Route::resource('customers', CustomerController::class);
     Route::resource('carts', CartController::class);
     Route::resource('orders', OrderController::class);
+
+
 });
 

@@ -15,7 +15,7 @@ use App\Validators\UserValidator;
  */
 abstract class BaseRepositoryEloquent extends BaseRepository
 {
-    const PAGE_SIZE = 20;
+    const PAGE_SIZE = 3;
 
     protected function buildForDatatable($query, $params, $columns = ['*'])
     {
@@ -39,16 +39,16 @@ abstract class BaseRepositoryEloquent extends BaseRepository
      * @param $query
      * @return array
      */
-    protected function buildOrderForDataTable($columns, $params, $query): array
-    {
-        $order = isset($params['order']) && count($params['order']) > 0 ? $params['order'][0] : null;
-        $dir = $order['dir'] ?? 'asc';
-        if ($order && isset($columns[$order['column']])) {
-            $query = $query->orderBy($columns[$order['column']], $dir);
-        }
+    // protected function buildOrderForDataTable($columns, $params, $query): array
+    // {
+    //     $order = isset($params['order']) && count($params['order']) > 0 ? $params['order'][0] : null;
+    //     $dir = $order['dir'] ?? 'asc';
+    //     if ($order && isset($columns[$order['column']])) {
+    //         $query = $query->orderBy($columns[$order['column']], $dir);
+    //     }
 
-        return array($params, $query);
-    }
+    //     return array($params, $query);
+    // }
 
     /**
      * @return int
