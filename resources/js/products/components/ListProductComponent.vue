@@ -5,6 +5,9 @@ import InputComponent from '../../common/form/InputComponent.vue';
 import PaginationComponent from '../../common/Pagination/PaginationComponent.vue';
 import SelectBoxComponent from '../../common/form/SelectBoxComponent.vue';
 import YesNoComponent from '../../common/form/YesNoComponent.vue';
+import {
+    URI
+} from '../../common/config/main.js';
 import moment from 'moment';
 
 export default {
@@ -35,11 +38,9 @@ export default {
         }
     },
     created() {
-
         this.objData.page = this.products.currentPage;
         this.totalPage = this.products.totalPage;
         this.totalRecords = this.products.totalRecords;
-       
 
     },
     methods: {
@@ -78,7 +79,7 @@ export default {
                         <div class="product-status-wrap">
                             <h4>Danh sách sản phẩm</h4>
                             <div class="add-product">
-                                <a href="manage/products/create">Thêm sản phẩm</a>
+                                <a href="/manage/products/create">Thêm sản phẩm</a>
                             </div>
                             <table>
                                 <tr>
@@ -101,25 +102,30 @@ export default {
                                     <td>{{  item.image }}</td>
                                     <td>{{  item.description }}</td>
                                     <td>
-                                        <button class="pd-setting" v-if="item.disp == 1">Active</button>
+                                        <span class="pd-setting" v-if="item.disp == 1">Active</span>
                                         <button class="ds-setting" v-if="item.disp == 0">Disabled</button>
                                     </td>
                                     <td>{{ formatMyDate(item.created_at) }}</td>
                                     <td>{{ formatMyDate(item.updated_at) }}</td>
 
                                     <td>
-                                        <a data-toggle="tooltip" title="Edit" class="pd-setting-ed btn" href="`manage/categories/${item.id}/edit`"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+
+
+                                        <a data-toggle="tooltip" title="Edit" class="pd-setting-ed btn" :href="`product-details/add/${item.id}`">
+                                            Setting
+                                        </a>
+                                        <a data-toggle="tooltip" title="Edit" class="pd-setting-ed btn" :href="`products/${item.id}/edit`"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                                         <a data-toggle="tooltip" title="Trash" class="pd-setting-ed btn"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                                     </td>
                                 </tr>
                             </table>
 
-                            <pagination-component 
+                            <pagination-component
                                 :page = "this.products.currentPage"
                                 :total-page = "this.products.totalPage"
                                 :total-records = "this.products.totalRecords"
                             />
-                            
+
                         </div>
                     </div>
                 </div>

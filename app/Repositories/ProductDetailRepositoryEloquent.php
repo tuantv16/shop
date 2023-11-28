@@ -9,7 +9,7 @@ use App\Repositories\Interfaces\ProductDetailRepository;
  *
  * @package namespace App\Repositories;
  */
-class ProductDetailRepositoryEloquent extends BaseRepositoryEloquent implements ProductDetailRepository 
+class ProductDetailRepositoryEloquent extends BaseRepositoryEloquent implements ProductDetailRepository
 {
 
     /**
@@ -23,29 +23,15 @@ class ProductDetailRepositoryEloquent extends BaseRepositoryEloquent implements 
     }
 
     public function getList($params) {
-        // $columns = [
-        //     //'products.id',
-        //      '*'
-        // ];
 
-        // $query = $this->model->select($columns);
+    }
 
-        // $columnCategories = ['id', 'category_name'];
-        // $columnBrands = ['id', 'name'];
-        // $arrWiths = [
-        //     'category' => function ($q) use ($columnCategories) {
-        //         $q->select($columnCategories);
-        //     },
-        //     'brand' => function ($q) use ($columnBrands) {
-        //         $q->select($columnBrands);
-        //     }
-        // ];
-
-        // $query->with($arrWiths);
-
-        // $query->orderBy('created_at','desc');
-
-        // return $this->buildForDatatable($query, $params, $columns);
+    public function getListDataByProductId($productId) {
+        return $this->model->where([
+            'disp'=> 1,
+            'product_id' => intval($productId)
+        ])
+        ->orderby('updated_at')->get();
     }
 
 }

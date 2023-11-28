@@ -102,7 +102,12 @@ export default {
         brands: {
             type: Object,
             default : null
-        }
+        },
+        maxId: {
+            type: Object,
+            default : null
+        },
+
 
     },
     computed: {
@@ -111,6 +116,7 @@ export default {
             let obj = {
                 product_name: yup.string().max(255).required(msg),
                 category_id: yup.string().required(msg),
+                // product_code: yup.string().max(30).required(msg),
                 brand_id: yup.string().required(msg),
                 description: yup.string().nullable().max(500),
                 price: yup.string().nullable().required(msg),
@@ -144,13 +150,6 @@ export default {
                                         <div class="row">
                                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                 <div class="review-content-section">
-                                                    <input-component title="Tên sản phẩm"
-                                                        id="product_name"
-                                                        :limit="255"
-                                                        name="product_name"
-                                                        :required="true"
-                                                        placeholder=""
-                                                    />
 
                                                     <select-box-component title="Danh mục sản phẩm" :required="true" id="category_id" name="category_id">
                                                         <option value="0"></option>
@@ -161,17 +160,23 @@ export default {
                                                         </option>
                                                     </select-box-component>
 
-                                                    <!-- <input-component title="Ảnh"
-                                                        id="image"
+                                                    <input-component title="Mã sản phẩm"
+                                                        id="product_code"
+                                                        name="product_code"
+                                                        placeholder="PO"
+                                                        :disabled="true"
+                                                        :data="this.maxId + 1"
+                                                    />
+
+                                                    <input-component title="Tên sản phẩm"
+                                                        id="product_name"
                                                         :limit="255"
-                                                        name="image"
+                                                        name="product_name"
+                                                        :required="true"
                                                         placeholder=""
-                                                    /> -->
 
-                                                    <!-- <Field name="file" v-slot="{ handleChange, handleBlur }">
+                                                    />
 
-                                                        <input type="file" @change="handleChange" @blur="handleBlur" />
-                                                    </Field> -->
                                                     <Field name="image" v-slot="{ field }">
                                                         <input type="file" @change="handleChange" :ref="field.ref" />
                                                     </Field>

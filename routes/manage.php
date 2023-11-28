@@ -38,8 +38,6 @@ Route::prefix('manage')->group(function () {
         Route::get('/add/{productId}', [ProductDetailController::class, 'createMultiProductDetail'])->name('product_details.create_rows');
     });
 
-    
-
     Route::resource('categories', CategoryController::class)->names([
         'index' => 'category.index',
         'create' => 'category.create',

@@ -10,7 +10,7 @@ class ProductDetail extends Model
 {
     use HasFactory;
 
-    protected $table = 'products';
+    protected $table = 'product_details';
 
     protected $fillable = [
         'id', 'product_id', 'size_id', 'color_id', 'brand_id', 'quantity', 'disp'

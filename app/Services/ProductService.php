@@ -33,15 +33,13 @@ class ProductService extends BaseService
     }
 
     public function getInitData() {
-        // $sizes = config('web.config.sizes');
-        // $colors = config('web.config.colors');
         $brands = $this->brandRepository->getDataDispOrder();
         $categories = $this->categoryService->getCbCategory();
+        $maxId = $this->productRepository->getMaxId();
         $results = [
-            // 'sizes' => $sizes,
-            // 'colors' => $colors,
             'brands' => $brands,
-            'categories' => $categories
+            'categories' => $categories,
+            'maxId' => $maxId
         ];
 
         return $results;

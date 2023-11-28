@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Repositories\Interfaces\BrandRepository;
 use App\Repositories\Interfaces\CategoryRepository;
+use App\Repositories\Interfaces\ProductDetailRepository;
 use App\Repositories\Interfaces\ProductRepository;
 use App\Services\Traits\ImageUpload;
 use Illuminate\Support\Facades\DB;
@@ -17,6 +18,8 @@ class ProductDetailService extends BaseService
     protected $brandRepository;
     protected $categoryRepository;
     protected $categoryService;
+    protected $productDetailRepository;
+
     /**
      *
      */
@@ -24,22 +27,26 @@ class ProductDetailService extends BaseService
         ProductRepository $productRepository,
         BrandRepository $brandRepository,
         CategoryRepository $categoryRepository,
-        CategoryService $categoryService
+        CategoryService $categoryService,
+        ProductDetailRepository $productDetailRepository
     ) {
         $this->productRepository = $productRepository;
         $this->brandRepository = $brandRepository;
         $this->categoryRepository = $categoryRepository;
         $this->categoryService = $categoryService;
+        $this->productDetailRepository = $productDetailRepository;
     }
 
-    public function getInitData() {
+    public function getInitData($params) {
         $sizes = config('web.config.sizes');
         $colors = config('web.config.colors');
         $brands = $this->brandRepository->getDataDispOrder();
+        $productDetails = $this->productDetailRepository->getListDataByProductId($params['productId']);
         $results = [
             'sizes' => $sizes,
             'colors' => $colors,
-            'brands' => $brands
+            'brands' => $brands,
+            'productDetails' => $productDetails
         ];
 
         return $results;
@@ -59,7 +66,26 @@ class ProductDetailService extends BaseService
     }
 
     public function saveMultiProductDetail($params) {
-        dd($params);
+
+        DB::beginTransaction();
+
+        try {
+
+            $this->productDetailRepository->where('product_id', (int) $params['product_id'])->delete();
+            $rows = $params['rows'];
+            foreach ($rows as $dataInsert) {
+                $dataInsert['product_id'] = intval($params['product_id']);
+                $this->productDetailRepository->create($dataInsert);
+            }
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            // Xử lý lỗi hoặc ném lại ngoại lệ
+            throw $e;
+        }
+
+        return true;
     }
 
 }

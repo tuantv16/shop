@@ -62,5 +62,13 @@ abstract class BaseRepositoryEloquent extends BaseRepository
         }
     }
 
+    public function getMaxId(): int
+    {
+        try {
+            return $this->model->max('id');
+        } catch (\Exception $e) {
+            return 0;
+        }
+    }
 
 }

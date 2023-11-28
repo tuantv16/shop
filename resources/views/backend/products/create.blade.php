@@ -44,6 +44,7 @@
         :colors='@json($colors)' --}}
         :brands='@json($brands)'
         :categories='@json($categories)'
+        :max-id='@json($maxId)'
     />
 </div>
 

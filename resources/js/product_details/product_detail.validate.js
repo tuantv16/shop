@@ -40,7 +40,9 @@ export const ProductDetailValidator = (ctx) => {
         color_id: yup.string().required(requiredMsg),
         brand_id: yup.string().required(requiredMsg),
         quantity: yup.number().required(requiredMsg),
+
         disp: yup.string().required(requiredMsg),
+        deleted: yup.boolean(),
       });
 
     let obj = {

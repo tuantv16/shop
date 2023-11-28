@@ -18,7 +18,7 @@ class ProductDetailController extends ApiController
     protected $productDetailService;
 
     public function __construct(
-        ProductRepository $productRepository, 
+        ProductRepository $productRepository,
         ProductService $productService,
         ProductDetailService $productDetailService
     )
@@ -49,8 +49,7 @@ class ProductDetailController extends ApiController
     public function saveMultiRows(FormRowsRequest $request) {
         $inputDatas = $request->validated();
         $this->productDetailService->saveMultiProductDetail($inputDatas);
-
-        // return $this->responseSuccess(new ProductDetailCollection($data));
+        return $this->responseSuccess([]);
     }
 
 }

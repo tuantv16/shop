@@ -30,7 +30,7 @@ class ProductDetailController extends Controller
      */
     public function index(Request $request)
     {
-        
+
     }
 
     /**
@@ -38,14 +38,15 @@ class ProductDetailController extends Controller
      */
     public function create()
     {
-        
+
     }
 
     public function createMultiProductDetail($productId) {
-     
-        $dataInit = $this->productDetailService->getInitData();
-        $dataInit['productId'] = intval($productId);
 
+        $params['productId'] = intval($productId);
+
+        $dataInit = $this->productDetailService->getInitData($params);
+        $dataInit['productId'] = intval($productId);
         return view('backend.product_details.create', $dataInit);
     }
 

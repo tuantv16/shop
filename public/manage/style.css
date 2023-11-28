@@ -1260,11 +1260,12 @@ ul.two-part-sp li{
 .product-status-wrap .pd-setting {
     border: none;
     color: #fff;
-    padding: 5px 15px;
-    font-size: 15px;
+    padding: 5px 10px;
+    font-size: 12px;
     background: #24caa1;
-    border-radius: 3px;
+    border-radius: 15px;
 }
+
 .product-status-wrap .ps-setting {
     border: none;
     color: #fff;
@@ -3737,5 +3738,5 @@ span[role="alert"] {
 .flex-container {
     display: flex;
     justify-content: space-around; /* Tùy chọn: căn chỉnh các item */
-    align-items: center; 
+    align-items: center;
 }

@@ -15,7 +15,7 @@ export default {
         InputComponent,
         SelectBoxComponent,
         YesNoComponent,
-        TextareaComponentnpm
+        TextareaComponent
 
     },
     data() {

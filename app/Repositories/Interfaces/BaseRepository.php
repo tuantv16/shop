@@ -8,4 +8,6 @@ interface BaseRepository extends RepositoryInterface
 {
     public function getMaxDispOrder();
 
+    public function getMaxId();
+
 }
