@@ -6,6 +6,7 @@ import InputComponent from '../../common/form_style_1/InputComponent.vue';
 import SelectBoxComponent from '../../common/form_style_1/SelectBoxComponent.vue';
 import {dataAction} from '../services/dataActions.js';
 
+import { ProductDetailValidator } from "../productDetail.validate.js"; 
 export default {
     name: 'CreateProductDetailComponent',
     components: {
@@ -35,7 +36,7 @@ export default {
     },
     methods: {
         onSubmit(dataInputs) {
-            // console.log(formData);
+            // console.log(dataInputs);
             // debugger;
             dataAction.saveData(dataInputs).then(res => {
 
@@ -74,21 +75,11 @@ export default {
 
     },
     computed: {
+
         schema() {
-            let msg = 'Đây là trường bắt buộc';
-            let obj = {
-                product_name: yup.string().max(255).required(msg),
-                color_id: yup.string().required(msg),
-                brand_id: yup.string().required(msg),
-                description: yup.string().nullable().max(500),
-                price: yup.string().nullable().required(msg),
-                image: yup.string().nullable(),
-                disp: yup.string().max(1).required(msg),
-
-            };
-
-            return yup.object(obj);
-        }
+            let rules = ProductDetailValidator(this);
+            return yup.object().shape(rules);
+        },
     }
 }
 
@@ -141,7 +132,7 @@ export default {
                                         <div class="row" v-for="(row, rowIndex) in rows" :key="rowIndex">                             
                                                 <div class="review-content-section flex-container">
                                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
-                                                        <select-box-component :required="true" id="size_id" name="size_id">
+                                                        <select-box-component :required="true" :name="`rows[${rowIndex}].size_id`" >
                                                             <option value=""></option>
                                                             <option v-for="(value, key) in this.sizes" :key="key" :value="key">
                                                                 {{ value }}
@@ -150,7 +141,7 @@ export default {
                                                     </div>
                                                     
                                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
-                                                        <select-box-component :required="true" id="color_id" name="color_id">
+                                                        <select-box-component :required="true" :name="`rows[${rowIndex}].color_id`">
                                                             <option value=""></option>
                                                             <option v-for="(value, key) in this.colors" :key="key" :value="key">
                                                                 {{ value }}
@@ -159,7 +150,7 @@ export default {
                                                     </div>
 
                                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
-                                                        <select-box-component :required="true" id="brand_id" name="brand_id">
+                                                        <select-box-component :required="true" :name="`rows[${rowIndex}].brand_id`">
                                                             <option value=""></option>
                                                             <option v-for="item in this.brands" :key="item.id" :value="item.id">
                                                                 {{ item.name }}
@@ -172,14 +163,14 @@ export default {
                                                             type="number"
                                                             id="quantity"
                                                             :limit="255"
-                                                            name="quantity"
+                                                            :name="`rows[${rowIndex}].quantity`"
                                                             :required="true"
                                                             placeholder=""
                                                         />
                                                     </div>
 
                                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
-                                                        <select-box-component :required="true" id="disp" name="disp">
+                                                        <select-box-component :required="true" id="disp" :name="`rows[${rowIndex}].disp`">
                                                             <option value="1">Hiển thị</option>
                                                             <option value="0">Vô hiệu hóa</option>
                                                         </select-box-component>
@@ -197,9 +188,16 @@ export default {
                                             
                                         </div>
 
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="text-center custom-pro-edt-ds">
+                                                    <button type="button" class="btn btn-ctl-bt waves-effect waves-light">Quay lại</button>
+                                                    <button type="submit" class="btn btn-ctl-bt waves-effect waves-light m-r-10">Save</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
-
-
                                 </div>
                                 </Form>
                             </div>
