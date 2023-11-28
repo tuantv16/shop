@@ -43,6 +43,7 @@
         :sizes='@json($sizes)'
         :colors='@json($colors)'
         :brands='@json($brands)'
+        :product-id="{{ $productId }}"
     />
 
 </div>

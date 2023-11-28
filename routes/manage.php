@@ -33,7 +33,12 @@ Route::prefix('manage')->group(function () {
         'destroy' => 'product.destroy',
     ]);
 
-    Route::resource('product-details', ProductDetailController::class);
+    Route::prefix('product-details')->group(function () {
+        Route::resource('product-details', ProductDetailController::class);
+        Route::get('/add/{productId}', [ProductDetailController::class, 'createMultiProductDetail'])->name('product_details.create_rows');
+    });
+
+    
 
     Route::resource('categories', CategoryController::class)->names([
         'index' => 'category.index',

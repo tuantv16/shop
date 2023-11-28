@@ -58,4 +58,8 @@ class ProductDetailService extends BaseService
         // return $this->productRepository->create($data);
     }
 
+    public function saveMultiProductDetail($params) {
+        dd($params);
+    }
+
 }

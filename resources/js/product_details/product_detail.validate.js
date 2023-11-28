@@ -34,9 +34,18 @@ yup.addMethod(yup.mixed, 'requiredALeast', function (messages) {
 });
 
 export const ProductDetailValidator = (ctx) => {
-   
+    let requiredMsg = 'Yêu cầu bắt buộc nhập';
+    const rowSchema = yup.object().shape({
+        size_id: yup.string().required(requiredMsg),
+        color_id: yup.string().required(requiredMsg),
+        brand_id: yup.string().required(requiredMsg),
+        quantity: yup.number().required(requiredMsg),
+        disp: yup.string().required(requiredMsg),
+      });
+
     let obj = {
-        rows: yup.mixed().requiredALeast('項目名が入力されていません。'),
+        rows: yup.array().of(rowSchema).min(1, '至少需要一行数据。')
+        //rows: yup.mixed().requiredALeast('項目名が入力されていません。'),
     };
 
     return obj;

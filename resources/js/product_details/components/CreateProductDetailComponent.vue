@@ -6,7 +6,7 @@ import InputComponent from '../../common/form_style_1/InputComponent.vue';
 import SelectBoxComponent from '../../common/form_style_1/SelectBoxComponent.vue';
 import {dataAction} from '../services/dataActions.js';
 
-import { ProductDetailValidator } from "../productDetail.validate.js"; 
+import { ProductDetailValidator } from "../product_detail.validate.js"; 
 export default {
     name: 'CreateProductDetailComponent',
     components: {
@@ -17,46 +17,40 @@ export default {
     },
     data() {
         return {
-            // objData: {
-            //     category_id: '',
-            //     brand_id: '',
-            //     category_id: '',
-            //     description : '',
-            //     price : '',
-            //     image : '',
-            //     disp : 1
-            // },
-            
-            rows: []
+            objData: {
+                product_id : '',
+                rows: [
+                    { size_id: null, color_id: null, brand_id: null, quantity: null, disp: 1 }
+                ]
+            },
+            display: 1
         }
     },
     created() {
 
-     
     },
     methods: {
         onSubmit(dataInputs) {
-            // console.log(dataInputs);
-            // debugger;
+            dataInputs.product_id = this.productId;
+            
             dataAction.saveData(dataInputs).then(res => {
-
-
                  if (res.data.status == 'success') {
-                    //window.location.href = '/manage/categories';
                     location.reload();
-
                  }
             });
 
         },
         addRow() {
-            this.rows.push({
+            this.objData.rows.push({
                 size_id: null,
                 color_id: null,
                 brand_id: null,
                 quantity: null,
                 disp: 1
             });
+        },
+        removeRow(indexRow) {
+            this.objData.rows.splice(indexRow, 1);
         }
     },
     props: {
@@ -70,6 +64,10 @@ export default {
         },
         brands: {
             type: Object,
+            default : null
+        },
+        productId: {
+            type: Number,
             default : null
         }
 
@@ -129,10 +127,10 @@ export default {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row" v-for="(row, rowIndex) in rows" :key="rowIndex">                             
+                                        <div class="row" v-for="(row, rowIndex) in this.objData.rows" :key="rowIndex">                             
                                                 <div class="review-content-section flex-container">
                                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
-                                                        <select-box-component :required="true" :name="`rows[${rowIndex}].size_id`" >
+                                                        <select-box-component :required="true" :name="`rows[${rowIndex}].size_id`" data="">
                                                             <option value=""></option>
                                                             <option v-for="(value, key) in this.sizes" :key="key" :value="key">
                                                                 {{ value }}
@@ -141,7 +139,7 @@ export default {
                                                     </div>
                                                     
                                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
-                                                        <select-box-component :required="true" :name="`rows[${rowIndex}].color_id`">
+                                                        <select-box-component :required="true" :name="`rows[${rowIndex}].color_id`" data="">
                                                             <option value=""></option>
                                                             <option v-for="(value, key) in this.colors" :key="key" :value="key">
                                                                 {{ value }}
@@ -150,7 +148,7 @@ export default {
                                                     </div>
 
                                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
-                                                        <select-box-component :required="true" :name="`rows[${rowIndex}].brand_id`">
+                                                        <select-box-component :required="true" :name="`rows[${rowIndex}].brand_id`" data="">
                                                             <option value=""></option>
                                                             <option v-for="item in this.brands" :key="item.id" :value="item.id">
                                                                 {{ item.name }}
@@ -170,7 +168,7 @@ export default {
                                                     </div>
 
                                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
-                                                        <select-box-component :required="true" id="disp" :name="`rows[${rowIndex}].disp`">
+                                                        <select-box-component :required="true" id="disp" :name="`rows[${rowIndex}].disp`" :data="this.display">
                                                             <option value="1">Hiển thị</option>
                                                             <option value="0">Vô hiệu hóa</option>
                                                         </select-box-component>
@@ -178,7 +176,7 @@ export default {
 
                                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
                                                         <div class="group-item">
-                                                            <button class="btn btn-danger">Delete</button>
+                                                            <button class="btn btn-danger" @click="removeRow(rowIndex)">Delete</button>
                                                         </div>
                                                     </div>
 

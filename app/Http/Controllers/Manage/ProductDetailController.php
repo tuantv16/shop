@@ -38,8 +38,15 @@ class ProductDetailController extends Controller
      */
     public function create()
     {
-        $data = $this->productDetailService->getInitData();
-        return view('backend.product_details.create', $data);
+        
+    }
+
+    public function createMultiProductDetail($productId) {
+     
+        $dataInit = $this->productDetailService->getInitData();
+        $dataInit['productId'] = intval($productId);
+
+        return view('backend.product_details.create', $dataInit);
     }
 
 }
