@@ -45,17 +45,18 @@ export default {
     },
     methods: {
         onSubmit(dataInputs) {
+
             dataInputs.product_id = this.productId;
-            // if (dataInputs.rows.length > 0) {
-            //     dataInputs.rows = dataInputs.rows.filter((item) => !item.del)
-
-            // }
-
+            if (dataInputs.rows.length > 0) {
+                dataInputs.rows = dataInputs.rows.filter(row => {
+                    return !(row.size_id === this.threshold || row.color_id === this.threshold || row.brand_id === this.threshold);
+                });
+            }
 
             dataAction.saveData(dataInputs).then(res => {
-                 if (res.data.status == 'success') {
+                if (res.data.status == 'success') {
                     location.reload();
-                 }
+                }
             });
 
         },
@@ -72,7 +73,6 @@ export default {
             this.objData.rows.push(newRow);
         },
         removeRow(indexRow) {
-            //this.objData.rows.splice(indexRow, 1);
             this.ignoreValidate(indexRow);
             this.objData.rows[indexRow].deleted = true;
         },
@@ -81,7 +81,6 @@ export default {
             this.objData.rows[indexRow].color_id = this.threshold;
             this.objData.rows[indexRow].brand_id = this.threshold;
             this.objData.rows[indexRow].quantity = this.threshold;
-            //this.objData.rows[indexRow].del = true;
         }
     },
     props: {
@@ -162,7 +161,7 @@ export default {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row" v-for="(row, rowIndex) in this.objData.rows" :key="row.rowIndex" v-show="!row.deleted">
+                                        <div class="row" v-for="(item, rowIndex) in this.objData.rows" :key="item.rowIndex" v-show="!item.deleted">
                                                 <div class="review-content-section flex-container">
                                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
                                                         <select-box-component :required="true" :name="`rows[${rowIndex}].size_id`" :data="this.productDetails[rowIndex].size_id">
