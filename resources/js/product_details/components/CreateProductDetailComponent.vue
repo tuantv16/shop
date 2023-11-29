@@ -130,9 +130,9 @@ export default {
                                     <li class="active"><a href="#description"><i class="icon nalika-edit" aria-hidden="true"></i> Cài đặt thuộc tính</a></li>
                                 </ul>
                                 <button class="btn btn-primary" @click="addRow">Add</button>
-                                <Form @submit="onSubmit" :initial-values="this.objData" :validation-schema="schema" >
+                                <Form @submit="onSubmit" :initial-values="this.objData" :validation-schema="schema">
                                 <div id="myTabContent" class="tab-content">
-                                    <div class="product-tab-list tab-pane fade active in" id="description-product">
+                                    <div class="product-tab-list tab-pane fade active in wrap_row">
                                         <div class="row">
 
                                             <div class="review-content-section flex-container">
@@ -153,7 +153,7 @@ export default {
                                                 </div>
 
                                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
-                                                    Hiển thị
+                                                    Trạng thái
                                                 </div>
 
                                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">

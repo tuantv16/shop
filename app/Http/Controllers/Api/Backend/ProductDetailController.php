@@ -36,16 +36,6 @@ class ProductDetailController extends ApiController
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(FormProductRequest $request)
-    {
-        // $inputDatas = $request->validated();
-        // $data = $this->productService->saveData($inputDatas, $request);
-        // return $this->responseSuccess(new Product($data));
-    }
-
     public function saveMultiRows(FormRowsRequest $request) {
         $inputDatas = $request->validated();
         $this->productDetailService->saveMultiProductDetail($inputDatas);

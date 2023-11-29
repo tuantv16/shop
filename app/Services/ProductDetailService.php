@@ -52,19 +52,6 @@ class ProductDetailService extends BaseService
         return $results;
     }
 
-    public function saveData($data, $request) {
-        // $configs = config('web.config.uploads');
-        // $destinationPath =  $configs['products']; // đặt tên folder
-
-        // if ($request->hasFile('image')) {
-        //     $file = $request->file('image');
-        //     $nameImage = $this->uploads($file, $destinationPath) ; // upload (local or S3) and get name file image
-        //     $data['image'] = $nameImage;
-        // }
-
-        // return $this->productRepository->create($data);
-    }
-
     public function saveMultiProductDetail($params) {
 
         DB::beginTransaction();

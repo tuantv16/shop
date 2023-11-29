@@ -3740,3 +3740,16 @@ span[role="alert"] {
     justify-content: space-around; /* Tùy chọn: căn chỉnh các item */
     align-items: center;
 }
+
+.wrap_row {
+    margin-top: 20px;
+    padding:20px
+}
+
+.wrap_row .row{
+    margin-bottom: 20px !important;
+}
+
+.is-invalid {
+    border: 1px #FFA07A solid;
+}
