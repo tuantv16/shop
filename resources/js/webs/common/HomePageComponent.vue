@@ -8,7 +8,7 @@
                     </div>
 
                     <div class="card-body">
-                        I'm an example component. tran van tuan
+                        This is home page component. tran van tuan
                     </div>
                 </div>
             </div>

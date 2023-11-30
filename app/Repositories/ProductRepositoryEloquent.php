@@ -15,7 +15,7 @@ use App\Repositories\Interfaces\ProductRepository;
  *
  * @package namespace App\Repositories;
  */
-class ProductRepositoryEloquent extends BaseRepositoryEloquent implements ProductRepository 
+class ProductRepositoryEloquent extends BaseRepositoryEloquent implements ProductRepository
 {
 
     /**
@@ -79,4 +79,8 @@ class ProductRepositoryEloquent extends BaseRepositoryEloquent implements Produc
         return $this->buildForDatatable($query, $params, $columns);
     }
 
+
+    public function search($params) {
+
+    }
 }

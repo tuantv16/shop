@@ -13,8 +13,8 @@ const app = createApp({});
 // Đăng ký global mixin
 app.mixin(apiMixin);
 
-import ExampleComponent from './components/ExampleComponent.vue';
-app.component('example-component', ExampleComponent);
+import HomeComponent from './webs/pages/homes/components/HomeComponent.vue';
+app.component('home-component', HomeComponent);
 
 // Nếu bạn có router, store, hoặc các plugin khác, đăng ký chúng ở đây
 // Ví dụ:

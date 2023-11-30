@@ -34,9 +34,7 @@ export default {
         }
     },
     created() {
-
         this.objData = this.products;
-        console.log(this.objData);
     },
     methods: {
 
@@ -133,7 +131,7 @@ export default {
                                                         :data="this.objData.product_name"
                                                     />
 
-                                                    <select-box-component title="Danh mục sản phẩm" :required="true" id="category_id" name="category_id"  :data="this.objData.category_id">
+                                                    <select-box-component title="Danh mục sản phẩm" :required="true" id="category_id" name="category_id"  :data="String(this.objData.category_id)">
                                                         <option value="0"></option>
                                                         <option v-for="item in this.categories" :key="item.id" :value="item.id">
                                                             <span v-if="item.level == 2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
@@ -169,7 +167,7 @@ export default {
                                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                 <div class="review-content-section">
 
-                                                    <select-box-component title="Thương hiệu" :required="true" id="brand_id" name="brand_id" :data="this.objData.brand_id">
+                                                    <select-box-component title="Thương hiệu" :required="true" id="brand_id" name="brand_id" :data="String(this.objData.brand_id)">
                                                         <option value="0"></option>
                                                         <option v-for="item in this.brands" :key="item.id" :value="item.id">
                                                             {{ item.name }}
