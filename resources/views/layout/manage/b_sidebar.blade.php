@@ -61,6 +61,17 @@
                     <li><a title="Danh sách nhãn hàng" href="{{ url('/manage/customers')}}"><span class="mini-sub-pro">Danh sách khách hàng</span></a></li>
                 </ul>
             </li>
+
+            <li>
+                <a class="has-arrow" href="index.html">
+                       <i class="icon nalika-home icon-wrap"></i>
+                       <span class="mini-click-non">Khảo sát</span>
+                    </a>
+                <ul class="submenu-angle" aria-expanded="true">
+                    <li><a title="Danh sách khảo sát" href="{{ url('/manage/surveys')}}"><span class="mini-sub-pro">Danh sách khảo sát</span></a></li>
+                </ul>
+            </li>
+
             <!--
             <li>
                 <a class="has-arrow" href="mailbox.html" aria-expanded="false"><i class="icon nalika-mail icon-wrap"></i> <span class="mini-click-non">Mailbox</span></a>

@@ -28,7 +28,6 @@ class ProductDetailRepositoryEloquent extends BaseRepositoryEloquent implements 
 
     public function getListDataByProductId($productId) {
         return $this->model->where([
-            'disp'=> 1,
             'product_id' => intval($productId)
         ])
         ->orderby('updated_at')->get();

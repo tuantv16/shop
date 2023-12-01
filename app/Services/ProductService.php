@@ -94,4 +94,21 @@ class ProductService extends BaseService
         }
     }
 
+    public function setupData() {
+        $sizes = config('web.config.sizes');
+        $colors = config('web.config.colors');
+        $brands = $this->brandRepository->getDataDispOrder();
+
+        $results = [
+            'sizes' => $sizes,
+            'colors' => $colors,
+            'brands' => $brands,
+
+        ];
+
+        return $results;
+    }
+
+
+
 }

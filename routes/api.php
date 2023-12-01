@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Backend\BrandController;
 use App\Http\Controllers\Api\Backend\CategoryController;
+use App\Http\Controllers\Api\Backend\FeedbackController;
 use App\Http\Controllers\Api\Backend\ProductControler;
 use App\Http\Controllers\Api\Backend\ProductDetailController;
 use App\Http\Resources\ProductDetails\ProductDetail;
@@ -34,8 +35,10 @@ Route::prefix('backend')->group(function () {
         Route::post('save-multi-rows', [ProductDetailController::class,'saveMultiRows'])->name('product_details.save_rows');
     });
 
-    
-    
+    Route::prefix('feedbacks')->group(function () {
+        Route::post('setting', [FeedbackController::class,'setting'])->name('feedbacks.settings');
+    });
+
 
 });
 

@@ -5,9 +5,11 @@ use App\Http\Controllers\Manage\CartController;
 use App\Http\Controllers\Manage\CategoryController;
 use App\Http\Controllers\Manage\CustomerController;
 use App\Http\Controllers\Manage\DashboardController;
+use App\Http\Controllers\Manage\FeedbackController;
 use App\Http\Controllers\Manage\OrderController;
 use App\Http\Controllers\Manage\ProductController;
 use App\Http\Controllers\Manage\ProductDetailController;
+use App\Http\Controllers\Manage\SurveyController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,7 +24,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('manage')->group(function () {
-    Route::resource('dashboard', DashboardController::class);
+
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('products', ProductController::class)->names([
         'index' => 'product.index',
         'create' => 'product.create',
@@ -36,6 +39,13 @@ Route::prefix('manage')->group(function () {
     Route::prefix('product-details')->group(function () {
         Route::resource('product-details', ProductDetailController::class);
         Route::get('/add/{productId}', [ProductDetailController::class, 'createMultiProductDetail'])->name('product_details.create_rows');
+    });
+
+    Route::resource('surveys', SurveyController::class);
+
+    Route::prefix('feedbacks')->group(function () {
+        Route::resource('feedbacks', FeedbackController::class);
+        Route::get('/setting/{surveyId}', [FeedbackController::class, 'setting'])->name('feedbacks.setting');
     });
 
     Route::resource('categories', CategoryController::class)->names([

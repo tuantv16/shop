@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Product;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +20,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // view truyền biến đến mọi view
+        $dataProduct = Product::find(1); // test
+        view()->composer('layout.web.header', function ($view) use ($dataProduct) {
+            $view->with('master', $dataProduct->product_name);
+        });
     }
 }

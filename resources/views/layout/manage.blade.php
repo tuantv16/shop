@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- favicon
 		============================================ -->
-    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('manage/img/favicon.ico') }}">
     <!-- Google Fonts
 		============================================ -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">
@@ -69,15 +69,12 @@
 </head>
 
 <body>
-    <!--[if lt IE 8]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
 
     <div class="left-sidebar-pro">
         <nav id="sidebar" class="">
             <div class="sidebar-header">
                 <a href="index.html"><img class="main-logo" src="{{ asset('/manage/img/logo/logo.png') }}" alt="" /></a>
-                <strong><img src="img/logo/logosn.png" alt="" /></strong>
+                <strong><img src="{{ asset('/manage/img/logo/logosn.png') }}" alt="" /></strong>
             </div>
 			<div class="nalika-profile">
 				<div class="profile-dtl">
@@ -97,7 +94,7 @@
             @show
         </nav>
     </div>
-    <!-- Start Welcome area -->
+    <!-- Start area -->
     <div class="all-content-wrapper">
         <div class="container-fluid">
             <div class="row">
@@ -157,7 +154,7 @@
                                                             <li>
                                                                 <a href="#">
                                                                     <div class="message-img">
-                                                                        <img src="img/contact/4.jpg" alt="">
+                                                                        <img src="{{ asset('/manage/img/contact/4.jpg') }}" alt="">
                                                                     </div>
                                                                     <div class="message-content">
                                                                         <span class="message-date">16 Sept</span>
@@ -169,7 +166,7 @@
                                                             <li>
                                                                 <a href="#">
                                                                     <div class="message-img">
-                                                                        <img src="img/contact/3.jpg" alt="">
+                                                                        <img src="{{ asset('/manage/img/contact/3.jpg') }}" alt="">
                                                                     </div>
                                                                     <div class="message-content">
                                                                         <span class="message-date">16 Sept</span>
@@ -181,7 +178,7 @@
                                                             <li>
                                                                 <a href="#">
                                                                     <div class="message-img">
-                                                                        <img src="img/contact/2.jpg" alt="">
+                                                                        <img src="{{ asset('/manage/img/contact/2.jpg') }}" alt="">
                                                                     </div>
                                                                     <div class="message-content">
                                                                         <span class="message-date">16 Sept</span>
@@ -300,7 +297,7 @@
                                                                                 <a href="#">
                                                                                     <div class="notes-list-flow">
                                                                                         <div class="notes-img">
-                                                                                            <img src="img/contact/4.jpg" alt="" />
+                                                                                            <img src="{{ asset('manage/img/contact/4.jpg') }}" alt="" />
                                                                                         </div>
                                                                                         <div class="notes-content">
                                                                                             <p> The point of using Lorem Ipsum is that it has a more-or-less normal.</p>
@@ -313,7 +310,7 @@
                                                                                 <a href="#">
                                                                                     <div class="notes-list-flow">
                                                                                         <div class="notes-img">
-                                                                                            <img src="img/contact/1.jpg" alt="" />
+                                                                                            <img src="{{ asset('manage/img/contact/1.jpg') }}" alt="" />
                                                                                         </div>
                                                                                         <div class="notes-content">
                                                                                             <p> The point of using Lorem Ipsum is that it has a more-or-less normal.</p>
@@ -326,7 +323,7 @@
                                                                                 <a href="#">
                                                                                     <div class="notes-list-flow">
                                                                                         <div class="notes-img">
-                                                                                            <img src="img/contact/2.jpg" alt="" />
+                                                                                            <img src="{{ asset('manage/img/contact/2.jpg') }}" alt="" />
                                                                                         </div>
                                                                                         <div class="notes-content">
                                                                                             <p> The point of using Lorem Ipsum is that it has a more-or-less normal.</p>
@@ -339,7 +336,7 @@
                                                                                 <a href="#">
                                                                                     <div class="notes-list-flow">
                                                                                         <div class="notes-img">
-                                                                                            <img src="img/contact/3.jpg" alt="" />
+                                                                                            <img src="{{ asset('manage/img/contact/3.jpg') }}" alt="" />
                                                                                         </div>
                                                                                         <div class="notes-content">
                                                                                             <p> The point of using Lorem Ipsum is that it has a more-or-less normal.</p>
@@ -352,7 +349,7 @@
                                                                                 <a href="#">
                                                                                     <div class="notes-list-flow">
                                                                                         <div class="notes-img">
-                                                                                            <img src="img/contact/4.jpg" alt="" />
+                                                                                            <img src="{{ asset('manage/img/contact/4.jpg') }}" alt="" />
                                                                                         </div>
                                                                                         <div class="notes-content">
                                                                                             <p> The point of using Lorem Ipsum is that it has a more-or-less normal.</p>
@@ -365,7 +362,7 @@
                                                                                 <a href="#">
                                                                                     <div class="notes-list-flow">
                                                                                         <div class="notes-img">
-                                                                                            <img src="img/contact/1.jpg" alt="" />
+                                                                                            <img src="{{ asset('manage/img/contact/1.jpg') }}" alt="" />
                                                                                         </div>
                                                                                         <div class="notes-content">
                                                                                             <p> The point of using Lorem Ipsum is that it has a more-or-less normal.</p>
@@ -378,7 +375,7 @@
                                                                                 <a href="#">
                                                                                     <div class="notes-list-flow">
                                                                                         <div class="notes-img">
-                                                                                            <img src="img/contact/2.jpg" alt="" />
+                                                                                            <img src="{{ asset('manage/img/contact/2.jpg') }}" alt="" />
                                                                                         </div>
                                                                                         <div class="notes-content">
                                                                                             <p> The point of using Lorem Ipsum is that it has a more-or-less normal.</p>
@@ -391,7 +388,7 @@
                                                                                 <a href="#">
                                                                                     <div class="notes-list-flow">
                                                                                         <div class="notes-img">
-                                                                                            <img src="img/contact/1.jpg" alt="" />
+                                                                                            <img src="{{ asset('manage/img/contact/1.jpg') }}" alt="" />
                                                                                         </div>
                                                                                         <div class="notes-content">
                                                                                             <p> The point of using Lorem Ipsum is that it has a more-or-less normal.</p>
@@ -404,7 +401,7 @@
                                                                                 <a href="#">
                                                                                     <div class="notes-list-flow">
                                                                                         <div class="notes-img">
-                                                                                            <img src="img/contact/2.jpg" alt="" />
+                                                                                            <img src="{{ asset('manage/img/contact/2.jpg') }}" alt="" />
                                                                                         </div>
                                                                                         <div class="notes-content">
                                                                                             <p> The point of using Lorem Ipsum is that it has a more-or-less normal.</p>
@@ -417,7 +414,7 @@
                                                                                 <a href="#">
                                                                                     <div class="notes-list-flow">
                                                                                         <div class="notes-img">
-                                                                                            <img src="img/contact/3.jpg" alt="" />
+                                                                                            <img src="{{ asset('manage/img/contact/3.jpg') }}" alt="" />
                                                                                         </div>
                                                                                         <div class="notes-content">
                                                                                             <p> The point of using Lorem Ipsum is that it has a more-or-less normal.</p>
@@ -823,7 +820,7 @@
 											</div>
 											<div class="breadcomb-ctn">
 												<h2>Dashboard One</h2>
-												<p>Welcome to Nalika <span class="bread-ntd">Admin Template</span></p>
+												<p>Hello to Nalika <span class="bread-ntd">Admin Template</span></p>
 											</div>
 										</div>
                                     </div>
@@ -1284,7 +1281,7 @@
                                     <h2>Jon Royita</h2>
                                     <p>Founder of Uttara It Park</p>
                                 </div>
-                                <img src="img/contact/2.jpg" class="img-circle circle-border m-b-md" alt="profile">
+                                <img src="{{ asset('manage/img/contact/2.jpg') }}" class="img-circle circle-border m-b-md" alt="profile">
                                 <div class="social-widget-result">
                                     <span>100 Tweets</span> |
                                     <span>350 Following</span> |

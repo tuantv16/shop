@@ -42,28 +42,15 @@ export default {
 
             if (file) {
                 this.imageFile = file; // Gắn file với objData để gửi lên server
-                console.log('Tên tệp: ', file.name);
 
-                console.log('Kích thước: ', file.size); // Lấy size của file
+                // Không xóa phần này
+                // console.log('Tên tệp: ', file.name);
+                // console.log('Kích thước: ', file.size); // Lấy size của file
+                // let extension = file.name.split('.').pop();
+                // console.log('Đuôi mở rộng: ', extension); // Lấy đuôi mở rộng của file
 
-                // let url = window.URL.createObjectURL(file);
-                // console.log('Đường dẫn: ', url); // Lấy đường dẫn tạm thời của file
-
-                let extension = file.name.split('.').pop();
-                console.log('Đuôi mở rộng: ', extension); // Lấy đuôi mở rộng của file
-
-                // Các xử lý khác...
             }
 
-
-            // if (event.target.files.length > 0) {
-            //         const file = event.target.files[0];
-            //         let url = URL.createObjectURL(file);
-            //         console.log('Đường dẫn: ', url);
-            //         // Các xử lý khác...
-            //     } else {
-            //         console.log('Không có file nào được chọn');
-            //     }
 
         },
 
@@ -77,16 +64,8 @@ export default {
             }
 
             formData.append('image', this.imageFile); // append dữ liệu this.imageFile vào item imâge
-
-
-
-            // console.log(formData);
-            // debugger;
             dataAction.saveData(formData).then(res => {
-
-
                  if (res.data.status == 'success') {
-                    //window.location.href = '/manage/categories';
                     location.reload();
 
                  }
@@ -104,7 +83,7 @@ export default {
             default : null
         },
         maxId: {
-            type: Object,
+            type: Number,
             default : null
         },
 
@@ -165,7 +144,7 @@ export default {
                                                         name="product_code"
                                                         placeholder="PO"
                                                         :disabled="true"
-                                                        :data="this.maxId + 1"
+                                                        :data="String(this.maxId + 1)"
                                                     />
 
                                                     <input-component title="Tên sản phẩm"
@@ -180,7 +159,6 @@ export default {
                                                     <Field name="image" v-slot="{ field }">
                                                         <input type="file" @change="handleChange" :ref="field.ref" />
                                                     </Field>
-
 
                                                     <textarea-component
                                                         title="Mô tả"

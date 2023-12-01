@@ -21,7 +21,7 @@ export default {
             default: ''
         },
         limit: {
-            type: String,
+            type: Number,
             default: 0
         },
         tooltip: {
@@ -50,7 +50,7 @@ export default {
         },
         rows: {
             type: Number,
-            default: ''
+            default: 0
         }
     },
     created() {
