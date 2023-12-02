@@ -29,6 +29,7 @@
             :colors ='@json($colors)'
             :prices ='@json($prices)'
             :categories ='@json($categories)'
+            :list-products ='@json($listProducts)'
         />
     </div>
 @endsection

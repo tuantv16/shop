@@ -1,10 +1,10 @@
 <script>
 import {Field, ErrorMessage} from 'vee-validate';
-import { useSizeStore } from '../stores/sizeStore';
+import { useShopStore } from '../stores/filterShopStore';
 
 export default {
     setup() {
-        const store = useSizeStore();
+        const store = useShopStore();
 
         return {
             store, // expose store to the template
@@ -30,8 +30,10 @@ export default {
     },
     methods: {
         processSetSize(sizeId) {
-            console.log('sizeId',sizeId);
            this.store.setSize(sizeId);
+           let index = sizeId - 1;
+           $(".shop__sidebar__size label").removeClass("active");
+           $(".shop__sidebar__size label:eq("+ index +")").addClass('active');
         },
 
     }
@@ -45,7 +47,7 @@ export default {
         <div id="collapseFour" class="collapse show" data-parent="#accordionExample">
             <div class="card-body">
                 <div class="shop__sidebar__size">
-                    <label :for="`${item}`" v-for="(item, key) in this.sizes" :key="key" @click.stop="processSetSize(key)"> {{  item  }} </label>
+                    <label :for="`${item}`" v-for="(item, key) in this.sizes" :key="key" @click.stop="processSetSize(key)" class=""> {{  item  }} </label>
                     <input type="radio" :id="`${item}`" name="size" class="d-none">
                 </div>
             </div>

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Shop\ShopProductCollection;
 use App\Repositories\Interfaces\BrandRepository;
 use App\Repositories\Interfaces\CategoryRepository;
+use App\Repositories\Interfaces\ProductDetailRepository;
 use App\Repositories\Interfaces\ProductRepository;
 use App\Services\CategoryService;
 use App\Services\ProductService;
@@ -18,13 +20,15 @@ class ShopController extends Controller
     protected $categoryRepository;
     protected $productRepository;
     protected $productService;
+    protected $productDetailRepository;
 
     public function __construct(
         BrandRepository $brandRepository,
         CategoryService $categoryService,
         CategoryRepository $categoryRepository,
         ProductRepository $productRepository,
-        ProductService $productService
+        ProductService $productService,
+        ProductDetailRepository $productDetailRepository
     )
     {
         $this->brandRepository = $brandRepository;
@@ -32,13 +36,16 @@ class ShopController extends Controller
         $this->categoryRepository = $categoryRepository;
         $this->productRepository = $productRepository;
         $this->productService = $productService;
+        $this->productDetailRepository = $productDetailRepository;
     }
 
     public function index(Request $request) {
+
         $params = $request->all();
         $results = $this->productService->setupData();
-        $dataSearchs = $this->productRepository->search($params);
-        $results['products'] = $dataSearchs;
+        $dataSearchs = $this->productRepository->getListProducts($params);
+
+        $results['listProducts'] = new ShopProductCollection($dataSearchs);
         return view('frontend.shops.index', $results);
     }
 

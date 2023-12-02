@@ -2,8 +2,16 @@
 
 <script>
 import {Field, ErrorMessage} from 'vee-validate';
-
+import { useShopStore } from '../stores/filterShopStore';
 export default {
+    setup() {
+        const store = useShopStore();
+
+        return {
+            store, // expose store to the template
+        };
+
+    },
     components: {
         Field,
         ErrorMessage
@@ -16,6 +24,11 @@ export default {
     },
     mounted() {
 
+    },
+    methods: {
+        processSetColor(key) {
+            this.store.setColor(key);
+        }
     }
 }
 </script>
@@ -42,7 +55,7 @@ export default {
                     <input type="radio" id="sp-1">
                 </label>
 
-                <label :for="`${item}`" v-for="(item, key) in this.colors" :key="key" :class="`${item}`">
+                <label :for="`${item}`" v-for="(item, key) in this.colors" :key="key" :class="`${item}`" @click="processSetColor(key)">
                     <input type="radio" :id="`${item}`" name="color">
                 </label>
 

@@ -94,4 +94,43 @@ class ProductRepositoryEloquent extends BaseRepositoryEloquent implements Produc
         $query->groupBy('category_id');
         return $query->get();
     }
+
+
+    // search màn hình shop.html
+    public function getListProducts($params) {
+        $columns = [
+             '*'
+        ];
+
+        $query = $this->model->select($columns);
+
+        $columnProductDetails = ['product_id','size_id', 'color_id', 'brand_id', 'quantity'];
+
+        $relationships = [
+            'productDetails' => function ($q) use ($columnProductDetails) {
+                $q->select($columnProductDetails);
+            }
+        ];
+
+        $query->with($relationships);
+
+        $query->when($params['size_id'] ?? null, function ($q, $sizeId) {
+            $q->whereHas('productDetails', function ($query) use ($sizeId) {
+                $query->where('size_id', intval($sizeId));
+            });
+        });
+
+        $query->when($params['color_id'] ?? null, function ($q, $colorId) {
+            $q->whereHas('productDetails', function ($query) use ($colorId) {
+                $query->where('color_id', intval($colorId));
+            });
+        });
+
+        $query->orderBy('created_at','DESC');
+
+        // $data = $query->get();
+        // dd($data->toArray());
+        return $this->buildForDatatable($query, $params, $columns);
+    }
+
 }
