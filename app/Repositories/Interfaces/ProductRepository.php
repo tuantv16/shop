@@ -10,4 +10,7 @@ interface ProductRepository extends BaseRepository
 
     // search Frontend (/shop.html)
     public function search($params);
+
+    // Frontend
+    public function getTotalProductEachCategory();
 }

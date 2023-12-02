@@ -6,4 +6,5 @@ interface CategoryRepository extends BaseRepository
 {
 
     public function getDataDispOrder();
+
 }

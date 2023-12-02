@@ -97,13 +97,17 @@ class ProductService extends BaseService
     public function setupData() {
         $sizes = config('web.config.sizes');
         $colors = config('web.config.colors');
+        $prices = config('web.config.prices');
+
         $brands = $this->brandRepository->getDataDispOrder();
+        $categories = $this->categoryService->createMenu();
 
         $results = [
             'sizes' => $sizes,
             'colors' => $colors,
             'brands' => $brands,
-
+            'prices' => $prices,
+            'categories' => $categories
         ];
 
         return $results;

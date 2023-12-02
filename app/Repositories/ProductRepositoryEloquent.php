@@ -10,6 +10,7 @@ use App\Constants\Constant;
 use App\Models\Product;
 use App\Repositories\Interfaces\BrandRepository;
 use App\Repositories\Interfaces\ProductRepository;
+use Illuminate\Support\Facades\DB;
 
 /**
  *
@@ -18,6 +19,7 @@ use App\Repositories\Interfaces\ProductRepository;
 class ProductRepositoryEloquent extends BaseRepositoryEloquent implements ProductRepository
 {
 
+    CONST LEVEL = 2;
     /**
      * Specify Model class name
      *
@@ -82,5 +84,14 @@ class ProductRepositoryEloquent extends BaseRepositoryEloquent implements Produc
 
     public function search($params) {
 
+    }
+
+    public function getTotalProductEachCategory() {
+        $query = $this->model->select('category_id', DB::raw('COUNT(products.category_id) as total'));
+        $query->with(['category' => function ($query) {
+            $query->where('categories.level', self::LEVEL);
+        }]);
+        $query->groupBy('category_id');
+        return $query->get();
     }
 }

@@ -62,7 +62,7 @@ export default {
                         <div class="product-status-wrap">
                             <h4>Products List</h4>
                             <div class="add-product">
-                                <a href="product-edit.html">Thêm danh mục</a>
+                                <a href="/manage/categories/create">Thêm danh mục</a>
                             </div>
                             <table>
                                 <tr>
@@ -86,7 +86,7 @@ export default {
                                     <td>{{item.updated_at }}</td>
 
                                     <td>
-                                        <a data-toggle="tooltip" title="Edit" class="pd-setting-ed btn" href="manage/categories/item.id/edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                        <a data-toggle="tooltip" title="Edit" class="pd-setting-ed btn" :href="`/manage/categories/${item.id}/edit`"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                                         <a data-toggle="tooltip" title="Trash" class="pd-setting-ed btn"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                                     </td>
                                 </tr>

@@ -37,7 +37,6 @@ class ShopController extends Controller
     public function index(Request $request) {
         $params = $request->all();
         $results = $this->productService->setupData();
-
         $dataSearchs = $this->productRepository->search($params);
         $results['products'] = $dataSearchs;
         return view('frontend.shops.index', $results);

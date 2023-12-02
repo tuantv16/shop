@@ -1,5 +1,5 @@
 
-@extends('main')
+@extends('layout.web')
 
 @section('title', 'shop page')
 
@@ -24,7 +24,12 @@
 
 @section('content')
     <div id="shop-page">
-        <shop-component />
+        <shop-component
+            :sizes ='@json($sizes)'
+            :colors ='@json($colors)'
+            :prices ='@json($prices)'
+            :categories ='@json($categories)'
+        />
     </div>
 @endsection
 

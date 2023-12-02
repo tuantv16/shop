@@ -1,0 +1,53 @@
+
+
+<script>
+import {Field, ErrorMessage} from 'vee-validate';
+
+export default {
+    components: {
+        Field,
+        ErrorMessage
+    },
+    props: {
+        colors: {
+            type: Object,
+            default: null
+        },
+    },
+    mounted() {
+
+    }
+}
+</script>
+<template>
+<div class="card">
+    <div class="card-heading">
+        <a data-toggle="collapse" data-target="#collapseFive">Màu sắc</a>
+    </div>
+    <div id="collapseFive" class="collapse show" data-parent="#accordionExample">
+        <div class="card-body">
+            <div class="shop__sidebar__color">
+                <!--
+                    c-1 : đen
+                    c-2: Xanh navi
+                    c-3: Vàng
+                    c-4: Ghi
+                    c-5: Nâu
+                    c-6: Hồng
+                    c-7: tím
+                    c-8: Đỏ
+                    c-9: Trắng
+                 -->
+                <label class="c-1" for="sp-1">
+                    <input type="radio" id="sp-1">
+                </label>
+
+                <label :for="`${item}`" v-for="(item, key) in this.colors" :key="key" :class="`${item}`">
+                    <input type="radio" :id="`${item}`" name="color">
+                </label>
+
+            </div>
+        </div>
+    </div>
+</div>
+</template>
