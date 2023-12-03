@@ -1,8 +1,17 @@
 
 <script>
 import {Field, ErrorMessage} from 'vee-validate';
+import { useShopStore } from '../stores/filterShopStore';
 
 export default {
+    setup() {
+        const store = useShopStore();
+
+        return {
+            store, // expose store to the template
+        };
+
+    },
     components: {
         Field,
         ErrorMessage
@@ -14,6 +23,12 @@ export default {
         },
     },
     created() {
+
+    },
+    methods: {
+        processSetCategory(id) {
+           this.store.setCategory(id);
+        },
 
     },
     mounted() {
@@ -34,7 +49,7 @@ export default {
                         <li class="item" v-for="item in this.categories" :key="item.id">
                             <a href="#">{{ item.category_name }}</a>
                             <ul class="child" style="display:none">
-                                <li v-for="row in item.child" :key="item.child.id">
+                                <li v-for="row in item.child" :key="item.id"  @click="processSetCategory(row.id)">
                                     <a href="#"> {{ row.category_name  }} {{ "(" + row.total + ")"}}</a>
                                 </li>
                             </ul>

@@ -16,7 +16,10 @@ class ShopProductCollection extends ResourceCollection
     {
 
         return [
-            'data' => $this->collection
+            'data' => $this->collection,
+            "currentPage" => $this->currentPage(),
+            "totalPage" => $this->lastPage(),
+            "totalRecords" => $this->total(),
         ];
     }
 }

@@ -6,7 +6,7 @@ import PaginationComponent from '../../common/Pagination/PaginationComponent.vue
 import SelectBoxComponent from '../../common/form/SelectBoxComponent.vue';
 import YesNoComponent from '../../common/form/YesNoComponent.vue';
 import {
-    URI
+    urlBase
 } from '../../common/config/main.js';
 import moment from 'moment';
 

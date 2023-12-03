@@ -44,7 +44,6 @@ class ShopController extends Controller
         $params = $request->all();
         $results = $this->productService->setupData();
         $dataSearchs = $this->productRepository->getListProducts($params);
-
         $results['listProducts'] = new ShopProductCollection($dataSearchs);
         return view('frontend.shops.index', $results);
     }

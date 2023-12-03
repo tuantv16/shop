@@ -9,6 +9,7 @@ import SizeComponent from './SizeComponent.vue';
 
 import ColorComponent from './ColorComponent.vue';
 import TagComponent from './TagComponent.vue';
+import PaginationComponent from './PaginationComponent.vue';
 
 import { useShopStore } from '../stores/filterShopStore';
 import { watch } from 'vue';
@@ -25,59 +26,84 @@ export default {
         PriceComponent,
         SizeComponent,
         ColorComponent,
-        TagComponent
+        TagComponent,
+        PaginationComponent
     },
     data() {
         return {
             objData: {
 
             },
+            searchKeyword: '',
         }
     },
     setup() {
     const shopStore = useShopStore();
 
-    // Truy cập trực tiếp trạng thái từ store
-    const sizeId = shopStore.size_id;
+    // const sizeId = shopStore.size_id;
     const dataProducts = ref([]); // Sử dụng ref để theo dõi giá trị dataProducts
-
+    const currentPage = ref([]);
+    const totalPage = ref([]);
+    const totalRecords = ref([]);
     // call api query dữ liệu trả về dataProducts(kết quả search mới)
     const getProducts = (objUrl) => {
-        // dataProducts.value = [
-        //     {id: 1, name: 'tran van tuan'}
-        // ]; // Gán giá trị cho listProducts bằng cách sử dụng dataProducts .value
-
-
-
         let endpoint = `${urlBase}/api/webs/shop/get-list-products${objUrl.search}`;
         dataAction.getListProducts(endpoint).then(res => {
             if (res.data.status === 'success') {
                 dataProducts.value = res.data.data; // Gán giá trị cho dataProducts.value
+
+                // dành cho phân trang
+                currentPage.value = res.data.data.currentPage;
+                totalPage.value = res.data.data.totalPage;
+                totalRecords.value = res.data.data.totalRecords;
+
             }
         });
     };
 
     watch([
+        () => shopStore.category_id,
+        () => shopStore.brand_id,
+        () => shopStore.price_range,
         () => shopStore.size_id,
         () => shopStore.color_id,
+        () => shopStore.sort_price,
+        () => shopStore.keyword,
         () => shopStore.page
     ], ([
+        newCategoryId,
+        newBrandId,
+        newPriceRange,
         newSizeId,
         newColorId,
-        newPage
+        newSortPrice,
+        newKeyword,
+        newPage,
+
     ]) => {
         const currentUrl = new URL(window.location);
+        currentUrl.searchParams.set('category_id', newCategoryId);
+        currentUrl.searchParams.set('brand_id', newBrandId);
+        currentUrl.searchParams.set('price_range', newPriceRange);
         currentUrl.searchParams.set('size_id', newSizeId);
         currentUrl.searchParams.set('color_id', newColorId);
+        currentUrl.searchParams.set('sort_price', newSortPrice);
+        currentUrl.searchParams.set('keyword', newKeyword);
         currentUrl.searchParams.set('page', newPage);
         window.history.pushState({}, '', currentUrl); //hình thành url mới đầy đủ param (dạng...?size_id=1&color_id=3)
         getProducts(currentUrl); // thực hiện query dữ liệu
     });
 
     return {
-        sizeId: shopStore.size_id,
-        colorId: shopStore.color_id,
+        shopStore,
+        // sizeId: shopStore.size_id,
+        // colorId: shopStore.color_id,
         dataProducts, // Trả về listProducts như một ref
+
+        //dành cho phân trang
+        currentPage,
+        totalPage,
+        totalRecords
     };
 },
 
@@ -101,6 +127,10 @@ export default {
             type: Object,
             default: null
         },
+        brands: {
+            type: Object,
+            default: null
+        },
         listProducts: {
             type: Object,
             default: null
@@ -110,6 +140,7 @@ export default {
     created() {
         // console.log(this.listProducts);
         // debugger;
+
     },
     methods: {
         // getProducts(url) {
@@ -122,15 +153,27 @@ export default {
         //          }
         //     });
         // }
+
+        handleSetSortPrice(e) {
+            this.shopStore.setSortPrice(e.target.value);
+        },
+        handleSetKeyword() {
+            const keyword = this.searchKeyword;
+            this.shopStore.setKeyword(keyword);
+        },
+        handleSetPage(val) {
+            this.shopStore.setPage(val);
+        }
     }
 }
 </script>
 
 <template>
-    <!-- Shop Section Begin -->
-    {{  listProducts }} tuantv111
+    hihi {{ currentPage }}
+    haha{{  totalPage }}
 
-{{  dataProducts }} tuantv2222
+    hehe {{totalRecords  }}
+    <!-- Shop Section Begin -->
     <section class="shop spad">
         <div class="container">
             <div class="row">
@@ -138,16 +181,16 @@ export default {
                     <div class="shop__sidebar">
                         <div class="shop__sidebar__search">
                             <form action="#">
-                                <input type="text" placeholder="Search...">
-                                <button type="submit"><span class="icon_search"></span></button>
+                                <input type="text" name="keyword" v-model="searchKeyword"  placeholder="Search...">
+                                <button type="button" @click="handleSetKeyword()"><span class="icon_search"></span></button>
                             </form>
                         </div>
                         <div class="shop__sidebar__accordion">
                             <div class="accordion" id="accordionExample">
 
-                                <category-component :categories = this.categories />
+                                <category-component :categories = categories />
 
-                                <brand-component />
+                                <brand-component :brands = brands />
 
                                 <price-component :prices = prices />
 
@@ -171,11 +214,10 @@ export default {
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="shop__product__option__right">
-                                    <p>Sort by Price:</p>
-                                    <select>
-                                        <option value="">Low To High</option>
-                                        <option value="">$0 - $55</option>
-                                        <option value="">$55 - $100</option>
+                                    <p>Sắp xếp theo mức giá:</p>
+                                    <select name="sort_price" @input="handleSetSortPrice($event)">
+                                        <option value="asc">Thấp đến cao</option>
+                                        <option value="desc">Cao đến thấp</option>
                                     </select>
                                 </div>
                             </div>
@@ -187,9 +229,9 @@ export default {
                                 <div class="product__item__pic set-bg" :data-setbg="`/storage/product_images/${item.image}`"  :style="`background-image: url(/storage/product_images/${item.image});`">
                                     <ul class="product__hover">
                                         <li><a href="#"><img src="frontend/img/icon/heart.png" alt=""></a></li>
-                                        <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a>
+                                        <li><a href="#"><img src="frontend/img/icon/compare.png" alt=""> <span>Compare</span></a>
                                         </li>
-                                        <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
+                                        <li><a href="#"><img src="frontend/img/icon/search.png" alt=""></a></li>
                                     </ul>
                                 </div>
                                 <div class="product__item__text">
@@ -217,19 +259,16 @@ export default {
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="product__pagination">
-                                <a class="active" href="#">1</a>
-                                <a href="#">2</a>
-                                <a href="#">3</a>
-                                <span>...</span>
-                                <a href="#">21</a>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- phân trang -->
+                    <pagination-component
+                        :current-page = currentPage
+                        :total-page = totalPage
+                        :total-records = totalRecords
+                        @handle-click-number-page = "handleSetPage"
+                    />
+
                 </div>
             </div>
         </div>

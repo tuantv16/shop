@@ -47,8 +47,8 @@ export default {
         <div id="collapseFour" class="collapse show" data-parent="#accordionExample">
             <div class="card-body">
                 <div class="shop__sidebar__size">
-                    <label :for="`${item}`" v-for="(item, key) in this.sizes" :key="key" @click.stop="processSetSize(key)" class=""> {{  item  }} </label>
-                    <input type="radio" :id="`${item}`" name="size" class="d-none">
+                    <label :for="`size_${key}`" v-for="(item, key) in this.sizes" :key="key" @click.stop="processSetSize(key)"> {{  item  }} </label>
+                    <input type="radio" :id="`size_${key}`" name="size" class="d-none">
                 </div>
             </div>
         </div>

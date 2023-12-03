@@ -48,3 +48,7 @@
     color: red;
     padding-left: 20px;
 }
+
+.mg-5 {
+    margin: 5px !important;
+}

@@ -28,6 +28,7 @@
             :sizes ='@json($sizes)'
             :colors ='@json($colors)'
             :prices ='@json($prices)'
+            :brands ='@json($brands)'
             :categories ='@json($categories)'
             :list-products ='@json($listProducts)'
         />
