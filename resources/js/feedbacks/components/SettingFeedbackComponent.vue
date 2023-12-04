@@ -8,7 +8,7 @@ import {dataAction} from '../services/dataActions.js';
 
 import { FeedbackValidator } from "../settings.validate.js";
 
-import { URI } from '../../common/config/main.js';
+import { urlBase } from '../../common/config/main.js';
 
 const rowSchema = yup.object().shape({
   name: yup.string().required('Dữ liệu là bắt buộc').max(255, 'Dữ liệu không được dài quá 255 ký tự'),
@@ -95,7 +95,7 @@ export default {
             $("#btnAdd").trigger('click');
         },
         goToback() {
-            window.location.href= `${URI}/manage/feedbacks`;
+            window.location.href= `${urlBase}/manage/feedbacks`;
         }
 
     },

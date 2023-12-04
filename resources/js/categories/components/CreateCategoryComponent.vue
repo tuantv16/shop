@@ -105,7 +105,7 @@ export default {
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="review-tab-pro-inner">
                                 <ul id="myTab3" class="tab-review-design">
-                                    <li class="active"><a href="#description"><i class="icon nalika-edit" aria-hidden="true"></i> Khu vực thêm sản phẩm</a></li>
+                                    <li class="active"><a href="#description"><i class="icon nalika-edit" aria-hidden="true"></i> Khu vực thêm danh mục</a></li>
                                 </ul>
                                 <Form @submit="onSubmit" :initial-values="this.objData" id="createSettingInputClients" :validation-schema="schema" >
                                 <div id="myTabContent" class="tab-content custom-product-edit">

@@ -8,6 +8,8 @@ use App\Repositories\Interfaces\CategoryRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Prettus\Repository\Exceptions\RepositoryException;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+
 /**
  * Class AreaRepositoryEloquent.
  *
@@ -15,7 +17,6 @@ use Illuminate\Support\Carbon;
  */
 class CategoryRepositoryEloquent extends BaseRepositoryEloquent implements CategoryRepository
 {
-
     /**
      * Specify Model class name
      *

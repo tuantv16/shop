@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Backend\CategoryController;
 use App\Http\Controllers\Api\Backend\FeedbackController;
 use App\Http\Controllers\Api\Backend\ProductControler;
 use App\Http\Controllers\Api\Backend\ProductDetailController;
+use App\Http\Controllers\Api\Web\ShopController;
 use App\Http\Resources\ProductDetails\ProductDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -38,7 +39,10 @@ Route::prefix('backend')->group(function () {
     Route::prefix('feedbacks')->group(function () {
         Route::post('setting', [FeedbackController::class,'setting'])->name('feedbacks.settings');
     });
-
-
 });
+
+Route::prefix('webs')->group(function () {
+    Route::get('shop/get-list-products', [ShopController::class, 'getListProducts'])->name('product_detail.get_list_products');
+});
+
 

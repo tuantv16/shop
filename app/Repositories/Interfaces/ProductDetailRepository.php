@@ -8,4 +8,5 @@ interface ProductDetailRepository extends BaseRepository
 
     public function getListDataByProductId($productId);
 
+
 }

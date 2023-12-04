@@ -24,6 +24,9 @@
             CategoryHomeComponent,
 
         },
+        created() {
+
+        },
         mounted() {
 
         }

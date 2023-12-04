@@ -1,5 +1,5 @@
 <template>
-    <section class="categories spad">
+    <section class="categories spad" >
         <div class="container">
             <div class="row">
                 <div class="col-lg-3">

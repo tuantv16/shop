@@ -33,4 +33,5 @@ class ProductDetailRepositoryEloquent extends BaseRepositoryEloquent implements 
         ->orderby('updated_at')->get();
     }
 
+
 }

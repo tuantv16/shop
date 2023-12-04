@@ -14,7 +14,11 @@ class MainController extends Controller
 
     public function index(Request $request) {
         $master = 'TRAN TUAN008';
-        return view('main', [
+        // return view('main', [
+        //     'master' => $master
+        // ]);
+
+        return view('layout.web', [
             'master' => $master
         ]);
     }

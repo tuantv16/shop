@@ -6,8 +6,10 @@ use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Manage\FormProductRequest;
 use App\Http\Resources\Products\Product;
+use App\Http\Resources\Products\ProductCollection;
 use App\Repositories\Interfaces\ProductRepository;
 use App\Services\ProductService;
+use Illuminate\Http\Request;
 
 class ProductControler extends ApiController
 {
@@ -66,5 +68,6 @@ class ProductControler extends ApiController
         $data = $this->productService->updateData($inputDatas, $request);
         return $this->responseSuccess(new Product($data));
     }
+
 
 }

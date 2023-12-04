@@ -30,7 +30,7 @@ class ProductDetailController extends Controller
      */
     public function index(Request $request)
     {
-
+        dd(1111122222);
     }
 
     /**
