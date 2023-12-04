@@ -87,7 +87,7 @@ export default {
             this.value = val
         }
     },
-    
+
 }
 </script>
 

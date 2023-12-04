@@ -6,6 +6,7 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use Prettus\Repository\Exceptions\RepositoryException;
 use App\Models\Customer;
 use App\Repositories\Interfaces\CustomerRepository;
+use Illuminate\Support\Facades\Hash;
 
 /**
  *
@@ -37,8 +38,30 @@ class CustomerRepositoryEloquent extends BaseRepositoryEloquent implements Custo
      * @param array $data
      * @return mixed
      */
-    // public function getDataDispOrder() {
-    //     return $this->model->where('disp', Constant::DISPLAY)->get();
-    // }
+    public function register($params) {
+        $params['password'] = Hash::make($params['password']);
+        return $this->model->create($params);
+    }
+
+
+     /**
+     * @param array $data
+     * @return mixed
+     */
+    public function login($params) {
+
+        // Tìm user theo account
+        $user = $this->model->where('account', trim($params['account']))->first();
+
+        // Kiểm tra xem user có tồn tại và mật khẩu khớp hay không
+        if ($user && Hash::check($params['password'], $user->password)) {
+            return $user;
+        } else {
+            // Đăng nhập thất bại
+            return null;
+        }
+
+    }
+
 
 }

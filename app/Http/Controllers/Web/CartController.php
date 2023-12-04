@@ -3,16 +3,8 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Shop\ShopProductCollection;
-use App\Repositories\Interfaces\BrandRepository;
-use App\Repositories\Interfaces\CategoryRepository;
-use App\Repositories\Interfaces\ProductDetailRepository;
-use App\Repositories\Interfaces\ProductRepository;
 use App\Services\CartService;
-use App\Services\CategoryService;
-use App\Services\ProductService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class CartController extends Controller
 {

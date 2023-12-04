@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Backend\CategoryController;
 use App\Http\Controllers\Api\Backend\FeedbackController;
 use App\Http\Controllers\Api\Backend\ProductControler;
 use App\Http\Controllers\Api\Backend\ProductDetailController;
+use App\Http\Controllers\Api\Web\CustomerController;
 use App\Http\Controllers\Api\Web\ShopController;
 use App\Http\Resources\ProductDetails\ProductDetail;
 use Illuminate\Http\Request;
@@ -43,6 +44,8 @@ Route::prefix('backend')->group(function () {
 
 Route::prefix('webs')->group(function () {
     Route::get('shop/get-list-products', [ShopController::class, 'getListProducts'])->name('product_detail.get_list_products');
+    Route::post('/login', [CustomerController::class, 'login'])->name('customer.post_login');
+    Route::post('/register', [CustomerController::class, 'register'])->name('customer.post_register');
 });
 
 

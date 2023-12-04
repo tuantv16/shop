@@ -2555,7 +2555,7 @@ ol {
 
 .checkout__input p {
 	color: #111111;
-	margin-bottom: 12px;
+	margin-bottom: 5px;
 }
 
 .checkout__input p span {
@@ -3853,3 +3853,5 @@ ol {
 		height: 250px;
 	}
 }
+
+

@@ -24,6 +24,20 @@ trait ResponseTrait
         ], 200);
     }
 
+    /**
+     * @param $data
+     * @param $message
+     * @return JsonResponse
+     */
+    public function responseFail($message = null): JsonResponse
+    {
+        return response()->json([
+            'status' => 'fail',
+            'code' => ResponseCode::NOT_FOUND,
+            'data' => [],
+            'message' => $message,
+        ], 200);
+    }
 
     /**
      * @param $data
@@ -32,11 +46,11 @@ trait ResponseTrait
      */
     public function responseCsv($data, $fileName): StreamedResponse
     {
-       
+
         $callback = function () use ($data) {
             $stream = fopen('php://output', 'w');
             stream_filter_prepend($stream, 'convert.iconv.utf-8/cp932//TRANSLIT');  // 文字コードをShift-JISに変換
-          
+
             foreach ($data as $line) {
                 fputcsv($stream, $line);
             }

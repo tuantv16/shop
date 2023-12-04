@@ -52,3 +52,30 @@
 .mg-5 {
     margin: 5px !important;
 }
+
+.btn_submit_customer {
+    display: flex;
+    justify-content: center;
+}
+
+#register_customer {
+    padding-top: 20px
+}
+
+
+.input-type-2 {
+    margin-bottom: 0px !important;
+}
+
+
+span[role="alert"] {
+    color: #FFA07A;
+    /* margin-top: 5px; */
+    font-style: italic;
+    font-size: 14px;
+}
+
+.message-error {
+    display: inline-flex;
+    margin-top: 5px
+}
