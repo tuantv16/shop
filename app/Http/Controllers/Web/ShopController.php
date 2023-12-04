@@ -11,6 +11,7 @@ use App\Repositories\Interfaces\ProductRepository;
 use App\Services\CategoryService;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ShopController extends Controller
 {
@@ -40,10 +41,10 @@ class ShopController extends Controller
     }
 
     public function index(Request $request) {
-
         $params = $request->all();
         $results = $this->productService->setupData();
         $dataSearchs = $this->productRepository->getListProducts($params);
+
         $results['listProducts'] = new ShopProductCollection($dataSearchs);
         return view('frontend.shops.index', $results);
     }

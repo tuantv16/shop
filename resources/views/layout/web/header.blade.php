@@ -37,21 +37,20 @@
                 <div class="col-lg-6 col-md-6">
                     <nav class="header__menu mobile-menu">
                         <ul>
-                            <li class="active"><a href="./index.html">Home</a></li>
-                            <li><a href="./shop.html">Shop</a></li>
+                            <li class="active"><a href="{{ asset('/') }}">Home</a></li>
+                            <li><a href="{{ asset('/shop.html') }}">Shop</a></li>
                             <li><a href="#">Pages</a>
                                 <ul class="dropdown">
-                                    <li><a href="./about.html">About Us</a></li>
-                                    <li><a href="./shop-details.html">Shop Details</a></li>
-                                    <li><a href="./shopping-cart.html">Shopping Cart</a></li>
-                                    <li><a href="./checkout.html">Check Out</a></li>
-                                    <li><a href="./blog-details.html">Blog Details</a></li>
-
+                                    <li><a href="{{ asset('/about.html') }}">Giới thiệu</a></li>
+                                    <li><a href="{{ asset('/shop-details.html') }}">Cửa hàng chi tiết</a></li>
+                                    <li><a href="{{ asset('/shopping-cart.html') }}">Giỏ hàng</a></li>
+                                    <li><a href="{{ asset('/checkout.html') }}">Thanh toán</a></li>
+                                    <li><a href="{{ asset('/blog-details.html') }}">Tin tức chi tiết</a></li>
                                 </ul>
                             </li>
-                            <li><a href="./blog.html">Blog</a></li>
-                            <li><a href="./cart.html">Cart</a></li>
-                            <li><a href="./contact.html">Contacts</a></li>
+                            <li><a href="{{ asset('/blog.html') }}">Blog</a></li>
+                            <li><a href="{{ asset('/shopping-cart.html') }}">Cart</a></li>
+                            <li><a href="{{ asset('/contact.html') }}">Contacts</a></li>
                         </ul>
                     </nav>
                 </div>

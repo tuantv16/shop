@@ -4,6 +4,8 @@ namespace App\Http\Resources\Shop;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Storage;
 
 class ShopProduct extends JsonResource
 {
@@ -14,6 +16,10 @@ class ShopProduct extends JsonResource
      */
     public function toArray(Request $request): array
     {
+
+        $disk = App::environment('local') ? 'public' : 's3';
+        $configs = config('web.config.uploads');
+        $folderName =  $configs['products']; // đặt tên folder
 
         return [
             'id' => $this->id,
@@ -27,7 +33,8 @@ class ShopProduct extends JsonResource
             'product_name' => $this->product_name,
             'description' => $this->description,
             'price' => $this->price,
-            'image' => $this->image
+            'image' => $this->image,
+            'url_image' => Storage::disk($disk)->url($folderName.'/'.$this->image)
         ];
 
         return parent::toArray($request);

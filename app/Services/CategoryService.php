@@ -92,11 +92,13 @@ class CategoryService extends BaseService
 
                 foreach($categories as $key => $row) {
                     $total = 0;
-                    foreach($row['child'] as $rew => $item) {
-                        if (isset($arrCounts[$item['id']])) {
-                            $total  = $arrCounts[$item['id']];
+                    if (!empty($row['child'])) {
+                        foreach($row['child'] as $rew => $item) {
+                            if (isset($arrCounts[$item['id']])) {
+                                $total  = $arrCounts[$item['id']];
+                            }
+                            $categories[$key]['child'][$rew]['total'] = $total;
                         }
-                        $categories[$key]['child'][$rew]['total'] = $total;
                     }
 
                 }

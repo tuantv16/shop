@@ -169,10 +169,6 @@ export default {
 </script>
 
 <template>
-    hihi {{ currentPage }}
-    haha{{  totalPage }}
-
-    hehe {{totalRecords  }}
     <!-- Shop Section Begin -->
     <section class="shop spad">
         <div class="container">
@@ -226,7 +222,7 @@ export default {
                     <div class="row">
                         <div class="col-lg-4 col-md-6 col-sm-6" v-for="item in dataProducts.data ?? listProducts.data" :key="item.id">
                             <div class="product__item sale">
-                                <div class="product__item__pic set-bg" :data-setbg="`/storage/product_images/${item.image}`"  :style="`background-image: url(/storage/product_images/${item.image});`">
+                                <div class="product__item__pic set-bg" :data-setbg="item.url_image"  :style="`background-image: url('${item.url_image}');`">
                                     <ul class="product__hover">
                                         <li><a href="#"><img src="frontend/img/icon/heart.png" alt=""></a></li>
                                         <li><a href="#"><img src="frontend/img/icon/compare.png" alt=""> <span>Compare</span></a>
