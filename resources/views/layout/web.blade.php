@@ -76,9 +76,6 @@
         </div>
     </div>
 
-
-
-
   <script src="{{ asset('frontend/js/jquery-3.3.1.min.js') }}"></script>
   <script src="{{ asset('frontend/js/bootstrap.min.js') }}"></script>
   <script src="{{ asset('frontend/js/jquery.nice-select.min.js') }}"></script>
@@ -94,5 +91,6 @@
   {{-- @section('vite-web')
     @vite('resources/js/webs/pages/homes/home.js')
   @stop --}}
+  
 </body>
 </html>

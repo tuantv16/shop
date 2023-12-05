@@ -18,13 +18,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', [MainController::class, 'index'])->name('main.index');
+//Route::middleware(['customer-login'])->group(function () {
+    Route::get('/', [MainController::class, 'index'])->name('main.index');
 
-Route::get('/shop.html', [ShopController::class, 'index'])->name('shop.index');
-Route::get('/shopping-cart.html', [CartController::class, 'index'])->name('cart.index');
-
-
+    Route::get('/shop.html', [ShopController::class, 'index'])->name('shop.index');
+    Route::get('/shopping-cart.html', [CartController::class, 'index'])->name('cart.index');
+//});
 
 Route::get('/login.html', [CustomerController::class, 'login'])->name('customer.get_login');
 Route::get('/register.html', [CustomerController::class, 'register'])->name('customer.get_register');
+
+
 

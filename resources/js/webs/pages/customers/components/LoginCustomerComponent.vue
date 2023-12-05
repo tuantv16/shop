@@ -4,6 +4,8 @@ import {ErrorMessage, Field, Form} from "vee-validate";
 import * as yup from 'yup';
 import InputComponent from '../../../../common/form_style_2/InputComponent.vue';
 import {dataAction} from '../services/dataActions.js';
+import Cookies from 'js-cookie';
+
 export default {
     components: {
         Form, Field, ErrorMessage,
@@ -29,6 +31,9 @@ export default {
         onSubmit(dataInputs) {
             dataAction.login(dataInputs).then(res => {
                 if (res.data.status === 'success') {
+                    //this.setCookieLogin(res.data.data.account);
+
+                    $("body #account").val(res.data.data.account);
                     alert('Đăng nhập thành công');
                     window.location.href = "/";
                 } else {
@@ -37,7 +42,11 @@ export default {
                 }
             });
 
-            },
+        },
+        // setCookieLogin(value) {
+        //     Cookies.set('account', value , { expires: 7 }); // cookie hết hạn sau 7 ngày
+
+        // },
     },
     computed: {
         schema() {

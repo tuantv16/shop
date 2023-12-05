@@ -30,5 +30,5 @@
 @endsection
 
 @section('vite-web')
-    @vite('resources/js/webs/pages/customers/customer.js')
+    @vite('resources/js/webs/pages/customers/customer_register.js')
 @stop

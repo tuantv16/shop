@@ -1,4 +1,6 @@
 
+
+
     <header class="header">
         <div class="header__top">
             <div class="container">
@@ -10,10 +12,17 @@
                     </div>
                     <div class="col-lg-6 col-md-5">
                         <div class="header__top__right">
-                            <div class="header__top__links">
-                                <a href="{{ asset('/login.html')}}">Đăng nhập {{ $master }}</a>
-                                <a href="{{ asset('/register.html')}}">Đăng ký</a>
-                                <a href="#">FAQs</a>
+                            <div id="account-header">
+                                <div class="header__top__links">
+                                    <a id="account"> </a>
+                                    <a href="{{ asset('/logout.html')}}">Đăng xuất</a>
+                                
+                                    <a href="{{ asset('/login.html')}}">Đăng nhập</a>
+                                    <a href="{{ asset('/register.html')}}">Đăng ký</a>
+                                
+                                
+                                    <a href="{{ asset('/faq.html') }}">FAQs</a>
+                                </div>
                             </div>
                             <div class="header__top__hover">
                                 <span>Usd <i class="arrow_carrot-down"></i></span>
@@ -39,7 +48,7 @@
                     <nav class="header__menu mobile-menu">
                         <ul>
                             <li class="active"><a href="{{ asset('/') }}">Home</a></li>
-                            <li><a href="{{ asset('/shop.html') }}">Shop</a></li>
+                            <li><a href="{{ asset('/shop.html') }}">Shop22</a></li>
                             <li><a href="#">Pages</a>
                                 <ul class="dropdown">
                                     <li><a href="{{ asset('/about.html') }}">Giới thiệu</a></li>
@@ -68,3 +77,6 @@
         </div>
     </header>
 
+{{-- @section('vite-web')
+    @vite('resources/js/webs/common/headers/header.js')
+@stop --}}

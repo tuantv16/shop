@@ -6,6 +6,7 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use Prettus\Repository\Exceptions\RepositoryException;
 use App\Models\Customer;
 use App\Repositories\Interfaces\CustomerRepository;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 /**
@@ -49,10 +50,7 @@ class CustomerRepositoryEloquent extends BaseRepositoryEloquent implements Custo
      * @return mixed
      */
     public function login($params) {
-
-        // Tìm user theo account
         $user = $this->model->where('account', trim($params['account']))->first();
-
         // Kiểm tra xem user có tồn tại và mật khẩu khớp hay không
         if ($user && Hash::check($params['password'], $user->password)) {
             return $user;

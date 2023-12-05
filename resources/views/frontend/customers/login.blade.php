@@ -24,6 +24,7 @@
 
 @section('content')
     <div id="login-customer">
+        <input type="hidden" id="token_login" value="{{ csrf_token() }}" />
         <login-customer-component />
     </div>
 @endsection

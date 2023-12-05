@@ -1,4 +1,5 @@
 import axios from 'axios';
+axios.defaults.withCredentials = true;
 
 export const dataAction = {
 
@@ -9,7 +10,13 @@ export const dataAction = {
         });
     },
     login(data) {
-        return axios.post('/api/webs/login', data)
+        //const token = localStorage.getItem('token_login');
+        let token = $("#token_login").val();
+        return axios.post('/api/webs/login', data, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
         .catch(function (error) {
             console.log(error.response);
         });
