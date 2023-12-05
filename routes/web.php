@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Web\CartController;
 use App\Http\Controllers\Web\CustomerController;
+use App\Http\Controllers\Web\DemoController;
 use App\Http\Controllers\Web\MainController;
 use App\Http\Controllers\Web\ShopController;
 use Illuminate\Support\Facades\Route;
@@ -28,5 +29,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/login.html', [CustomerController::class, 'login'])->name('customer.get_login');
 Route::get('/register.html', [CustomerController::class, 'register'])->name('customer.get_register');
 
-
-
+Route::get('/demo', [DemoController::class, 'demo'])->name('demo.demo');
+Route::get('/demo2', [DemoController::class, 'demo2'])->name('demo2.demo2');

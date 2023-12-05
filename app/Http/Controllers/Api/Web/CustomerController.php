@@ -10,6 +10,7 @@ use App\Repositories\Interfaces\CustomerRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class CustomerController extends ApiController
 {
@@ -21,8 +22,6 @@ class CustomerController extends ApiController
     }
 
     public function register(RegisterCustomerRequest $request) {
-        // $account = request()->cookie('account');
-        // dd($account);
         $params = $request->validated();
         $data = $this->customerRepository->register($params);
         return $this->responseSuccess(new Customer($data));
@@ -32,14 +31,14 @@ class CustomerController extends ApiController
     {
         $params = $request->validated();
         $customers = $this->customerRepository->login($params);
+        Session::put('account', $customers->account);
+        return $this->responseSuccess(new Customer($customers), null );
+    }
 
-        // return response()->json($$customers)->cookie(
-        //     'cookie_name', 'value', $minutes, $path, $domain, $secure, $httpOnly
-        // );
-
-        return $this->responseSuccess(new Customer($customers), null )->cookie(
-            'account', $customers->account, 60, '/', 'http://shop.local'
-        );
+    public function logout()
+    {
+        session()->forget('account');
+        return redirect()->route('main.index');
     }
 
 }

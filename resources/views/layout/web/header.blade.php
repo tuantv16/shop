@@ -13,25 +13,30 @@
                     <div class="col-lg-6 col-md-5">
                         <div class="header__top__right">
                             <div id="account-header">
-                                <div class="header__top__links">
-                                    <a id="account"> </a>
-                                    <a href="{{ asset('/logout.html')}}">Đăng xuất</a>
-                                
-                                    <a href="{{ asset('/login.html')}}">Đăng nhập</a>
-                                    <a href="{{ asset('/register.html')}}">Đăng ký</a>
-                                
-                                
-                                    <a href="{{ asset('/faq.html') }}">FAQs</a>
+                                <div class="header__top__hover">
+                                    @if ($accountLogin)
+                                        <span>Hi: {{ $accountLogin }} <i class="arrow_carrot-down"></i></span>
+                                        <ul>
+                                            <li><a href="{{ asset('/api-v1/webs/logout')}}">Đăng xuất</a></li>
+                                        </ul>
+                                    @else
+                                        <span><a href="{{ asset('/login.html')}}">Đăng nhập</a><i class="arrow_carrot-down"></i></span>
+                                        <ul>
+                                            <li><a href="{{ asset('/register.html')}}">Đăng ký</a></li>
+                                            <li><a href="{{ asset('/faq.html')}}">FAQs</a></li>
+                                        </ul>
+                                    @endif
+                                </div>
+                                <div class="header__top__hover">
+                                    <span>Usd <i class="arrow_carrot-down"></i></span>
+                                    <ul>
+                                        <li>USD</li>
+                                        <li>EUR</li>
+                                        <li>USD</li>
+                                    </ul>
                                 </div>
                             </div>
-                            <div class="header__top__hover">
-                                <span>Usd <i class="arrow_carrot-down"></i></span>
-                                <ul>
-                                    <li>USD</li>
-                                    <li>EUR</li>
-                                    <li>USD</li>
-                                </ul>
-                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -39,16 +44,16 @@
         </div>
         <div class="container">
             <div class="row">
-                <div class="col-lg-3 col-md-3">
+                <div class="col-lg-2 col-md-2">
                     <div class="header__logo">
                         <a href="./index.html"><img src="/frontend/img/logo.png" alt=""></a>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-6">
+                <div class="col-lg-7 col-md-7">
                     <nav class="header__menu mobile-menu">
                         <ul>
-                            <li class="active"><a href="{{ asset('/') }}">Home</a></li>
-                            <li><a href="{{ asset('/shop.html') }}">Shop22</a></li>
+                            <li class="active"><a href="{{ asset('/') }}">Trang chủ</a></li>
+                            <li><a href="{{ asset('/shop.html') }}">Cửa hàng</a></li>
                             <li><a href="#">Pages</a>
                                 <ul class="dropdown">
                                     <li><a href="{{ asset('/about.html') }}">Giới thiệu</a></li>
@@ -58,9 +63,9 @@
                                     <li><a href="{{ asset('/blog-details.html') }}">Tin tức chi tiết</a></li>
                                 </ul>
                             </li>
-                            <li><a href="{{ asset('/blog.html') }}">Blog</a></li>
-                            <li><a href="{{ asset('/shopping-cart.html') }}">Cart</a></li>
-                            <li><a href="{{ asset('/contact.html') }}">Contacts</a></li>
+                            <li><a href="{{ asset('/blog.html') }}">Tin tức</a></li>
+                            <li><a href="{{ asset('/shopping-cart.html') }}">Giỏ hàng</a></li>
+                            <li><a href="{{ asset('/contact.html') }}">Liên hệ</a></li>
                         </ul>
                     </nav>
                 </div>

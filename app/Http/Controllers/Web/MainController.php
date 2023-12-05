@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Cookie;
-
+use Illuminate\Support\Facades\Session;
 class MainController extends Controller
 {
 
@@ -15,32 +15,15 @@ class MainController extends Controller
     }
 
     public function index(Request $request) {
-        $accountLogin = $request->get('accountLogin');
 
-        $account = request()->cookie('account');
-        dd($account);
-
-       // dd($accountLogin);
-
-    //    session()->put('account','tuantv2222');
-
-    //     $all = session()->all();
-    //     dd(session()->get('account'));
-
-    //     $accountLogin = '';
-    //     if (session()->has('account')) {
-    //         $accountLogin = session()->get('account');
-    //         dd($accountLogin);
-    //     }
-    //    dd($accountLogin);
-
+        $accountLogin = session()->get('account', '');
         return view('layout.web', [
-            // 'accountLogin' => $accountLogin
+            'accountLogin' => $accountLogin
         ]);
     }
 
 
-    
+
 
 
 }

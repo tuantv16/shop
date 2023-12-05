@@ -47,7 +47,7 @@ export default {
     const totalRecords = ref([]);
     // call api query dữ liệu trả về dataProducts(kết quả search mới)
     const getProducts = (objUrl) => {
-        let endpoint = `${urlBase}/api/webs/shop/get-list-products${objUrl.search}`;
+        let endpoint = `${urlBase}/api-v1/webs/shop/get-list-products${objUrl.search}`;
         dataAction.getListProducts(endpoint).then(res => {
             if (res.data.status === 'success') {
                 dataProducts.value = res.data.data; // Gán giá trị cho dataProducts.value
