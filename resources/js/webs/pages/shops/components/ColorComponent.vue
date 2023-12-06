@@ -51,10 +51,6 @@ export default {
                     c-8: Đỏ
                     c-9: Trắng
                  -->
-                <label class="c-1" for="sp-1">
-                    <input type="radio" id="sp-1">
-                </label>
-
                 <label :for="`${item}`" v-for="(item, key) in this.colors" :key="key" :class="`${item}`" @click="processSetColor(key)">
                     <input type="radio" :id="`${item}`" name="color">
                 </label>

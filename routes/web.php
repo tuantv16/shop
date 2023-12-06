@@ -29,7 +29,7 @@ use Illuminate\Support\Facades\Route;
     ->name('web.product.index');
 
     Route::get('/shop.html', [ShopController::class, 'index'])->name('shop.index');
-    Route::get('/web-shopping-cart.html', [CartController::class, 'index'])->name('cart.index');
+    Route::get('/shopping-cart.html', [CartController::class, 'index'])->name('cart.index');
 //});
 
 Route::get('/login.html', [CustomerController::class, 'login'])->name('customer.get_login');

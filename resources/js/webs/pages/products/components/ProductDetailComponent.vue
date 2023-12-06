@@ -8,31 +8,84 @@ import { ref } from 'vue';
 export default {
     components: {
         ProductRelatedComponent
-      
+
     },
     data() {
         return {
-            objData: {
-
+            customerProducts: {
+                product_id: '',
+                size_id: '',
+                color_id: '',
+                quantity: 1
             },
-            
+            quantity : 1
         }
     },
     mounted() {
 
     },
     props: {
-        productDetails: {
+        infoProducts: {
+            type: Object,
+            default: null
+        },
+        sizes: {
+            type: Object,
+            default: null
+        },
+        colors: {
             type: Object,
             default: null
         },
 
     },
     created() {
+        this.customerProducts.product_id = this.infoProducts.id;
 
     },
     methods: {
-    
+        handleSize(val) {
+            this.customerProducts.size_id = val; // active
+
+        },
+
+        handleColor(val) {
+            this.customerProducts.color_id = val; // active
+        },
+
+        handleQuantity(e) {
+            this.customerProducts.quantity = e.target.value;
+        },
+        addCart() {
+            const infoCart = JSON.parse(localStorage.getItem('infoCart')) || [];
+
+            // Kiểm tra xem có bản ghi nào hay chưa
+            const keyCart = infoCart.findIndex(item => {
+            return (
+                item.product_id === this.customerProducts.product_id &&
+                item.size_id === this.customerProducts.size_id &&
+                item.color_id === this.customerProducts.color_id
+            );
+            });
+
+            if (keyCart !== -1) {
+                // Nếu tìm thấy bản ghi, cộng thêm số lượng vào
+                infoCart[keyCart].quantity = parseInt(infoCart[keyCart].quantity) + parseInt(this.customerProducts.quantity);
+            } else {
+                // Nếu không tìm thấy, thêm mới vào danh sách
+                infoCart.push(this.customerProducts);
+            }
+
+            // Cập nhật localStorage với dữ liệu mới
+            localStorage.setItem('infoCart', JSON.stringify(infoCart));
+
+            // Lấy dữ liệu mới từ localStorage và log ra console
+            let updatedData = localStorage.getItem('infoCart');
+            console.log(updatedData);
+            debugger;
+
+        }
+
     }
 }
 </script>
@@ -45,9 +98,9 @@ export default {
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="product__details__breadcrumb">
-                            <a href="./index.html">Home</a>
-                            <a href="./shop.html">Shop</a>
-                            <span>Product Details</span>
+                            <a href="./index.html">Trang chủ</a>
+                            <a href="./shop.html">Cửa hàng</a>
+                            <span>Chi tiết sản phẩm</span>
                         </div>
                     </div>
                 </div>
@@ -114,7 +167,7 @@ export default {
                 <div class="row d-flex justify-content-center">
                     <div class="col-lg-8">
                         <div class="product__details__text">
-                            <h4>Hooded thermal anorak</h4>
+                            <h4>{{  this.infoProducts.product_name }}</h4>
                             <div class="rating">
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
@@ -123,52 +176,31 @@ export default {
                                 <i class="fa fa-star-o"></i>
                                 <span> - 5 Reviews</span>
                             </div>
-                            <h3>$270.00 <span>70.00</span></h3>
-                            <p>Coat with quilted lining and an adjustable hood. Featuring long sleeves with adjustable
-                                cuff tabs, adjustable asymmetric hem with elastic side tabs and a front zip fastening
-                            with placket.</p>
+                            <h3>{{  this.infoProducts.price }}<span>70.00</span></h3>
+
                             <div class="product__details__option">
                                 <div class="product__details__option__size">
-                                    <span>Size:</span>
-                                    <label for="xxl">xxl
-                                        <input type="radio" id="xxl">
-                                    </label>
-                                    <label class="active" for="xl">xl
-                                        <input type="radio" id="xl">
-                                    </label>
-                                    <label for="l">l
-                                        <input type="radio" id="l">
-                                    </label>
-                                    <label for="sm">s
-                                        <input type="radio" id="sm">
+                                    <span>Kích cỡ:</span>
+                                    <label :for="`${size}`" v-for="(size, key) in this.sizes" :key="key"
+                                        :class="{ 'active': customerProducts.size_id === key }"  @click="handleSize(key)">  {{ size }}
+                                        <input type="radio" :id="`${size}`">
                                     </label>
                                 </div>
                                 <div class="product__details__option__color">
-                                    <span>Color:</span>
-                                    <label class="c-1" for="sp-1">
-                                        <input type="radio" id="sp-1">
-                                    </label>
-                                    <label class="c-2" for="sp-2">
-                                        <input type="radio" id="sp-2">
-                                    </label>
-                                    <label class="c-3" for="sp-3">
-                                        <input type="radio" id="sp-3">
-                                    </label>
-                                    <label class="c-4" for="sp-4">
-                                        <input type="radio" id="sp-4">
-                                    </label>
-                                    <label class="c-9" for="sp-9">
-                                        <input type="radio" id="sp-9">
+                                    <span>Màu sắc:</span>
+                                    <label :for="`${color}`" v-for="(color, key) in this.colors" :key="key"
+                                        :class="[color, { 'active': customerProducts.color_id === key }]" @click="handleColor(key)">
+                                        <input type="radio" :id="`${color}`">
                                     </label>
                                 </div>
                             </div>
                             <div class="product__details__cart__option">
                                 <div class="quantity">
                                     <div class="pro-qty">
-                                        <input type="text" value="1">
+                                        <input type="number" min="0" max="5" v-model="quantity"  @change="handleQuantity">
                                     </div>
                                 </div>
-                                <a href="#" class="primary-btn">add to cart</a>
+                                <a href="#" class="primary-btn" @click.prevent="addCart">Thêm vào giỏ hàng</a>
                             </div>
                             <div class="product__details__btns__option">
                                 <a href="#"><i class="fa fa-heart"></i> add to wishlist</a>
@@ -310,6 +342,6 @@ export default {
         </div>
     </section>
     <product-related-component />
-    
+
     <!-- Shop Details Section End -->
 </template>

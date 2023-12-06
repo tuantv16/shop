@@ -117,13 +117,20 @@ class ProductService extends BaseService
         $results = [];
         $infoProducts = $this->productRepository->getProductByCode($productCode);
 
-        $sizeIds = $infoProducts->productDetails->pluck('size_id');
-        $colorIds = $infoProducts->productDetails->pluck('color_id');
-        dd($colorIds);
-  
+        $sizeIds = $infoProducts->productDetails->pluck('size_id')->unique()->toArray();
+        $colorIds = $infoProducts->productDetails->pluck('color_id')->unique()->toArray();
+
+        $configSizes = config('web.config.sizes');
+        $configColors = config('web.config.colors');
+        $filteredConfigSizes = collect($configSizes)->only($sizeIds)->all(); // Chỉ lấy ra danh sách size mà sản phẩm có
+        $filteredConfigColors = collect($configColors)->only($colorIds)->all(); // Chỉ lấy ra danh sách màu mà sản phẩm có
+
         $results = [
-            'infoProducts' => $infoProducts
+            'infoProducts' => $infoProducts,
+            'sizes' => $filteredConfigSizes,
+            'colors' => $filteredConfigColors
         ];
+
         return $results;
     }
 

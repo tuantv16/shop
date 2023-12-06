@@ -25,13 +25,49 @@ export default {
         // },
     },
     created() {
-       
+        // xóa hết
+        //localStorage.removeItem('infoCart');
+
+        let updatedData = localStorage.getItem('infoCart');
+        console.log(updatedData);
+        debugger;
         // console.log(this.listProducts);
         // debugger;
 
     },
     methods: {
+        removeItemFromLocalStorage(itemToRemove) {
+            // Lấy dữ liệu từ localStorage
+            const infoCart = JSON.parse(localStorage.getItem('infoCart')) || [];
 
+            // Tìm vị trí của mục cần xóa trong mảng
+            const indexToRemove = infoCart.findIndex(item => {
+                return (
+                item.product_id === itemToRemove.product_id &&
+                item.size_id === itemToRemove.size_id &&
+                item.color_id === itemToRemove.color_id
+                );
+            });
+
+            if (indexToRemove !== -1) {
+                // Xóa mục đó khỏi mảng
+                infoCart.splice(indexToRemove, 1);
+
+                // Cập nhật localStorage với mảng mới
+                localStorage.setItem('infoCart', JSON.stringify(infoCart));
+            }
+
+            // sử dụng
+            // Sử dụng phương thức để xóa một mục cụ thể
+            // const itemToRemove = {
+            // product_id: 18,
+            // size_id: '5',
+            // color_id: '3',
+            // quantity: '2',
+            // };
+
+            // this.removeItemFromLocalStorage(itemToRemove);
+        }
     }
 }
 </script>

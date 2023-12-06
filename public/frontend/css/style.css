@@ -1731,6 +1731,22 @@ ol {
 }
 
 .product__details__option__color label.c-4 {
+	background: #636068;
+}
+
+.product__details__option__color label.c-5 {
+	background: #57594d;
+}
+
+.product__details__option__color label.c-6 {
+	background: #e8bac4;
+}
+
+.product__details__option__color label.c-7 {
+	background: #d6c1d7;
+}
+
+.product__details__option__color label.c-8 {
 	background: #ed1c24;
 }
 
@@ -1742,8 +1758,8 @@ ol {
 	position: absolute;
 	left: -3px;
 	top: -3px;
-	height: 36px;
-	width: 36px;
+	/* height: 36px;
+	width: 36px; */
 	border: 1px solid #e5e5e5;
 	content: "";
 	border-radius: 50%;
@@ -1752,6 +1768,11 @@ ol {
 .product__details__option__color label input {
 	position: absolute;
 	visibility: hidden;
+}
+
+.product__details__option__color .active {
+    height: 45px;
+    width: 45px;
 }
 
 .product__details__cart__option {

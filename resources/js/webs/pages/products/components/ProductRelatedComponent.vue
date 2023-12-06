@@ -7,29 +7,29 @@ import { ref } from 'vue';
 
 export default {
     components: {
-        
-      
+
+
     },
     data() {
         return {
             objData: {
 
             },
-            
+
         }
     },
     mounted() {
 
     },
     props: {
-        
+
 
     },
     created() {
-      
+
     },
     methods: {
-    
+
     }
 }
 </script>
@@ -45,12 +45,12 @@ export default {
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-sm-6 col-sm-6">
                     <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="fronend/img/product/product-1.jpg" style="background-image: url('fronend/img/product/product-1.jpg');">
+                        <div class="product__item__pic set-bg" data-setbg="frontend/img/product/product-1.jpg" style="background-image: url('frontend/img/product/product-1.jpg');">
                             <span class="label">New</span>
                             <ul class="product__hover">
-                                <li><a href="#"><img src="fronend/img/icon/heart.png" alt=""></a></li>
-                                <li><a href="#"><img src="fronend/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                                <li><a href="#"><img src="fronend/img/icon/search.png" alt=""></a></li>
+                                <li><a href="#"><img src="frontend/img/icon/heart.png" alt=""></a></li>
+                                <li><a href="#"><img src="frontend/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                                <li><a href="#"><img src="frontend/img/icon/search.png" alt=""></a></li>
                             </ul>
                         </div>
                         <div class="product__item__text">
@@ -80,11 +80,11 @@ export default {
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-6 col-sm-6">
                     <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="fronend/img/product/product-2.jpg" style="background-image: url('fronend/img/product/product-2.jpg');">
+                        <div class="product__item__pic set-bg" data-setbg="frontend/img/product/product-2.jpg" style="background-image: url('frontend/img/product/product-2.jpg');">
                             <ul class="product__hover">
-                                <li><a href="#"><img src="fronend/img/icon/heart.png" alt=""></a></li>
-                                <li><a href="#"><img src="fronend/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                                <li><a href="#"><img src="fronend/img/icon/search.png" alt=""></a></li>
+                                <li><a href="#"><img src="frontend/img/icon/heart.png" alt=""></a></li>
+                                <li><a href="#"><img src="frontend/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                                <li><a href="#"><img src="frontend/img/icon/search.png" alt=""></a></li>
                             </ul>
                         </div>
                         <div class="product__item__text">
@@ -114,12 +114,12 @@ export default {
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-6 col-sm-6">
                     <div class="product__item sale">
-                        <div class="product__item__pic set-bg" data-setbg="fronend/img/product/product-3.jpg" style="background-image: url('fronend/img/product/product-3.jpg');">
+                        <div class="product__item__pic set-bg" data-setbg="frontend/img/product/product-3.jpg" style="background-image: url('frontend/img/product/product-3.jpg');">
                             <span class="label">Sale</span>
                             <ul class="product__hover">
-                                <li><a href="#"><img src="fronend/img/icon/heart.png" alt=""></a></li>
-                                <li><a href="#"><img src="fronend/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                                <li><a href="#"><img src="fronend/img/icon/search.png" alt=""></a></li>
+                                <li><a href="#"><img src="frontend/img/icon/heart.png" alt=""></a></li>
+                                <li><a href="#"><img src="frontend/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                                <li><a href="#"><img src="frontend/img/icon/search.png" alt=""></a></li>
                             </ul>
                         </div>
                         <div class="product__item__text">
@@ -149,11 +149,11 @@ export default {
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-6 col-sm-6">
                     <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="fronend/img/product/product-4.jpg" style="background-image: url('fronend/img/product/product-4.jpg');">
+                        <div class="product__item__pic set-bg" data-setbg="frontend/img/product/product-4.jpg" style="background-image: url('frontend/img/product/product-4.jpg');">
                             <ul class="product__hover">
-                                <li><a href="#"><img src="fronend/img/icon/heart.png" alt=""></a></li>
-                                <li><a href="#"><img src="fronend/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                                <li><a href="#"><img src="fronend/img/icon/search.png" alt=""></a></li>
+                                <li><a href="#"><img src="frontend/img/icon/heart.png" alt=""></a></li>
+                                <li><a href="#"><img src="frontend/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                                <li><a href="#"><img src="frontend/img/icon/search.png" alt=""></a></li>
                             </ul>
                         </div>
                         <div class="product__item__text">

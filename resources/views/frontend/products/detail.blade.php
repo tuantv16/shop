@@ -9,10 +9,9 @@
 @section('content')
     <div id="product-detail-page">
         <product-detail-component
-            :product-details ='@json($productDetails)'
+            :info-products ='@json($infoProducts)'
+            :sizes ='@json($sizes)'
             :colors ='@json($colors)'
-            :brands ='@json($brands)'
-            :categories ='@json($categories)'
         />
 
     </div>
