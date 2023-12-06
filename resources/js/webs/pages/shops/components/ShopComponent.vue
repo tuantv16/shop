@@ -51,7 +51,6 @@ export default {
         dataAction.getListProducts(endpoint).then(res => {
             if (res.data.status === 'success') {
                 dataProducts.value = res.data.data; // Gán giá trị cho dataProducts.value
-
                 // dành cho phân trang
                 currentPage.value = res.data.data.currentPage;
                 totalPage.value = res.data.data.totalPage;
@@ -143,17 +142,7 @@ export default {
 
     },
     methods: {
-        // getProducts(url) {
-        //     alert(111);
-        //     dataAction.getListProducts(url).then(res => {
-        //         console.log(url);
-        //          if (res.data.status == 'success') {
-        //             //location.reload();
-        //             this.listProducts = res.data.data;
-        //          }
-        //     });
-        // }
-
+    
         handleSetSortPrice(e) {
             this.shopStore.setSortPrice(e.target.value);
         },
@@ -163,7 +152,11 @@ export default {
         },
         handleSetPage(val) {
             this.shopStore.setPage(val);
-        }
+        },
+        buyNow(productCode) {
+            console.log(productCode);
+            window.location.href = "";
+        },
     }
 }
 </script>
@@ -232,7 +225,7 @@ export default {
                                 </div>
                                 <div class="product__item__text">
                                     <h6>{{ item.product_name }}</h6>
-                                    <a href="#" class="add-cart">+ Add To Cart</a>
+                                    <a :href="`${item.slug}`" class="add-cart">Xem chi tiết</a>
                                     <div class="rating">
                                         <i class="fa fa-star-o"></i>
                                         <i class="fa fa-star-o"></i>

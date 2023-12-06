@@ -104,7 +104,7 @@ class ProductRepositoryEloquent extends BaseRepositoryEloquent implements Produc
 
         $query = $this->model->select($columns);
 
-        $columnProductDetails = ['product_id','size_id', 'color_id', 'brand_id', 'quantity'];
+        $columnProductDetails = ['product_id','size_id', 'color_id', 'quantity'];
 
         $relationships = [
             'productDetails' => function ($q) use ($columnProductDetails) {
@@ -216,4 +216,42 @@ class ProductRepositoryEloquent extends BaseRepositoryEloquent implements Produc
 
         return $results;
     }
+
+    public function getProductByCode($productCode) {
+        $columns = [
+            'products.id as id',
+            'products.category_id',
+            'products.brand_id',
+            'products.product_code',
+            'products.product_name',
+            'products.description',
+            'products.price',
+            'products.image'
+        ];
+    
+        $columnProductDetails = ['product_details.product_id as product_id', 'product_details.size_id', 'product_details.color_id', 'product_details.quantity'];
+        $columnBrand = ['brands.name as brand_name'];
+        $columnCategory = ['categories.category_name as category_name'];
+    
+        $relationships = [
+            'productDetails' => function ($q) use ($columnProductDetails) {
+                $q->select($columnProductDetails);
+            },
+            'brand' => function ($q) use ($columnBrand) {
+                $q->select($columnBrand);
+            },
+            'category' => function ($q) use ($columnCategory) {
+                $q->select($columnCategory);
+            }
+        ];
+    
+        $query = $this->model->select($columns)->with($relationships);
+        $query->where('products.product_code', $productCode);
+        $query->where('products.disp', 1);
+
+        $data = $query->first();
+        return $data;
+    }
+
+    
 }

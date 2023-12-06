@@ -29,7 +29,6 @@ class FormRowsRequest extends FormRequest
             'product_id'       => 'integer|required',
             'rows.*.size_id' => 'required|numeric|min:1',
             'rows.*.color_id' => 'required|numeric|min:1',
-            'rows.*.brand_id' => 'required|numeric|min:1',
             'rows.*.quantity' => 'required|numeric|min:1',
             'rows.*.disp'   => 'nullable|numeric|in:1,0'
         ];

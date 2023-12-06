@@ -23,7 +23,6 @@ export default {
                     {
                         size_id: null,
                         color_id: null,
-                        brand_id: null,
                         quantity: null,
                         disp: 1,
                         deleted: false
@@ -101,7 +100,7 @@ export default {
             default : null
         },
         productDetails: {
-            type: Number,
+            type: Object,
             default : null
         },
 
@@ -142,11 +141,7 @@ export default {
 
                                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
                                                     Màu sắc
-                                                </div>
-
-                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
-                                                    Thương hiệu
-                                                </div>
+                                                </div>   
 
                                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
                                                     Số lượng
@@ -164,7 +159,7 @@ export default {
                                         <div class="row" v-for="(item, rowIndex) in this.objData.rows" :key="item.rowIndex" v-show="!item.deleted">
                                                 <div class="review-content-section flex-container">
                                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
-                                                        <select-box-component :required="true" :name="`rows[${rowIndex}].size_id`" :data="this.productDetails[rowIndex].size_id">
+                                                        <select-box-component :required="true" :name="`rows[${rowIndex}].size_id`" :data="String(this.productDetails[rowIndex].size_id)">
                                                             <option value=""></option>
                                                             <option v-for="(value, key) in this.sizes" :key="key" :value="key">
                                                                 {{ value }}
@@ -173,19 +168,10 @@ export default {
                                                     </div>
 
                                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
-                                                        <select-box-component :required="true" :name="`rows[${rowIndex}].color_id`" :data="this.productDetails[rowIndex].color_id">
+                                                        <select-box-component :required="true" :name="`rows[${rowIndex}].color_id`" :data="String(this.productDetails[rowIndex].color_id)">
                                                             <option value=""></option>
                                                             <option v-for="(value, key) in this.colors" :key="key" :value="key">
                                                                 {{ value }}
-                                                            </option>
-                                                        </select-box-component>
-                                                    </div>
-
-                                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
-                                                        <select-box-component :required="true" :name="`rows[${rowIndex}].brand_id`" :data="this.productDetails[rowIndex].brand_id">
-                                                            <option value=""></option>
-                                                            <option v-for="item in this.brands" :key="item.id" :value="item.id">
-                                                                {{ item.name }}
                                                             </option>
                                                         </select-box-component>
                                                     </div>
@@ -198,7 +184,7 @@ export default {
                                                             :name="`rows[${rowIndex}].quantity`"
                                                             :required="true"
                                                             placeholder=""
-                                                            :data="this.productDetails[rowIndex].quantity"
+                                                            :data="String(this.productDetails[rowIndex].quantity)"
                                                         />
                                                     </div>
 

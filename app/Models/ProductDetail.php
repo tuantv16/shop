@@ -13,7 +13,7 @@ class ProductDetail extends Model
     protected $table = 'product_details';
 
     protected $fillable = [
-        'id', 'product_id', 'size_id', 'color_id', 'brand_id', 'quantity', 'disp'
+        'id', 'product_id', 'size_id', 'color_id', 'quantity', 'disp'
     ];
 
     public function product(): BelongsTo

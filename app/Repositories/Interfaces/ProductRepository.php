@@ -12,5 +12,7 @@ interface ProductRepository extends BaseRepository
     public function getTotalProductEachCategory();
 
       // search shop.html (frontend)
-      public function getListProducts($params);
+    public function getListProducts($params);
+
+    public function getProductByCode($productCode);
 }

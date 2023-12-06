@@ -113,6 +113,20 @@ class ProductService extends BaseService
         return $results;
     }
 
+    public function getInfoProduct($productCode) {
+        $results = [];
+        $infoProducts = $this->productRepository->getProductByCode($productCode);
+
+        $sizeIds = $infoProducts->productDetails->pluck('size_id');
+        $colorIds = $infoProducts->productDetails->pluck('color_id');
+        dd($colorIds);
+  
+        $results = [
+            'infoProducts' => $infoProducts
+        ];
+        return $results;
+    }
+
 
 
 }
