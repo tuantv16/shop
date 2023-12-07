@@ -51,6 +51,18 @@
         9 => 'c-9'
     ];
 
+    $colorNames = [
+        1 => 'đen',
+        2 => 'xanh navi',
+        3 => 'vàng',
+        4 => 'ghi',
+        5 => 'nâu',
+        6 => 'hồng',
+        7 => 'tím',
+        8 => 'đỏ',
+        9 => 'trắng'
+    ];
+
     $prices = [
         1 => '0 - 200.000đ',
         2 => '200.000đ - 500.000đ',
@@ -69,6 +81,7 @@
     return [
         'sizes' => $sizes,
         'colors' => $colors,
+        'colorNames' => $colorNames,
         'prices' => $prices,
         'uploads' => $uploads
     ];

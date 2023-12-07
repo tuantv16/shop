@@ -5,6 +5,8 @@ import InputComponent from '../../common/form/InputComponent.vue';
 import PaginationComponent from '../../common/Pagination/PaginationComponent.vue';
 import SelectBoxComponent from '../../common/form/SelectBoxComponent.vue';
 import YesNoComponent from '../../common/form/YesNoComponent.vue';
+import {apiMixin} from '../../mixins/apiMixin.js';
+
 import {
     urlBase
 } from '../../common/config/main.js';
@@ -12,6 +14,7 @@ import moment from 'moment';
 
 export default {
     name: 'CreateCategoryComponent',
+    mixins: [apiMixin],
     components: {
         Form, Field, ErrorMessage,
         InputComponent,
@@ -38,6 +41,7 @@ export default {
         }
     },
     created() {
+        this.messageSuccess();
         this.objData.page = this.products.currentPage;
         this.totalPage = this.products.totalPage;
         this.totalRecords = this.products.totalRecords;

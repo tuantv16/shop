@@ -28,7 +28,7 @@
 @section('content')
     <div id="cart-page">
         <cart-component
-        
+            :carts = '@json($carts)'
         />
     </div>
 @endsection

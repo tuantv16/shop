@@ -25,11 +25,11 @@ class AddCartRequest extends FormRequest
     {
 
         $rules = [
-            'carts' => 'required|array',
-            'carts.*.product_id' => 'required|numeric|min:1|max:50',
-            'carts.*.size_id'    => 'required|numeric|min:1|max:50',
-            'carts.*.color_id'   => 'required|numeric|min:1|max:50',
-            'carts.*.quantity'   => 'required|numeric|min:1|max:50',
+            'products' => 'required|array',
+            'products.*.product_id' => 'required|numeric|min:1|max:50',
+            'products.*.size_id'    => 'required|numeric|min:1|max:50',
+            'products.*.color_id'   => 'required|numeric|min:1|max:50',
+            'products.*.quantity'   => 'required|numeric|min:1|max:50',
         ];
 
         return $rules;

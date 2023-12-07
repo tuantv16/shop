@@ -15,4 +15,7 @@ interface ProductRepository extends BaseRepository
     public function getListProducts($params);
 
     public function getProductByCode($productCode);
+
+    public function getProductByIds($productIds);
+
 }

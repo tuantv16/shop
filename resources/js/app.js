@@ -7,6 +7,8 @@
 import './bootstrap';
 import { createApp } from 'vue';
 import { apiMixin } from './mixins/apiMixin';
+import Toast from 'vue-toastification';
+import 'vue-toastification/dist/index.css';
 import { createPinia } from 'pinia';
 
 const pinia = createPinia();
@@ -15,12 +17,11 @@ const app = createApp({});
 
 // Đăng ký global mixin
 app.mixin(apiMixin);
+app.use(Toast);
 
 // import HomeComponent from './webs/pages/homes/components/HomeComponent.vue';
 // app.component('home-component', HomeComponent);
 
-// Nếu bạn có router, store, hoặc các plugin khác, đăng ký chúng ở đây
-// Ví dụ:
 // app.use(router);
 // app.use(store);
 app.use(pinia);

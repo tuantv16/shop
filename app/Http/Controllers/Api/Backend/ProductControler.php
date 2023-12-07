@@ -3,14 +3,12 @@
 namespace App\Http\Controllers\Api\Backend;
 
 use App\Http\Controllers\Api\ApiController;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Manage\FormProductRequest;
 use App\Http\Resources\Products\Product;
-use App\Http\Resources\Products\ProductCollection;
 use App\Repositories\Interfaces\ProductRepository;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Session;
 class ProductControler extends ApiController
 {
 
@@ -66,6 +64,7 @@ class ProductControler extends ApiController
     public function updateProduct(FormProductRequest $request) {
         $inputDatas = $request->validated();
         $data = $this->productService->updateData($inputDatas, $request);
+        Session::flash('success', 'Message lưu thông tin thành công');
         return $this->responseSuccess(new Product($data));
     }
 

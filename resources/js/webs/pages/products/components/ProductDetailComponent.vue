@@ -3,11 +3,13 @@
 <script>
 import ProductRelatedComponent from './ProductRelatedComponent.vue';
 import { urlBase } from '../../../../common/config/main.js';
-import { ref } from 'vue';
 import {dataAction} from '../services/dataActions.js';
+import {apiMixin} from '../../../../mixins/apiMixin.js';
 
 export default {
+    mixins: [apiMixin],
     components: {
+
         ProductRelatedComponent
 
     },
@@ -22,9 +24,6 @@ export default {
             quantity : 1,
             statusCustomerLogin : false,
         }
-    },
-    mounted() {
-
     },
     props: {
         infoProducts: {
@@ -46,9 +45,11 @@ export default {
 
     },
     created() {
+        //this.msgToast('Thêm vào giỏ hàng thành công', { duration: 3000 });
+
         this.customerProducts.product_id = this.infoProducts.id;
         this.statusCustomerLogin = this.account != '' ? true : false;
-        
+
     },
     methods: {
         handleSize(val) {
@@ -64,7 +65,7 @@ export default {
             this.customerProducts.quantity = e.target.value;
         },
         addCart() {
-           
+
             //Khởi tạo giỏ hàng
             const infoCart = JSON.parse(localStorage.getItem('infoCart')) || [];
 
@@ -93,7 +94,7 @@ export default {
             // let infoCarts = localStorage.getItem('infoCart');
             // console.log(infoCarts);
             // debugger;
-            
+
             if (this.statusCustomerLogin) { // Trường hợp khách hàng đăng nhập tài khoản -> lưu thông tin hàng hóa vào Session
                 this.setProductToCart(infoCart);
             }
@@ -101,26 +102,25 @@ export default {
         },
         setProductToCart(data) {
             let obj = {};
-            obj.carts = data;
-        
+            obj.products = data;
+
             dataAction.addToCart(obj).then(res => {
 
-                console.log(res);
-               
                 if (res.data.status === 'success') {
-                    //this.setCookieLogin(res.data.data.account);
-                    
 
                 } else {
-                    alert('Đăng nhập thất bại');
+                    alert('lưu thông tin thất bại');
                     return false;
                 }
             });
+        },
+        success2() {
+            this.$toast.success('You did it!');
         }
 
     },
     watch: {
-        
+
     }
 }
 </script>

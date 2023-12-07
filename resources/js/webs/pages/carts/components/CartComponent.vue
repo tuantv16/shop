@@ -13,24 +13,28 @@ export default {
     },
     data() {
         return {
-            objData: {
-
-            },
+            dataCarts: []
         }
     },
     props: {
-        // sizes: {
-        //     type: Object,
-        //     default: null
-        // },
+        carts: {
+            type: Array,
+            default: null
+        },
     },
     created() {
+        if (this.carts == null) {
+            let cart = localStorage.getItem('infoCart');
+            //call api lấy đầy đủ thông tin
+            // this.dataCart = ...
+        } else {
+            this.dataCarts = this.carts; // nếu thông tin có trong session
+        }
+
+        // nếu không có trong session thì lấy ở localstorage
+
         // xóa hết
         //localStorage.removeItem('infoCart');
-
-        let updatedData = localStorage.getItem('infoCart');
-        console.log(updatedData);
-        debugger;
         // console.log(this.listProducts);
         // debugger;
 
@@ -79,17 +83,17 @@ export default {
             <div class="row">
                 <div class="col-lg-8">
                     <div class="shopping__cart__table">
-                        <item-product-component />
+                        <item-product-component :data-carts = this.dataCarts />
                     </div>
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="continue__btn">
-                                <a href="#">Continue Shopping</a>
+                                <a href="#">Tiếp tục mua sắm</a>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="continue__btn update__btn">
-                                <a href="#"><i class="fa fa-spinner"></i> Update cart</a>
+                                <a href="#"><i class="fa fa-spinner"></i> Cập nhật giỏ hàng</a>
                             </div>
                         </div>
                     </div>

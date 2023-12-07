@@ -32,11 +32,14 @@ class CartController extends Controller
 
     public function index(Request $request) {
         $params = $request->all();
+        $carts = session()->get('dataCarts', []);
         //$results = $this->cartService->setupData();
         //$dataSearchs = $this->cartService->getListProducts($params);
 
         //$results['listProducts'] = new ShopProductCollection($dataSearchs);
-        return view('frontend.carts.index', []);
+        return view('frontend.carts.index', [
+            'carts' => $carts
+        ]);
     }
 
 }

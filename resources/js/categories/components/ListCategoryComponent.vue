@@ -7,8 +7,10 @@ import SelectBoxComponent from '../../common/form/SelectBoxComponent.vue';
 import YesNoComponent from '../../common/form/YesNoComponent.vue';
 import {dataAction} from '../services/dataActions.js';
 import moment from 'moment'
+import {apiMixin} from '../../mixins/apiMixin.js';
 
 export default {
+    mixins: [apiMixin],
     name: 'CreateCategoryComponent',
     components: {
         Form, Field, ErrorMessage,

@@ -66,6 +66,14 @@
 
     @yield('vite-manage')
 
+    @if(Session::has('success'))
+        {{-- <div class="alert alert-success">
+            {{ Session::get('success') }}
+        </div> --}}
+        <script>
+            window.successData = true
+        </script>
+    @endif
 </head>
 
 <body>
@@ -74,7 +82,7 @@
         <nav id="sidebar" class="">
             <div class="sidebar-header">
                 <a href="index.html"><img class="main-logo" src="{{ asset('/manage/img/logo/logo.png') }}" alt="" /></a>
-                <strong><img src="{{ asset('/manage/img/logo/logosn.png') }}" alt="" /></strong>
+                <strong><img src="{{ asset('/manage/img/logo/logo.png') }}" alt="" /></strong>
             </div>
 			<div class="nalika-profile">
 				<div class="profile-dtl">

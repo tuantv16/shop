@@ -228,11 +228,11 @@ class ProductRepositoryEloquent extends BaseRepositoryEloquent implements Produc
             'products.price',
             'products.image'
         ];
-    
+
         $columnProductDetails = ['product_details.product_id as product_id', 'product_details.size_id', 'product_details.color_id', 'product_details.quantity'];
         $columnBrand = ['brands.name as brand_name'];
         $columnCategory = ['categories.category_name as category_name'];
-    
+
         $relationships = [
             'productDetails' => function ($q) use ($columnProductDetails) {
                 $q->select($columnProductDetails);
@@ -244,7 +244,7 @@ class ProductRepositoryEloquent extends BaseRepositoryEloquent implements Produc
                 $q->select($columnCategory);
             }
         ];
-    
+
         $query = $this->model->select($columns)->with($relationships);
         $query->where('products.product_code', $productCode);
         $query->where('products.disp', 1);
@@ -253,5 +253,8 @@ class ProductRepositoryEloquent extends BaseRepositoryEloquent implements Produc
         return $data;
     }
 
-    
+    public function getProductByIds($productIds) {
+        return $this->model->where('id', $productIds)->get();
+    }
+
 }

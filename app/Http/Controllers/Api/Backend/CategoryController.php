@@ -9,6 +9,7 @@ use App\Http\Resources\Categories\CategoryCollection;
 use App\Http\Resources\Categories\CategoryResource;
 use App\Repositories\Interfaces\CategoryRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class CategoryController extends ApiController
 {
@@ -46,6 +47,7 @@ class CategoryController extends ApiController
         $inputDatas = $request->validated();
 
         $data = $this->categoryRepository->create($inputDatas);
+        Session::flash('success', 'Message lưu thông tin thành công');
         return $this->responseSuccess(new Category($data));
     }
 

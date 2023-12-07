@@ -60,12 +60,14 @@ export default {
                 headers: { 'Content-Type': 'multipart/form-data' }
             }).then(res => {
                  if (res.data.status == 'success') {
-                    //window.location.href = '/manage/categories';
-                    location.reload();
+                    window.location.href = '/manage/products';
+                    //location.reload();
 
                  }
             });
-
+        },
+        backList() {
+            window.location.href = "/manage/products";
         }
     },
     props: {
@@ -199,7 +201,7 @@ export default {
                                         <div class="row">
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                 <div class="text-center custom-pro-edt-ds">
-                                                    <button type="button" class="btn btn-ctl-bt waves-effect waves-light">Quay lại</button>
+                                                    <button type="button" class="btn btn-ctl-bt waves-effect waves-light" @click="backList()">Quay lại</button>
                                                     <button type="submit" class="btn btn-ctl-bt waves-effect waves-light m-r-10">Save</button>
                                                 </div>
                                             </div>
