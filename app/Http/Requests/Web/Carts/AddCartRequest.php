@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Web\Customers;
+namespace App\Http\Requests\Web\Carts;
 
 use App\Http\Requests\ValidateJsonResponse;
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoginCustomerRequest extends FormRequest
+class AddCartRequest extends FormRequest
 {
     use ValidateJsonResponse;
     /**
@@ -23,10 +23,15 @@ class LoginCustomerRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'account'            => 'string|required|max:20',
-            'password'           => 'string|required|max:30',
-            'infoCart'           => 'string|nullable'
+
+        $rules = [
+            'carts' => 'required|array',
+            'carts.*.product_id' => 'required|numeric|min:1|max:50',
+            'carts.*.size_id'    => 'required|numeric|min:1|max:50',
+            'carts.*.color_id'   => 'required|numeric|min:1|max:50',
+            'carts.*.quantity'   => 'required|numeric|min:1|max:50',
         ];
+
+        return $rules;
     }
 }

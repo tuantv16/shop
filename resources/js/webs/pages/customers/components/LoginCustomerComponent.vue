@@ -29,11 +29,17 @@ export default {
     },
     methods: {
         onSubmit(dataInputs) {
+            // send info cart
+            dataInputs.infoCart = localStorage.getItem('infoCart');
+            // console.log(dataInputs);
+            // debugger;
             dataAction.login(dataInputs).then(res => {
                 if (res.data.status === 'success') {
                     //this.setCookieLogin(res.data.data.account);
-
+                    
                     $("body #account").val(res.data.data.account);
+                    // login thành công -> đã merge 
+                    localStorage.removeItem('infoCart');
                     alert('Đăng nhập thành công');
                     window.location.href = "/";
                 } else {

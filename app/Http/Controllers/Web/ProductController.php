@@ -20,6 +20,9 @@ class ProductController extends Controller
     public function index($slug, $product) {
         $data = $this->productService->getInfoProduct($product);
         $data['infoProducts'] = new InfoProduct($data['infoProducts']);
+
+        $data['account'] = session()->get('account', '');
+        
         return view('frontend.products.detail', $data);
     }
 

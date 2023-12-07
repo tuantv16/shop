@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Backend\CategoryController;
 use App\Http\Controllers\Api\Backend\FeedbackController;
 use App\Http\Controllers\Api\Backend\ProductControler;
 use App\Http\Controllers\Api\Backend\ProductDetailController;
+use App\Http\Controllers\Api\Web\CartController;
 use App\Http\Controllers\Api\Web\CustomerController;
 use App\Http\Controllers\Api\Web\ShopController;
 use App\Http\Controllers\Api\Web\TestController;
@@ -50,6 +51,7 @@ Route::prefix('webs')->group(function () {
     Route::get('/logout', [CustomerController::class, 'logout'])->name('customer.logout');
     Route::get('/test', [TestController::class, 'test'])->name('test.test');
 
+    Route::post('/carts/add-to-cart', [CartController::class, 'addToCart'])->name('cart.add_to_cart');
 });
 
 

@@ -11,7 +11,8 @@
         <product-detail-component
             :info-products ='@json($infoProducts)'
             :sizes ='@json($sizes)'
-            :colors ='@json($colors)'
+            :colors ='@json($colors)',
+            account-login ="{{ $account }}"
         />
 
     </div>

@@ -122,8 +122,8 @@ class ProductService extends BaseService
 
         $configSizes = config('web.config.sizes');
         $configColors = config('web.config.colors');
-        $filteredConfigSizes = collect($configSizes)->only($sizeIds)->all(); // Chỉ lấy ra danh sách size mà sản phẩm có
-        $filteredConfigColors = collect($configColors)->only($colorIds)->all(); // Chỉ lấy ra danh sách màu mà sản phẩm có
+        $filteredConfigSizes = collect($configSizes)->only($sizeIds)->all(); // Chỉ lấy ra danh sách size mà sản phẩm set trong backend
+        $filteredConfigColors = collect($configColors)->only($colorIds)->all(); // Chỉ lấy ra danh sách màu mà sản phẩm set trong backend
 
         $results = [
             'infoProducts' => $infoProducts,

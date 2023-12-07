@@ -30,9 +30,22 @@ class CustomerController extends ApiController
     public function login(LoginCustomerRequest $request)
     {
         $params = $request->validated();
+
+        //set Cart
+        if (!empty($params['infoCart'])) {
+            $this->setCart($params['infoCart']); // $params['infoCart'] dữ liệu lưu dưới localStoreAge
+        }
+        
+        // $carts = session()->get('dataCarts');
+        // dd($carts);
         $customers = $this->customerRepository->login($params);
         Session::put('account', $customers->account);
         return $this->responseSuccess(new Customer($customers), null );
+    }
+
+    public function setCart($infoCart) {
+        $cartArrs = json_decode($infoCart, true);
+        Session::put('dataCarts', $cartArrs);
     }
 
     public function logout()

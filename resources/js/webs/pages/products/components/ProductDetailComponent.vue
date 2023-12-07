@@ -4,6 +4,7 @@
 import ProductRelatedComponent from './ProductRelatedComponent.vue';
 import { urlBase } from '../../../../common/config/main.js';
 import { ref } from 'vue';
+import {dataAction} from '../services/dataActions.js';
 
 export default {
     components: {
@@ -18,7 +19,8 @@ export default {
                 color_id: '',
                 quantity: 1
             },
-            quantity : 1
+            quantity : 1,
+            statusCustomerLogin : false,
         }
     },
     mounted() {
@@ -37,11 +39,16 @@ export default {
             type: Object,
             default: null
         },
+        accountLogin: {
+            type: String,
+            default: ''
+        },
 
     },
     created() {
         this.customerProducts.product_id = this.infoProducts.id;
-
+        this.statusCustomerLogin = this.account != '' ? true : false;
+        
     },
     methods: {
         handleSize(val) {
@@ -57,35 +64,63 @@ export default {
             this.customerProducts.quantity = e.target.value;
         },
         addCart() {
+           
+            //Khởi tạo giỏ hàng
             const infoCart = JSON.parse(localStorage.getItem('infoCart')) || [];
 
             // Kiểm tra xem có bản ghi nào hay chưa
             const keyCart = infoCart.findIndex(item => {
-            return (
-                item.product_id === this.customerProducts.product_id &&
-                item.size_id === this.customerProducts.size_id &&
-                item.color_id === this.customerProducts.color_id
-            );
+                return (
+                    item.product_id === this.customerProducts.product_id &&
+                    item.size_id === this.customerProducts.size_id &&
+                    item.color_id === this.customerProducts.color_id
+                );
             });
 
             if (keyCart !== -1) {
-                // Nếu tìm thấy bản ghi, cộng thêm số lượng vào
+                // Nếu sản phẩm đã tồn tại trong giỏ hàng -> update tăng số lượng
                 infoCart[keyCart].quantity = parseInt(infoCart[keyCart].quantity) + parseInt(this.customerProducts.quantity);
             } else {
-                // Nếu không tìm thấy, thêm mới vào danh sách
+                // Nếu sản phẩm không tồn tại trong giỏ hàng -> tạo mới bản ghi
                 infoCart.push(this.customerProducts);
             }
 
-            // Cập nhật localStorage với dữ liệu mới
-            localStorage.setItem('infoCart', JSON.stringify(infoCart));
+            if (!this.statusCustomerLogin) { // trường hợp chưa login (khách vãng lai) lưu thông tin hàng hóa vào localStorage
+                localStorage.setItem('infoCart', JSON.stringify(infoCart));
+            }
 
             // Lấy dữ liệu mới từ localStorage và log ra console
-            let updatedData = localStorage.getItem('infoCart');
-            console.log(updatedData);
-            debugger;
+            // let infoCarts = localStorage.getItem('infoCart');
+            // console.log(infoCarts);
+            // debugger;
+            
+            if (this.statusCustomerLogin) { // Trường hợp khách hàng đăng nhập tài khoản -> lưu thông tin hàng hóa vào Session
+                this.setProductToCart(infoCart);
+            }
 
+        },
+        setProductToCart(data) {
+            let obj = {};
+            obj.carts = data;
+        
+            dataAction.addToCart(obj).then(res => {
+
+                console.log(res);
+               
+                if (res.data.status === 'success') {
+                    //this.setCookieLogin(res.data.data.account);
+                    
+
+                } else {
+                    alert('Đăng nhập thất bại');
+                    return false;
+                }
+            });
         }
 
+    },
+    watch: {
+        
     }
 }
 </script>

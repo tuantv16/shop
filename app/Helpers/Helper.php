@@ -11,4 +11,3 @@ if (!function_exists('format_vnd')) {
         return number_format($number, 0, ',', '.') . 'đ';
     }
 }
-
