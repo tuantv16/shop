@@ -3,6 +3,9 @@
 import ItemProductComponent from './ItemProductComponent.vue';
 import TotalAmountComponent from './TotalAmountComponent.vue';
 import { useCartStore } from '../stores/cartStore.js';
+import { urlBase } from '../../../../common/config/main.js';
+import {dataAction} from '../services/dataActions.js';
+import { useToast } from 'vue-toastification';
 
 export default {
     components: {
@@ -10,10 +13,12 @@ export default {
         TotalAmountComponent
     },
     setup() {
+        const toast = useToast();
         const storeCart = useCartStore();
-       
-        return {
+
+    return {
             storeCart,
+            toast
         };
 
     },
@@ -21,7 +26,8 @@ export default {
         return {
             dataCarts: [],
             subTotal: 0,
-            totalAmount: 0 
+            totalAmount: 0,
+            showLoadingButton: false,
         }
     },
     props: {
@@ -29,18 +35,28 @@ export default {
             type: Array,
             default: null
         },
+        account: {
+            type: String,
+            default: ''
+        }
     },
     created() {
 
         //console.log('storeCart.sub_total',this.storeCart.sub_total);
 
-        if (this.carts == null) {
+        if (this.account == '') {
             let cart = localStorage.getItem('infoCart');
-            //call api lấy đầy đủ thông tin
-            // this.dataCart = ...
+
+
+            //call api lấy đầy đủ thông tin (*) // thứ 7 làm chỗ này
+            // api đã có sẵn rồi
+            // cart = JSON.parse(cart);
+            this.dataCarts = cart;
+
         } else {
             this.dataCarts = this.carts; // nếu thông tin có trong session
         }
+
 
         this.subTotal = this.storeCart.getTotalAmountFormat(this.dataCarts);
         //this.totalAmount = this.storeCart.getTotalAmountFormat(this.dataCarts);
@@ -56,6 +72,33 @@ export default {
         // debugger;
     },
     methods: {
+        updateCart() {
+
+            debugger;
+            // Trường hợp chưa đăng nhập (khách vãng lai)
+            if (this.account == '') {
+                localStorage.setItem('infoCart', this.dataCarts);
+                console.log(this.dataCarts);
+                let test2 = localStorage.getItem('infoCart');
+
+            } else { // Trường hợp đã đăng nhập
+                 // call api update cart to session
+                let obj = {};
+                obj.carts = this.storeCart.carts;
+                dataAction.updateCart(obj).then(res => {
+                    if (res.data.status == 'success') {
+                        this.toast.success('Cập nhật giỏ hàng thành công!');
+
+                        // Hiển thị button loading
+                        this.showLoadingButton = true;
+                        setTimeout(() => {
+                            this.scrollToTop();
+                        }, 2000);
+                    }
+                });
+            }
+
+        },
         removeItemFromLocalStorage(itemToRemove) {
             // Lấy dữ liệu từ localStorage
             const infoCart = JSON.parse(localStorage.getItem('infoCart')) || [];
@@ -87,12 +130,27 @@ export default {
             // };
 
             // this.removeItemFromLocalStorage(itemToRemove);
-        }
-    }
+        },
+        continueBuy() {
+            window.location.href = `${urlBase}/shop.html`;
+        },
+        scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            this.showLoadingButton = false;
+        },
+
+    },
+    mounted() {
+
+    },
 }
 </script>
 
 <template>
+    <!--button loading -->
+    <button v-if="showLoadingButton" @click="scrollToTop" class="loading-button" style="">
+        <span class="loader"></span>
+    </button>
      <!-- Shopping Cart Section Begin -->
      <section class="shopping-cart spad">
         <div class="container">
@@ -104,12 +162,12 @@ export default {
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="continue__btn">
-                                <a href="#">Tiếp tục mua sắm</a>
+                                <a href="#" @click.prevent="continueBuy()">Tiếp tục mua sắm </a>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="continue__btn update__btn">
-                                <a href="#"><i class="fa fa-spinner"></i> Cập nhật giỏ hàng</a>
+                                <a href="#" @click.prevent="updateCart()"><span class="item-update-cart"><i class="fa fa-spinner"></i></span> Cập nhật giỏ hàng</a>
                             </div>
                         </div>
                     </div>

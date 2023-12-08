@@ -21,8 +21,7 @@ export const apiMixin = {
             currencyDisplay: 'symbol' // Hiển thị ký hiệu của tiền tệ
         });
         return formatter.format(value);
-    },
-
+    }
   },
 };
 

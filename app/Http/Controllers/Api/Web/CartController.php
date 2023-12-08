@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api\Web;
 
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\Web\Carts\AddCartRequest;
+use App\Http\Requests\Web\Carts\UpdateCartRequest;
 use App\Services\CartService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class CartController extends ApiController
 {
@@ -33,4 +35,11 @@ class CartController extends ApiController
 
     }
 
+
+    // màn hình giỏ hàng. Sau khi click button Cập nhật giỏ hàng
+    public function updateCart(UpdateCartRequest $request) {
+        $data = $request->validated();
+        Session::put('dataCarts', $data['carts']);
+        return $this->responseSuccess([]);
+    }
 }

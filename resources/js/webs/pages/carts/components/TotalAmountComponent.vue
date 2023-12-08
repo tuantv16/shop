@@ -12,14 +12,14 @@ export default {
     setup() {
         const storeCart = useCartStore();
 
-      
+
         return {
             storeCart,
             useTotal: storeCart.getTotal
         };
 
     },
-	
+
     data() {
         return {
             sub_total: 0,
@@ -32,7 +32,7 @@ export default {
             default: null
         },
         subTotal: {
-            type: Number,
+            type: String,
             default: 0
         },
         totalAmount: {
@@ -47,11 +47,11 @@ export default {
         this.storeCart.total = this.storeCart.total > 0 ? this.storeCart.total : this.totalAmount;
     },
     methods: {
-       
+
 
     },
     watch: {
-        
+
     }
 }
 </script>

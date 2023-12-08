@@ -6,6 +6,7 @@ import { urlBase } from '../../../../common/config/main.js';
 
 import { useCartStore } from '../stores/cartStore.js';
 import {apiMixin} from '../../../../mixins/apiMixin.js';
+import { useToast } from 'vue-toastification';
 
 export default {
     mixins: [apiMixin],
@@ -13,14 +14,16 @@ export default {
 
     },
     setup() {
+        const toast = useToast();
         const storeCart = useCartStore();
 
         return {
             storeCart,
+            toast
         };
 
     },
-	
+
     data() {
         return {
 
@@ -35,18 +38,23 @@ export default {
 
     },
     created() {
-
+        this.storeCart.updateCart(this.dataCarts);
 
     },
     methods: {
 
+        // giảm số lượng sản phẩm
         hanldeDec(key, number) {
             number = parseInt(number);
             this.dataCarts[key].quantity = (number - 1) == 0 ? 1 : number - 1;
             let totalAmount = this.dataCarts[key].product_details.price * this.dataCarts[key].quantity;
-            this.dataCarts[key].product_details.total_amount = this.formatMoney(totalAmount);
+
+            this.dataCarts[key].product_details.total_amount = totalAmount;
             this.calculateTotalMoney(this.dataCarts);
+
+            this.storeCart.updateCart(this.dataCarts);
         },
+        // Tăng số lượng sản phẩm
         hanldeInc(key, number) {
             // chỉ cho nhập max là 10 sản phẩm
             this.dataCarts[key].quantity = (parseInt(number) + 1) <= 10 ? (parseInt(number) + 1) : parseInt(number);
@@ -54,32 +62,29 @@ export default {
 
             this.dataCarts[key].product_details.total_amount = totalAmount;
             this.calculateTotalMoney(this.dataCarts);
+
+            //update Cart ở store
+            this.storeCart.updateCart(this.dataCarts);
         },
+        // tính tổng
         calculateTotalMoney(dataCarts) {
             this.storeCart.setSubTotal(dataCarts);
         },
+        //xóa sản phẩm ra khỏi giỏ hàng
         delRowCart(keyRow) {
-            const cartBefore = this.dataCarts;
             // this.dataCarts = this.dataCarts.filter((item) => item.id !== idToDelete); xóa dựa theo item trong mỗi row
             this.dataCarts.splice(keyRow, 1);
+            this.storeCart.updateCart(this.dataCarts);
 
-            // cập nhật lại session giỏ hàng
-            // Hàm chung để compare cart mới và cũ (sử dụng cho cả trường hợp Khách vãng lai)
-            let dataUpdateCart = compareCart(cartBefore, this.dataCarts);
+            if (this.dataCarts.length <= 0) {
+                this.toast.warning('Giỏ hàng đã trống');
+                return false;
+            }
 
-            this.updateCart(dataUpdateCart);
-
-            console.log(this.dataCarts);
-            debugger;
-            // call api update data cart trong session
-        },
-        // hàm này sẽ dùng chung cho trường hợp khách chưa login và đã login (merge localStorage)
-        compareCart(cartBefore, cartCurrent) {
+            this.toast.success('Bạn vừa xóa 1 loại sản phẩm trong giỏ hàng');
 
         },
-        updateCart() {
-            // call api update session
-        }
+
     },
     watch: {
         value: function (val) {
@@ -97,7 +102,7 @@ export default {
         <tr>
             <th>Tên sản phẩm</th>
             <th>Số lượng</th>
-            <th>Tổng tiền33</th>
+            <th>Tổng tiền</th>
             <th></th>
         </tr>
     </thead>

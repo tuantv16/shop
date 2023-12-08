@@ -38,7 +38,8 @@ class CartController extends Controller
 
         //$results['listProducts'] = new ShopProductCollection($dataSearchs);
         return view('frontend.carts.index', [
-            'carts' => $carts
+            'carts' => $carts,
+            'account' => session()->get('account', '')
         ]);
     }
 

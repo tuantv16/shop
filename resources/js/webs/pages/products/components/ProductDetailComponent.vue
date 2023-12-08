@@ -48,7 +48,7 @@ export default {
         //this.msgToast('Thêm vào giỏ hàng thành công', { duration: 3000 });
 
         this.customerProducts.product_id = this.infoProducts.id;
-        this.statusCustomerLogin = this.account != '' ? true : false;
+        this.statusCustomerLogin = this.accountLogin != '' ? true : false;
 
     },
     methods: {
@@ -85,6 +85,7 @@ export default {
                 // Nếu sản phẩm không tồn tại trong giỏ hàng -> tạo mới bản ghi
                 infoCart.push(this.customerProducts);
             }
+
 
             if (!this.statusCustomerLogin) { // trường hợp chưa login (khách vãng lai) lưu thông tin hàng hóa vào localStorage
                 localStorage.setItem('infoCart', JSON.stringify(infoCart));

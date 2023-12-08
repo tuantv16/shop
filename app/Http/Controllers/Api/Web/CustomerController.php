@@ -35,7 +35,7 @@ class CustomerController extends ApiController
         if (!empty($params['infoCart'])) {
             $this->setCart($params['infoCart']); // $params['infoCart'] dữ liệu lưu dưới localStoreAge
         }
-        
+
         // $carts = session()->get('dataCarts');
         // dd($carts);
         $customers = $this->customerRepository->login($params);
@@ -50,7 +50,12 @@ class CustomerController extends ApiController
 
     public function logout()
     {
+        // xóa session thông tin tài khoản
         session()->forget('account');
+
+         // xóa session giỏ hàng
+        session()->forget('dataCarts');
+
         return redirect()->route('main.index');
     }
 
