@@ -1,0 +1,25 @@
+Add sản phẩm vào giỏ hàng chỉ thao tác ở màn hình Chi tiết sản phẩm
+1. Trường hợp khách hàng chưa login (khách vãng lai)
+    + Màn hình chi tiết sản phẩm. Click button add giỏ hàng
+		-> Sản phẩm được thêm vào localStorage (đã làm)
+	+ Màn hình Giỏ hàng. Click button "Cập nhật giỏ hàng"
+	    -> Update thông tin vào localStorage (chưa làm)
+		(so sánh vào mảng cart ban đầu để update lại mảng (xóa hoặc thêm) sau đó update lại database vào localStorage)
+	+ Màn hình thanh toán
+		->Sau khi thanh toán xong thì xóa localStorage
+2. Trường hợp khách hàng login
+    - Khởi tạo session = [] (empty)
+	
+	- Login thành công
+	  -> Merge dữ liệu ở localStorage vào session (chưa làm)
+	  -> Xóa hết dữ liệu trong localStorage
+	  (Dữ liệu session sau khi login có thể lấy ra thông tin ở table carts trong database, dữ liệu bảng carts trong database được lưu ở thời điểm khách hàng logout)
+	  
+	+ Màn hình chi tiết sản phẩm. Click button add giỏ hàng
+		Case 1: Trường hợp khách hàng CHƯA chọn sản phẩm ở thời điểm chưa login (localStorage chưa có dữ liệu)
+			-> Sản phẩm được thêm vào session (đã làm)
+	+ Màn hình Giỏ hàng. Click button "Cập nhật giỏ hàng"
+	    -> Update thông tin vào Session (chưa làm)
+		(so sánh vào mảng cart ban đầu để update lại mảng (xóa hoặc thêm) sau đó update lại database vào session)
+	+ Màn hình thanh toán
+		->Sau khi thanh toán xong thì xóa Session

@@ -1,19 +1,27 @@
 <script>
 
-import { useCartStore } from '../stores/cartStore';
-import {dataAction} from '../services/dataActions.js';
-
-import { urlBase } from '../../../../common/config/main.js';
-
 import ItemProductComponent from './ItemProductComponent.vue';
+import TotalAmountComponent from './TotalAmountComponent.vue';
+import { useCartStore } from '../stores/cartStore.js';
 
 export default {
     components: {
-        ItemProductComponent
+        ItemProductComponent,
+        TotalAmountComponent
+    },
+    setup() {
+        const storeCart = useCartStore();
+       
+        return {
+            storeCart,
+        };
+
     },
     data() {
         return {
-            dataCarts: []
+            dataCarts: [],
+            subTotal: 0,
+            totalAmount: 0 
         }
     },
     props: {
@@ -23,6 +31,9 @@ export default {
         },
     },
     created() {
+
+        //console.log('storeCart.sub_total',this.storeCart.sub_total);
+
         if (this.carts == null) {
             let cart = localStorage.getItem('infoCart');
             //call api lấy đầy đủ thông tin
@@ -31,13 +42,18 @@ export default {
             this.dataCarts = this.carts; // nếu thông tin có trong session
         }
 
-        // nếu không có trong session thì lấy ở localstorage
+        this.subTotal = this.storeCart.getTotalAmountFormat(this.dataCarts);
+        //this.totalAmount = this.storeCart.getTotalAmountFormat(this.dataCarts);
 
+        // this.subTotal = 9;
+        // this.totalAmount = 9;
+
+
+        // nếu không có trong session thì lấy ở localstorage
         // xóa hết
         //localStorage.removeItem('infoCart');
         // console.log(this.listProducts);
         // debugger;
-
     },
     methods: {
         removeItemFromLocalStorage(itemToRemove) {
@@ -47,9 +63,9 @@ export default {
             // Tìm vị trí của mục cần xóa trong mảng
             const indexToRemove = infoCart.findIndex(item => {
                 return (
-                item.product_id === itemToRemove.product_id &&
-                item.size_id === itemToRemove.size_id &&
-                item.color_id === itemToRemove.color_id
+                    item.product_id === itemToRemove.product_id &&
+                    item.size_id === itemToRemove.size_id &&
+                    item.color_id === itemToRemove.color_id
                 );
             });
 
@@ -98,23 +114,8 @@ export default {
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="cart__discount">
-                        <h6>Discount codes</h6>
-                        <form action="#">
-                            <input type="text" placeholder="Coupon code">
-                            <button type="submit">Apply</button>
-                        </form>
-                    </div>
-                    <div class="cart__total">
-                        <h6>Cart total</h6>
-                        <ul>
-                            <li>Subtotal <span>$ 169.50</span></li>
-                            <li>Total <span>$ 169.50</span></li>
-                        </ul>
-                        <a href="#" class="primary-btn">Proceed to checkout</a>
-                    </div>
-                </div>
+
+                <total-amount-component :data-carts = dataCarts :sub-total = this.subTotal :total-amount = this.totalAmount />
             </div>
         </div>
     </section>

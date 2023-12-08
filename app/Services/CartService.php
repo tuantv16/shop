@@ -54,25 +54,30 @@ class CartService extends BaseService
                 $productIds = $this->getAttributeIds($carts, 'product_id');
                 $sizeIds = $this->getAttributeIds($carts, 'size_id');
                 $colorIds = $this->getAttributeIds($carts, 'color_id');
-
+                
                 // Lấy dữ liệu tương ứng với các key ids
                 $products = $this->getProductByIds($productIds);
+
                 $sizes = config('web.config.sizes');
                 //$colors = config('web.config.colors');
                 $colorNames = config('web.config.colorNames');
 
-
                 $productDetails = []; //Khởi tạo chi tiết mỗi sản phẩm trong giỏ hàng
                 foreach($carts as $key => $row) {
+                  
                     $dataCarts[$key] = $row;
                     $keyPro = $row['product_id'];
 
                     $productDetails['product_name'] = isset($products[$keyPro]) && isset($products[$keyPro]['product_name']) ? $products[$keyPro]['product_name'] : '';
-                    $productDetails['price'] = isset($products[$keyPro]) && !empty($products[$keyPro]['price']) ? (int) $products[$keyPro]['price'] : 0;
-                    $productDetails['price_label'] = isset($products[$keyPro]) && !empty($products[$keyPro]['price']) ? format_vnd($products[$keyPro]['price']) : '';
+                    
+                    $price = 0;
+                    if (isset($products[$keyPro]) && !empty($products[$keyPro]['price'])) {
+                        $price = (int) $products[$keyPro]['price'];
+                    }
 
+                    $productDetails['price'] = $price;
+                    $productDetails['price_label'] = format_vnd($price);
                     $productDetails['product_code'] = isset($products[$keyPro]) && !empty($products[$keyPro]['product_code']) ? $products[$keyPro]['product_code'] : '';
-
                     $productDetails['quantity'] = $row['quantity'];
                     $productDetails['total_amount'] = $row['quantity'] * $productDetails['price'];
                     $productDetails['size_name'] = $sizes[$row['size_id']] ?? '';
@@ -113,6 +118,7 @@ class CartService extends BaseService
     private function getProductByIds($productIds) {
 
         $data = $this->productRepository->getProductByIds($productIds);
+       
         $products = $data->mapWithKeys(function ($item) {
             return [$item['id'] => $item];
         })->toArray();

@@ -79,3 +79,7 @@ span[role="alert"] {
     display: inline-flex;
     margin-top: 5px
 }
+
+.item-del-cart:hover {
+    cursor: pointer;
+}

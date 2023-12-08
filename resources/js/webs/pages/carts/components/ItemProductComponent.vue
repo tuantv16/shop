@@ -1,20 +1,28 @@
 <script>
 
-import { useCartStore } from '../stores/cartStore';
 import {dataAction} from '../services/dataActions.js';
 
 import { urlBase } from '../../../../common/config/main.js';
-import moment from 'moment';
+
+import { useCartStore } from '../stores/cartStore.js';
+import {apiMixin} from '../../../../mixins/apiMixin.js';
 
 export default {
+    mixins: [apiMixin],
     components: {
 
     },
+    setup() {
+        const storeCart = useCartStore();
+
+        return {
+            storeCart,
+        };
+
+    },
+	
     data() {
         return {
-            objData: {
-
-            },
 
         }
     },
@@ -31,29 +39,47 @@ export default {
 
     },
     methods: {
-        formatMoney(value) {
-            const formatter = new Intl.NumberFormat('vi-VN', {
-                style: 'currency',
-                currency: 'VND',
-                currencyDisplay: 'symbol' // Hiển thị ký hiệu của tiền tệ
-            });
-            return formatter.format(value);
-        },
+
         hanldeDec(key, number) {
             number = parseInt(number);
             this.dataCarts[key].quantity = (number - 1) == 0 ? 1 : number - 1;
             let totalAmount = this.dataCarts[key].product_details.price * this.dataCarts[key].quantity;
-            this.dataCarts[key].total_amount = this.formatMoney(totalAmount);
-
+            this.dataCarts[key].product_details.total_amount = this.formatMoney(totalAmount);
+            this.calculateTotalMoney(this.dataCarts);
         },
         hanldeInc(key, number) {
             // chỉ cho nhập max là 10 sản phẩm
             this.dataCarts[key].quantity = (parseInt(number) + 1) <= 10 ? (parseInt(number) + 1) : parseInt(number);
             let totalAmount = this.dataCarts[key].product_details.price * this.dataCarts[key].quantity;
-            this.dataCarts[key].total_amount = this.formatMoney(totalAmount);
+
+            this.dataCarts[key].product_details.total_amount = totalAmount;
+            this.calculateTotalMoney(this.dataCarts);
+        },
+        calculateTotalMoney(dataCarts) {
+            this.storeCart.setSubTotal(dataCarts);
+        },
+        delRowCart(keyRow) {
+            const cartBefore = this.dataCarts;
+            // this.dataCarts = this.dataCarts.filter((item) => item.id !== idToDelete); xóa dựa theo item trong mỗi row
+            this.dataCarts.splice(keyRow, 1);
+
+            // cập nhật lại session giỏ hàng
+            // Hàm chung để compare cart mới và cũ (sử dụng cho cả trường hợp Khách vãng lai)
+            let dataUpdateCart = compareCart(cartBefore, this.dataCarts);
+
+            this.updateCart(dataUpdateCart);
+
+            console.log(this.dataCarts);
+            debugger;
+            // call api update data cart trong session
+        },
+        // hàm này sẽ dùng chung cho trường hợp khách chưa login và đã login (merge localStorage)
+        compareCart(cartBefore, cartCurrent) {
 
         },
-
+        updateCart() {
+            // call api update session
+        }
     },
     watch: {
         value: function (val) {
@@ -76,7 +102,6 @@ export default {
         </tr>
     </thead>
     <tbody>
-
         <tr v-for="(item, key) in dataCarts" :key="key">
             <td class="product__cart__item">
                 <div class="product__cart__item__pic">
@@ -101,7 +126,7 @@ export default {
                 </div>
             </td>
             <td class="cart__price">{{  this.formatMoney(item.product_details.total_amount) }}</td>
-            <td class="cart__close"><i class="fa fa-close"></i></td>
+            <td class="cart__close"><span class="item-del-cart" @click="delRowCart(key)"><i class="fa fa-close"></i></span></td>
         </tr>
     </tbody>
 </table>

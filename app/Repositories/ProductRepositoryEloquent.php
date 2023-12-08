@@ -254,7 +254,7 @@ class ProductRepositoryEloquent extends BaseRepositoryEloquent implements Produc
     }
 
     public function getProductByIds($productIds) {
-        return $this->model->where('id', $productIds)->get();
+        return $this->model->whereIn('id', $productIds)->get();
     }
 
 }

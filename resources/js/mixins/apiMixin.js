@@ -14,6 +14,14 @@ export const apiMixin = {
         }
     },
 
+    formatMoney(value) {
+        const formatter = new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND',
+            currencyDisplay: 'symbol' // Hiển thị ký hiệu của tiền tệ
+        });
+        return formatter.format(value);
+    },
 
   },
 };
