@@ -29,7 +29,7 @@
     <div id="cart-page">
         <cart-component
             :carts = '@json($carts)'
-            :account = '{{ $account }}'
+            :account='@json($account)'
         />
     </div>
 @endsection

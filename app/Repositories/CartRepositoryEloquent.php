@@ -33,12 +33,11 @@ class CartRepositoryEloquent extends BaseRepositoryEloquent implements CartRepos
         $this->pushCriteria(app(RequestCriteria::class));
     }
 
-    /**
-     * @param array $data
-     * @return mixed
-     */
-    // public function getDataDispOrder() {
-    //     return $this->model->where('disp', Constant::DISPLAY)->get();
-    // }
+    public function deleteCartByCustomerId($customerId) {
+        return $this->model->where('customer_id', intval($customerId))->delete();
+    }
 
+    public function getCartByCustomerId($customerId) {
+        return $this->model->where('customer_id', intval($customerId))->get();
+    }
 }

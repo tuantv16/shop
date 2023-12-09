@@ -77,9 +77,11 @@ export default {
             this.storeCart.updateCart(this.dataCarts);
 
             if (this.dataCarts.length <= 0) {
-                this.toast.warning('Giỏ hàng đã trống');
+                this.toast.warning('Giỏ hàng đang trống');
                 return false;
             }
+
+            this.storeCart.setSubTotal(this.dataCarts);
 
             this.toast.success('Bạn vừa xóa 1 loại sản phẩm trong giỏ hàng');
 

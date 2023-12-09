@@ -4,9 +4,10 @@ namespace App\Services;
 
 use App\Repositories\Interfaces\CartRepository;
 use App\Repositories\Interfaces\ProductRepository;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
+use Exception;
 
 class CartService extends BaseService
 {
@@ -54,7 +55,7 @@ class CartService extends BaseService
                 $productIds = $this->getAttributeIds($carts, 'product_id');
                 $sizeIds = $this->getAttributeIds($carts, 'size_id');
                 $colorIds = $this->getAttributeIds($carts, 'color_id');
-                
+
                 // Lấy dữ liệu tương ứng với các key ids
                 $products = $this->getProductByIds($productIds);
 
@@ -64,12 +65,14 @@ class CartService extends BaseService
 
                 $productDetails = []; //Khởi tạo chi tiết mỗi sản phẩm trong giỏ hàng
                 foreach($carts as $key => $row) {
-                  
+
+                    $row['customer_id'] = session()->get('accountLogin')['customer_id'];
+
                     $dataCarts[$key] = $row;
                     $keyPro = $row['product_id'];
 
                     $productDetails['product_name'] = isset($products[$keyPro]) && isset($products[$keyPro]['product_name']) ? $products[$keyPro]['product_name'] : '';
-                    
+
                     $price = 0;
                     if (isset($products[$keyPro]) && !empty($products[$keyPro]['price'])) {
                         $price = (int) $products[$keyPro]['price'];
@@ -118,7 +121,7 @@ class CartService extends BaseService
     private function getProductByIds($productIds) {
 
         $data = $this->productRepository->getProductByIds($productIds);
-       
+
         $products = $data->mapWithKeys(function ($item) {
             return [$item['id'] => $item];
         })->toArray();
@@ -131,9 +134,6 @@ class CartService extends BaseService
         if (empty($newProducts)) {
             $carts = $newProducts;
         }
-
-
-
 
         $data = array_merge($carts, $newProducts); // merge sản phẩm mới session trong giỏ hàng
         foreach ($data as $item) {
@@ -154,4 +154,89 @@ class CartService extends BaseService
         return $resultCarts;
     }
 
+
+    // Lấy data đẩy đủ dựa theo param input từ dataLocalStorage
+    public function getCartForVisitingGuests($dataLocalStorage) {
+        return $this->getFullInfoCart($dataLocalStorage, false); // false: khách chưa login
+    }
+
+
+    // hàm chung để lấy ra đầy đủ thông tin cart (ví dụ product_name, color_name,size_name, total_amount ...)
+    public function getFullInfoCart($cartInputs, $statusLogin = true) {
+        $productIds = $this->getAttributeIds($cartInputs, 'product_id');
+        $products = $this->getProductByIds($productIds);
+
+        // Lấy dữ liệu tương ứng với các key ids
+        $products = $this->getProductByIds($productIds);
+
+        $sizes = config('web.config.sizes');
+        //$colors = config('web.config.colors');
+        $colorNames = config('web.config.colorNames');
+
+        $productDetails = []; //Khởi tạo chi tiết mỗi sản phẩm trong giỏ hàng
+        $dataCarts = [];
+        foreach($cartInputs as $key => $row) {
+
+            if ($statusLogin) { // trường hợp khách login thì set customer_id = session login
+                $row['customer_id'] = session()->get('accountLogin')['customer_id'];
+            }
+
+            $dataCarts[$key] = $row;
+            $keyPro = $row['product_id'];
+
+            $productDetails['product_name'] = isset($products[$keyPro]) && isset($products[$keyPro]['product_name']) ? $products[$keyPro]['product_name'] : '';
+
+            $price = 0;
+            if (isset($products[$keyPro]) && !empty($products[$keyPro]['price'])) {
+                $price = (int) $products[$keyPro]['price'];
+            }
+
+            $productDetails['price'] = $price;
+            $productDetails['price_label'] = format_vnd($price);
+            $productDetails['product_code'] = isset($products[$keyPro]) && !empty($products[$keyPro]['product_code']) ? $products[$keyPro]['product_code'] : '';
+            $productDetails['quantity'] = $row['quantity'];
+            $productDetails['total_amount'] = $row['quantity'] * $productDetails['price'];
+            $productDetails['size_name'] = $sizes[$row['size_id']] ?? '';
+            $productDetails['color_name'] = $colorNames[$row['color_id']] ?? '';
+
+            $dataCarts[$key]['product_details'] = $productDetails;
+        }
+
+        return $dataCarts;
+    }
+
+    // trước khi đăng xuất thì lưu thông tin cart vào database
+    public function saveCart($carts) {
+        $customerId = session()->get('accountLogin')['customer_id'];
+
+        $updateCartSuccess = false;
+
+        try {
+            DB::beginTransaction();
+            // Delete cart by customer_id
+            $this->cartRepository->deleteCartByCustomerId(intval($customerId));
+            // Add new data cart to database (table carts)
+            foreach ($carts as $product) {
+                $this->cartRepository->create($product);
+            }
+
+            DB::commit();
+            $updateCartSuccess = true;
+        } catch (Exception $e) {
+            DB::rollBack();
+        }
+
+        return $updateCartSuccess;
+    }
+
+    // sau khi khách đã login (từ thông tin cart trong bảng carts) -> lấy thông tin đầy đủ (các name)
+    public function getCartInfoDb($data) {
+        return $this->getFullInfoCart($data);
+    }
 }
+
+
+
+
+
+

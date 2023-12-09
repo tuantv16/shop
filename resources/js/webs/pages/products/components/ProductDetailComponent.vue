@@ -5,12 +5,20 @@ import ProductRelatedComponent from './ProductRelatedComponent.vue';
 import { urlBase } from '../../../../common/config/main.js';
 import {dataAction} from '../services/dataActions.js';
 import {apiMixin} from '../../../../mixins/apiMixin.js';
-
+import { useToast } from 'vue-toastification';
 export default {
     mixins: [apiMixin],
     components: {
 
         ProductRelatedComponent
+
+    },
+    setup() {
+        const toast = useToast();
+
+    return {
+            toast
+        };
 
     },
     data() {
@@ -23,6 +31,8 @@ export default {
             },
             quantity : 1,
             statusCustomerLogin : false,
+            isValidSize: false,
+            isValidColor: false
         }
     },
     props: {
@@ -45,8 +55,6 @@ export default {
 
     },
     created() {
-        //this.msgToast('Thêm vào giỏ hàng thành công', { duration: 3000 });
-
         this.customerProducts.product_id = this.infoProducts.id;
         this.statusCustomerLogin = this.accountLogin != '' ? true : false;
 
@@ -64,40 +72,73 @@ export default {
         handleQuantity(e) {
             this.customerProducts.quantity = e.target.value;
         },
+        validateAttrProduct(rowProduct) {
+            let valid = true;
+
+
+            this.isValidSize = false;
+            if(rowProduct.size_id == '') {
+                this.isValidSize = true;
+                valid = false;
+            }
+
+            this.isValidColor = false;
+            if(rowProduct.color_id == '') {
+                this.isValidColor = true;
+                valid = false;
+            }
+
+            if (!valid) {
+                this.toast.error('Thông tin chưa được nhập đẩy đủ');
+            } else {
+                // reset
+                // this.customerProducts = {
+                //     product_id: this.infoProducts.id ?? '',
+                //     size_id: '',
+                //     color_id: '',
+                //     quantity: 1
+                // },
+
+
+                this.toast.success('Thêm vào giỏ hàng thành công');
+            }
+
+            return valid;
+
+        },
         addCart() {
 
             //Khởi tạo giỏ hàng
             const infoCart = JSON.parse(localStorage.getItem('infoCart')) || [];
 
-            // Kiểm tra xem có bản ghi nào hay chưa
-            const keyCart = infoCart.findIndex(item => {
-                return (
-                    item.product_id === this.customerProducts.product_id &&
-                    item.size_id === this.customerProducts.size_id &&
-                    item.color_id === this.customerProducts.color_id
-                );
-            });
+            const isValid = this.validateAttrProduct(this.customerProducts);
+            if (isValid) {
+                // Kiểm tra xem có bản ghi nào hay chưa
+                const keyCart = infoCart.findIndex(item => {
+                    return (
+                        item.product_id === this.customerProducts.product_id &&
+                        item.size_id === this.customerProducts.size_id &&
+                        item.color_id === this.customerProducts.color_id
+                    );
+                });
 
-            if (keyCart !== -1) {
-                // Nếu sản phẩm đã tồn tại trong giỏ hàng -> update tăng số lượng
-                infoCart[keyCart].quantity = parseInt(infoCart[keyCart].quantity) + parseInt(this.customerProducts.quantity);
-            } else {
-                // Nếu sản phẩm không tồn tại trong giỏ hàng -> tạo mới bản ghi
-                infoCart.push(this.customerProducts);
-            }
+                if (keyCart !== -1) {
+                    // Nếu sản phẩm đã tồn tại trong giỏ hàng -> update tăng số lượng
+                    infoCart[keyCart].quantity = parseInt(infoCart[keyCart].quantity) + parseInt(this.customerProducts.quantity);
+                } else {
+                    // Nếu sản phẩm không tồn tại trong giỏ hàng -> tạo mới bản ghi
+                    infoCart.push(this.customerProducts);
+                }
 
 
-            if (!this.statusCustomerLogin) { // trường hợp chưa login (khách vãng lai) lưu thông tin hàng hóa vào localStorage
-                localStorage.setItem('infoCart', JSON.stringify(infoCart));
-            }
+                if (!this.statusCustomerLogin) { // trường hợp chưa login (khách vãng lai) lưu thông tin hàng hóa vào localStorage
+                    localStorage.setItem('infoCart', JSON.stringify(infoCart));
+                }
 
-            // Lấy dữ liệu mới từ localStorage và log ra console
-            // let infoCarts = localStorage.getItem('infoCart');
-            // console.log(infoCarts);
-            // debugger;
+                if (this.statusCustomerLogin) { // Trường hợp khách hàng đăng nhập tài khoản -> lưu thông tin hàng hóa vào Session
+                    this.setProductToCart(infoCart);
+                }
 
-            if (this.statusCustomerLogin) { // Trường hợp khách hàng đăng nhập tài khoản -> lưu thông tin hàng hóa vào Session
-                this.setProductToCart(infoCart);
             }
 
         },
@@ -115,9 +156,6 @@ export default {
                 }
             });
         },
-        success2() {
-            this.$toast.success('You did it!');
-        }
 
     },
     watch: {
@@ -221,6 +259,7 @@ export default {
                                         :class="{ 'active': customerProducts.size_id === key }"  @click="handleSize(key)">  {{ size }}
                                         <input type="radio" :id="`${size}`">
                                     </label>
+                                    <div class="error-attr"><span v-if="isValidSize">Vui lòng chọn kích cỡ</span></div>
                                 </div>
                                 <div class="product__details__option__color">
                                     <span>Màu sắc:</span>
@@ -228,6 +267,7 @@ export default {
                                         :class="[color, { 'active': customerProducts.color_id === key }]" @click="handleColor(key)">
                                         <input type="radio" :id="`${color}`">
                                     </label>
+                                    <div class="error-attr"><span v-if="isValidColor">Vui lòng chọn màu sắc</span></div>
                                 </div>
                             </div>
                             <div class="product__details__cart__option">

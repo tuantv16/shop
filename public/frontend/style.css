@@ -109,3 +109,11 @@ span[role="alert"] {
 
 
 /* end - css cho button loading */
+
+
+.error-attr span{
+    color: red;
+    font-style: italic;
+    font-size: 16px;
+    min-height: 50px;
+}

@@ -53,7 +53,7 @@ Route::prefix('webs')->group(function () {
 
     Route::post('/carts/add-to-cart', [CartController::class, 'addToCart'])->name('cart.add_to_cart');
     Route::post('/carts/update-cart', [CartController::class, 'updateCart'])->name('cart.update_to_cart');
-
+    Route::post('/carts/get-cart-by-local-storage', [CartController::class, 'getCartByLocalStorage'])->name('cart.get_cart_by_localstorage');
 
 });
 

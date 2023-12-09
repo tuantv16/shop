@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api\Web;
 
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\Web\Carts\AddCartRequest;
+use App\Http\Requests\Web\Carts\GetCartLocalStorage;
 use App\Http\Requests\Web\Carts\UpdateCartRequest;
+use App\Http\Resources\Carts\Cart;
 use App\Services\CartService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -42,4 +44,11 @@ class CartController extends ApiController
         Session::put('dataCarts', $data['carts']);
         return $this->responseSuccess([]);
     }
+
+    public function getCartByLocalStorage(GetCartLocalStorage $request) {
+        $params = $request->validated();
+        $data = $this->cartService->getCartForVisitingGuests($params['local_carts']);
+        return $this->responseSuccess(new Cart($data));
+    }
+
 }

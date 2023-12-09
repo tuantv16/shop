@@ -28,6 +28,7 @@ export default {
             subTotal: 0,
             totalAmount: 0,
             showLoadingButton: false,
+            dataCartsTmp : []
         }
     },
     props: {
@@ -41,45 +42,45 @@ export default {
         }
     },
     created() {
-
-        //console.log('storeCart.sub_total',this.storeCart.sub_total);
-
-        if (this.account == '') {
+        if (this.account == '') { // trường hợp khách vãng lai (khách chưa login)
             let cart = localStorage.getItem('infoCart');
 
+            let that = this;
 
-            //call api lấy đầy đủ thông tin (*) // thứ 7 làm chỗ này
-            // api đã có sẵn rồi
-            // cart = JSON.parse(cart);
-            this.dataCarts = cart;
+            if (cart == null) {
+                this.dataCarts = [];
+            } else {
+                cart = JSON.parse(cart);
+                let obj = {};
+                obj.local_carts = cart;
+
+                dataAction.getCartByLocalStorage(obj).then(res => {
+                    if (res.data.status == 'success') {
+                        this.dataCarts = res.data.data;
+                        this.subTotal = this.storeCart.getTotalAmountFormatTest(this.dataCarts);
+
+                        //localStorage.setItem('infoCart', this.dataCarts);
+
+                    }
+                });
+            }
+
+
+            // this.subTotal = 33339;
 
         } else {
-            this.dataCarts = this.carts; // nếu thông tin có trong session
+            this.dataCarts = this.carts; // nếu thông tin có trong session (trường hợp khách hàng login)
+            this.subTotal = this.storeCart.getTotalAmountFormat(this.dataCarts);
         }
 
+        // this.subTotal = this.storeCart.getTotalAmountFormat(this.dataCarts);
 
-        this.subTotal = this.storeCart.getTotalAmountFormat(this.dataCarts);
-        //this.totalAmount = this.storeCart.getTotalAmountFormat(this.dataCarts);
-
-        // this.subTotal = 9;
-        // this.totalAmount = 9;
-
-
-        // nếu không có trong session thì lấy ở localstorage
-        // xóa hết
-        //localStorage.removeItem('infoCart');
-        // console.log(this.listProducts);
-        // debugger;
     },
     methods: {
         updateCart() {
-
-            debugger;
             // Trường hợp chưa đăng nhập (khách vãng lai)
             if (this.account == '') {
                 localStorage.setItem('infoCart', this.dataCarts);
-                console.log(this.dataCarts);
-                let test2 = localStorage.getItem('infoCart');
 
             } else { // Trường hợp đã đăng nhập
                  // call api update cart to session

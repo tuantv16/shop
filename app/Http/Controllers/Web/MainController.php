@@ -17,6 +17,7 @@ class MainController extends Controller
     public function index(Request $request) {
 
         $accountLogin = session()->get('account', '');
+
         return view('layout.web', [
             'accountLogin' => $accountLogin
         ]);
