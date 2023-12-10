@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Web;
 
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\Web\Carts\AddCartRequest;
+use App\Http\Requests\Web\Carts\DecIncCartLocalRequest;
 use App\Http\Requests\Web\Carts\GetCartLocalStorage;
 use App\Http\Requests\Web\Carts\UpdateCartRequest;
 use App\Http\Resources\Carts\Cart;
@@ -51,4 +52,10 @@ class CartController extends ApiController
         return $this->responseSuccess(new Cart($data));
     }
 
+    public function getFullInfoCartApi(DecIncCartLocalRequest $request) {
+        $params = $request->validated();
+        $data = $this->cartService->getFullInfoCart($params['carts'], $params['isLogin']);
+        return $this->responseSuccess(new Cart($data));
+    }
 }
+

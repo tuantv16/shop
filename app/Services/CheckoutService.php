@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-class PaymentService extends BaseService
+class CheckoutService extends BaseService
 {
 
     public function __construct() {

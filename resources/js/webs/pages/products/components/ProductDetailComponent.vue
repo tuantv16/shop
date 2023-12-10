@@ -91,16 +91,11 @@ export default {
             if (!valid) {
                 this.toast.error('Thông tin chưa được nhập đẩy đủ');
             } else {
-                // reset
-                // this.customerProducts = {
-                //     product_id: this.infoProducts.id ?? '',
-                //     size_id: '',
-                //     color_id: '',
-                //     quantity: 1
-                // },
-
-
                 this.toast.success('Thêm vào giỏ hàng thành công');
+
+                setTimeout(function() {
+                    location.reload();
+                },1000);
             }
 
             return valid;

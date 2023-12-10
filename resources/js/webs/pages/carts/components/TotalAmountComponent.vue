@@ -71,7 +71,7 @@ export default {
                     <li>Tạm tính<span>{{ this.storeCart.sub_total_format }}</span></li>
                     <li>Tổng tiền <span>{{ this.storeCart.sub_total_format }}</span></li>
                 </ul>
-                <a href="#" class="primary-btn">Proceed to checkout</a>
+                <a href="#" class="primary-btn">Tiến hành thanh toán</a>
             </div>
         </div>
 </template>

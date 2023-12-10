@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\Web\CartController;
+use App\Http\Controllers\Web\CheckoutController;
 use App\Http\Controllers\Web\CustomerController;
 use App\Http\Controllers\Web\DemoController;
 use App\Http\Controllers\Web\MainController;
+use App\Http\Controllers\Web\PaymentController;
 use App\Http\Controllers\Web\ProductController;
 use App\Http\Controllers\Web\ShopController;
 use Illuminate\Support\Facades\Route;
@@ -30,6 +32,8 @@ use Illuminate\Support\Facades\Route;
 
     Route::get('/shop.html', [ShopController::class, 'index'])->name('shop.index');
     Route::get('/shopping-cart.html', [CartController::class, 'index'])->name('cart.index');
+
+    Route::get('/checkout.html', [CheckoutController::class, 'index'])->name('checkout.index');
 //});
 
 Route::get('/login.html', [CustomerController::class, 'login'])->name('customer.get_login');

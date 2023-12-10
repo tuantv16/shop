@@ -29,7 +29,6 @@ export const useCartStore = defineStore('cartStore', {
             this.sub_total = this.cacTotalAmount(carts);
             this.sub_total_format = this.getTotalAmountFormat(carts);
 
-            //console.log('this.sub_total',this.sub_total);
         },
         // setTotal(val) {
         //     this.total = this.getTotal();

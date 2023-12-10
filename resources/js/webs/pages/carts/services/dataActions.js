@@ -16,4 +16,11 @@ export const dataAction = {
         });
     },
 
+    getFullInfoCartApi(data) {
+        return axios.post('/api-v1/webs/carts/get-full-info-cart-api', data)
+        .catch(function (error) {
+            console.log(error.response);
+        });
+    }
+
 }

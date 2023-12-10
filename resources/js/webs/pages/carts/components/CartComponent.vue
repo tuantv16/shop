@@ -56,7 +56,7 @@ export default {
 
                 dataAction.getCartByLocalStorage(obj).then(res => {
                     if (res.data.status == 'success') {
-                        this.dataCarts = res.data.data;
+                        this.dataCarts = res.data.data; // set kết quả localstore vào data cart
                         this.subTotal = this.storeCart.getTotalAmountFormatTest(this.dataCarts);
 
                         //localStorage.setItem('infoCart', this.dataCarts);
@@ -80,7 +80,16 @@ export default {
         updateCart() {
             // Trường hợp chưa đăng nhập (khách vãng lai)
             if (this.account == '') {
-                localStorage.setItem('infoCart', this.dataCarts);
+                let cartString = JSON.stringify(this.dataCarts);
+
+                localStorage.setItem('infoCart', cartString);
+
+                this.toast.success('Cập nhật giỏ hàng thành công!');
+                // Hiển thị button loading
+                this.showLoadingButton = true;
+                setTimeout(() => {
+                    this.scrollToTop();
+                }, 2000);
 
             } else { // Trường hợp đã đăng nhập
                  // call api update cart to session
@@ -89,7 +98,6 @@ export default {
                 dataAction.updateCart(obj).then(res => {
                     if (res.data.status == 'success') {
                         this.toast.success('Cập nhật giỏ hàng thành công!');
-
                         // Hiển thị button loading
                         this.showLoadingButton = true;
                         setTimeout(() => {
@@ -158,7 +166,7 @@ export default {
             <div class="row">
                 <div class="col-lg-8">
                     <div class="shopping__cart__table">
-                        <item-product-component :data-carts = this.dataCarts />
+                        <item-product-component :data-carts = this.dataCarts :account = this.account />
                     </div>
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6">

@@ -34,17 +34,42 @@ export default {
             type: Array,
             default: null
         },
+        account: {
+            type: String,
+            default: ''
+        },
+
 
 
     },
     created() {
         this.storeCart.updateCart(this.dataCarts);
 
+        if (this.account == '') {
+
+            let cartLocal = localStorage.getItem('infoCart');
+            cartLocal = JSON.parse(cartLocal);
+            //this.getFullInfoCart(cartLocal, false);
+
+            let obj = {};
+            obj.carts = cartLocal;
+            obj.isLogin = false;
+            dataAction.getFullInfoCartApi(obj).then(res => {
+                if (res.data.status == 'success') {
+                    this.storeCart.setSubTotal(res.data.data);
+                }
+            });
+
+        }
+
+
+
     },
     methods: {
 
         // giảm số lượng sản phẩm
         hanldeDec(key, number) {
+
             number = parseInt(number);
             this.dataCarts[key].quantity = (number - 1) == 0 ? 1 : number - 1;
             let totalAmount = this.dataCarts[key].product_details.price * this.dataCarts[key].quantity;
@@ -53,18 +78,18 @@ export default {
             this.calculateTotalMoney(this.dataCarts);
 
             this.storeCart.updateCart(this.dataCarts);
+
         },
         // Tăng số lượng sản phẩm
         hanldeInc(key, number) {
-            // chỉ cho nhập max là 10 sản phẩm
             this.dataCarts[key].quantity = (parseInt(number) + 1) <= 10 ? (parseInt(number) + 1) : parseInt(number);
-            let totalAmount = this.dataCarts[key].product_details.price * this.dataCarts[key].quantity;
+                let totalAmount = this.dataCarts[key].product_details.price * this.dataCarts[key].quantity;
 
-            this.dataCarts[key].product_details.total_amount = totalAmount;
-            this.calculateTotalMoney(this.dataCarts);
+                this.dataCarts[key].product_details.total_amount = totalAmount;
+                this.calculateTotalMoney(this.dataCarts);
 
-            //update Cart ở store
-            this.storeCart.updateCart(this.dataCarts);
+                //update Cart ở store
+                this.storeCart.updateCart(this.dataCarts);
         },
         // tính tổng
         calculateTotalMoney(dataCarts) {
@@ -86,6 +111,21 @@ export default {
             this.toast.success('Bạn vừa xóa 1 loại sản phẩm trong giỏ hàng');
 
         },
+        // getFullInfoCart(data, isLogin) {
+        //     let obj = {};
+        //     obj.carts = data;
+        //     obj.isLogin = isLogin;
+        //     dataAction.getFullInfoCartApi(obj).then(res => {
+        //             if (res.data.status == 'success') {
+        //                 this.
+        //                 console.log(res);
+        //                 debugger;
+        //                 //this.dataCarts = res.data.data;
+        //                 //localStorage.setItem('infoCart', this.dataCarts);
+        //             }
+        //         });
+
+        // }
 
     },
     watch: {
