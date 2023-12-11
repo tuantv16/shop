@@ -62,12 +62,18 @@ class ProductService extends BaseService
         $configs = config('web.config.uploads');
         $folderName =  $configs['products']; // đặt tên folder
 
-        if ($request->hasFile('image')) {
+        if ($request->hasFile('image') || $data['is_image_deleted'] == 'true') {
             $file = $request->file('image');
-            $nameImage = $this->uploads($file, $folderName) ; // upload (local or S3) and get name file image. Trường hợp update thì xóa ảnh cũ ở s3
-            $data['image'] = $nameImage;
 
-            if (!empty($nameImage)) { // Nếu trường hợp upload ảnh thành công lên S3 thì xóa ảnh cũ
+
+            if ($data['is_image_deleted'] == 'true') {
+                $data['image'] = '';
+            } else {
+                $nameImage = $this->uploads($file, $folderName) ; // upload (local or S3) and get name file image. Trường hợp update thì xóa ảnh cũ ở s3
+                $data['image'] = $nameImage;
+            }
+
+            if (!empty($nameImage) || $data['is_image_deleted'] == 'true') { // Nếu trường hợp upload ảnh thành công lên S3 thì xóa ảnh cũ
                 $this->deleteOldImage($folderName, (int) $data['id']);
             }
 

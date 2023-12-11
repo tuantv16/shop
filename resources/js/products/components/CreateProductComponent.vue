@@ -29,7 +29,10 @@ export default {
                 image : '',
                 disp : 1
             },
-            imageFile: null
+            imageFile: null,
+            imagePreviewUrl: '',
+            isShowImage: false,
+
         }
     },
     created() {
@@ -39,20 +42,20 @@ export default {
 
         handleChange(event) {
             const file = event.target.files[0];
-
             if (file) {
                 this.imageFile = file; // Gắn file với objData để gửi lên server
-
+                this.isShowImage = true;
+                this.isImageDelete = false;
+                this.objData.url_image = URL.createObjectURL(file); // preview image
                 // Không xóa phần này
                 // console.log('Tên tệp: ', file.name);
                 // console.log('Kích thước: ', file.size); // Lấy size của file
                 // let extension = file.name.split('.').pop();
                 // console.log('Đuôi mở rộng: ', extension); // Lấy đuôi mở rộng của file
-
             }
 
-
         },
+
 
         onSubmit(dataInputs) {
 
@@ -71,6 +74,16 @@ export default {
                  }
             });
 
+        },
+        backList() {
+            window.location.href = "/manage/products";
+        },
+        uploadImage() {
+            $("#uploadImage").trigger("click");
+        },
+        deleteImage() {
+            this.objData.url_image = null;
+            this.isImageDelete = true;
         }
     },
     props: {
@@ -156,9 +169,22 @@ export default {
 
                                                     />
 
-                                                    <Field name="image" v-slot="{ field }">
-                                                        <input type="file" @change="handleChange" :ref="field.ref" />
-                                                    </Field>
+                                                    <div class="group-item">
+                                                        <label>Hình ảnh</label>
+                                                        <div id="show_image" style="width:150px; margin-bottom:10px" v-if="isShowImage">
+                                                            <img :src="this.objData.url_image" width="150"/>
+                                                            <button type="button" class="btn-delete-image" @click="deleteImage">X</button>
+                                                        </div>
+
+
+                                                        <div class="input-group input-normal">
+                                                        <Field name="image" v-slot="{ field }">
+                                                            <input type="file" @change="handleChange" :ref="field.ref" id="uploadImage" style="display: none"/>
+                                                            <button type="button" class="btn btn-upload py-3 px-5" @click="uploadImage">Upload</button>
+                                                        </Field>
+                                                        </div>
+                                                    </div>
+
 
                                                     <textarea-component
                                                         title="Mô tả"
@@ -200,10 +226,10 @@ export default {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        <div class="row mg-t-30 mg-b-30">
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                 <div class="text-center custom-pro-edt-ds">
-                                                    <button type="button" class="btn btn-ctl-bt waves-effect waves-light">Quay lại</button>
+                                                    <button type="button" class="btn btn-ctl-bt waves-effect waves-light" @click="backList()">Quay lại</button>
                                                     <button type="submit" class="btn btn-ctl-bt waves-effect waves-light m-r-10">Save</button>
                                                 </div>
                                             </div>

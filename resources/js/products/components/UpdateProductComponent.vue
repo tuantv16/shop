@@ -28,27 +28,33 @@ export default {
                 description : '',
                 price : '',
                 image : '',
-                disp : ''
+                disp : '',
             },
             imageFile: null,
             imagePreviewUrl: '',
-            isShowBtnDel: true
+            isShowImage: true,
+            isImageDelete: false
         }
     },
     created() {
         this.objData = this.products;
+        if(this.objData.url_image == '') {
+            this.isShowImage = false;
+        }
+
     },
     methods: {
 
         handleChange(event) {
             const file = event.target.files[0];
-
             if (file) {
                 this.imageFile = file; // Gắn file với objData để gửi lên server
-
+                this.isShowImage = true;
+                this.isImageDelete = false;
                 this.objData.url_image = URL.createObjectURL(file); // preview image
 
             }
+
         },
 
         onSubmit(dataInputs) {
@@ -60,10 +66,9 @@ export default {
             }
 
             formData.append('image', this.imageFile); // append dữ liệu this.imageFile vào item imâge
+            formData.append('is_image_deleted', this.isImageDelete);
 
-            dataAction.updateData(formData, this.products.id, {
-                headers: { 'Content-Type': 'multipart/form-data' }
-            }).then(res => {
+            dataAction.updateData(formData, this.products.id).then(res => {
                  if (res.data.status == 'success') {
                     window.location.href = '/manage/products';
                     //location.reload();
@@ -76,11 +81,11 @@ export default {
         },
         uploadImage() {
             $("#uploadImage").trigger("click");
-            this.isShowBtnDel = true;
         },
         deleteImage() {
             this.objData.url_image = null;
-            this.isShowBtnDel = false;
+            this.isShowImage = false;
+            this.isImageDelete = true;
         }
     },
     props: {
@@ -157,11 +162,11 @@ export default {
 
                                                     <div class="group-item">
                                                         <label>Hình ảnh</label>
-                                                        <div id="show_image" style="width:150px; margin-bottom:10px">
+                                                        <div id="show_image" style="width:150px; margin-bottom:10px" v-if="isShowImage">
                                                             <img :src="this.objData.url_image" width="150"/>
-                                                            <button type="button" class="btn-delete-image" @click="deleteImage" v-if="isShowBtnDel">X</button>
+                                                            <button type="button" class="btn-delete-image" @click="deleteImage">X</button>
                                                         </div>
-      
+
 
                                                         <div class="input-group input-normal">
                                                         <Field name="image" v-slot="{ field }">
@@ -214,7 +219,7 @@ export default {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        <div class="row mg-t-30 mg-b-30">
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                 <div class="text-center custom-pro-edt-ds">
                                                     <button type="button" class="btn btn-ctl-bt waves-effect waves-light" @click="backList()">Quay lại</button>

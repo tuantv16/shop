@@ -9,6 +9,10 @@ class ImageService
     public function getImageProduct($path)
     {
 
+        if ($path == '') {
+            return '';
+        }
+
         $path = self::FOLDER_PRODUCT.'/'.$path;
         $storageDisk = $this->determineStorageDisk($path);
         return $storageDisk->url($path); // url image
@@ -24,7 +28,7 @@ class ImageService
         if (str_starts_with($path, 's3/')) {
             return Storage::disk('s3');
         }
-     
+
         return Storage::disk('local');
     }
 }

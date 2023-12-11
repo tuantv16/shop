@@ -35,7 +35,8 @@ class FormProductRequest extends FormRequest
             'product_name'      => 'string|nullable|max:255',
             'description'       => 'string|nullable|max:500',
             'price'             => 'string|numeric|between:1,99999999999999',
-            'disp'              => 'integer|nullable|in:0,1'
+            'disp'              => 'integer|nullable|in:0,1',
+            'is_image_deleted'  => 'string'
         ];
 
         if ($this->hasFile('image')) {

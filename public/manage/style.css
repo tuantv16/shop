@@ -3799,7 +3799,7 @@ span[role="alert"] {
 #show_image {
     position: relative;
 }
-  
+
 .btn-delete-image {
     position: absolute;
     top: 0;
@@ -3810,3 +3810,4 @@ span[role="alert"] {
     cursor: pointer;
     z-index: 99;
 }
+
