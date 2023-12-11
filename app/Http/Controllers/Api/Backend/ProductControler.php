@@ -17,8 +17,6 @@ class ProductControler extends ApiController
 
     public function __construct(ProductRepository $productRepository, ProductService $productService)
     {
-
-
         $this->productRepository = $productRepository;
         $this->productService = $productService;
     }

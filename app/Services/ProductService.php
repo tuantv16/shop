@@ -47,11 +47,11 @@ class ProductService extends BaseService
 
     public function saveData($data, $request) {
         $configs = config('web.config.uploads');
-        $destinationPath =  $configs['products']; // đặt tên folder
+        $folderName =  $configs['products']; // đặt tên folder
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
-            $nameImage = $this->uploads($file, $destinationPath) ; // upload (local or S3) and get name file image
+            $nameImage = $this->uploads($file, $folderName) ; // upload (local or S3) and get name file image
             $data['image'] = $nameImage;
         }
 
@@ -60,15 +60,15 @@ class ProductService extends BaseService
 
     public function updateData($data, $request) {
         $configs = config('web.config.uploads');
-        $destinationPath =  $configs['products']; // đặt tên folder
+        $folderName =  $configs['products']; // đặt tên folder
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
-            $nameImage = $this->uploads($file, $destinationPath) ; // upload (local or S3) and get name file image. Trường hợp update thì xóa ảnh cũ ở s3
+            $nameImage = $this->uploads($file, $folderName) ; // upload (local or S3) and get name file image. Trường hợp update thì xóa ảnh cũ ở s3
             $data['image'] = $nameImage;
 
             if (!empty($nameImage)) { // Nếu trường hợp upload ảnh thành công lên S3 thì xóa ảnh cũ
-                $this->deleteOldImage($destinationPath, (int) $data['id']);
+                $this->deleteOldImage($folderName, (int) $data['id']);
             }
 
         } else { // trường hợp update dữ liệu nhưng ảnh vẫn giữ nguyên
@@ -78,11 +78,11 @@ class ProductService extends BaseService
         return $this->productRepository->update($data, (int) $data['id']);
     }
 
-    public function deleteOldImage($destinationPath, $id) {
+    public function deleteOldImage($folderName, $id) {
          try {
             $dataOld = $this->productRepository->find($id);
             $oldImage = $dataOld->image;
-            $pathImage = $destinationPath.'/'.$oldImage;
+            $pathImage = $folderName.'/'.$oldImage;
 
             Storage::disk('s3')->delete($pathImage);
 

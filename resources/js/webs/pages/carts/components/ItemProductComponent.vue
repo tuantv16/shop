@@ -46,23 +46,20 @@ export default {
         this.storeCart.updateCart(this.dataCarts);
 
         if (this.account == '') {
-
             let cartLocal = localStorage.getItem('infoCart');
-            cartLocal = JSON.parse(cartLocal);
-            //this.getFullInfoCart(cartLocal, false);
-
-            let obj = {};
-            obj.carts = cartLocal;
-            obj.isLogin = false;
-            dataAction.getFullInfoCartApi(obj).then(res => {
-                if (res.data.status == 'success') {
-                    this.storeCart.setSubTotal(res.data.data);
-                }
-            });
-
+            if (cartLocal != null) {
+                cartLocal = JSON.parse(cartLocal);
+                let obj = {};
+                obj.carts = cartLocal;
+                obj.isLogin = false;
+                dataAction.getFullInfoCartApi(obj).then(res => {
+                    if (res.data.status == 'success') {
+                        this.storeCart.setSubTotal(res.data.data);
+                    }
+                });
+            }
+            
         }
-
-
 
     },
     methods: {

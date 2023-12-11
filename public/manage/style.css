@@ -3753,3 +3753,60 @@ span[role="alert"] {
 .is-invalid {
     border: 1px #FFA07A solid;
 }
+
+
+
+.py-3 {
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+}
+
+.px-5 {
+    padding-right: 1rem !important;
+    padding-left: 1rem !important;
+}
+
+
+.btn-upload {
+    color: #084261;
+	font-weight: 500;
+    transition: .5s;
+    display: inline-block;
+    line-height: 1.5;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    border: 1px solid transparent;
+    font-size: 1rem;
+    border-radius: 0px;
+    /* background-color:#9dc8e2 !important;
+    border-color: 0px;
+    border-radius: 0px; */
+}
+
+.btn-upload:hover {
+    color: #084261;
+    background-color: #F3BD00 !important;
+    border-color: #F3BD00 !important;
+}
+
+.btn-upload:focus {
+    color: #084261;
+    background-color: #F3BD00 !important;
+    border-color: #F3BD00 !important;
+}
+
+#show_image {
+    position: relative;
+}
+  
+.btn-delete-image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: rgba(255, 0, 0, 0.7); /* Màu đỏ với độ trong suốt */
+    color: white;
+    border: none;
+    cursor: pointer;
+    z-index: 99;
+}

@@ -185,6 +185,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         'Repository' => Prettus\Repository\Facades\Repository::class,
+        'Image' => App\Facades\Image::class,
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 

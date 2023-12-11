@@ -30,7 +30,9 @@ export default {
                 image : '',
                 disp : ''
             },
-            imageFile: null
+            imageFile: null,
+            imagePreviewUrl: '',
+            isShowBtnDel: true
         }
     },
     created() {
@@ -43,6 +45,9 @@ export default {
 
             if (file) {
                 this.imageFile = file; // Gắn file với objData để gửi lên server
+
+                this.objData.url_image = URL.createObjectURL(file); // preview image
+
             }
         },
 
@@ -68,6 +73,14 @@ export default {
         },
         backList() {
             window.location.href = "/manage/products";
+        },
+        uploadImage() {
+            $("#uploadImage").trigger("click");
+            this.isShowBtnDel = true;
+        },
+        deleteImage() {
+            this.objData.url_image = null;
+            this.isShowBtnDel = false;
         }
     },
     props: {
@@ -144,13 +157,16 @@ export default {
 
                                                     <div class="group-item">
                                                         <label>Hình ảnh</label>
-                                                        <div id="show_image" style="width:100%; margin-bottom:10px">
-                                                            <img src="https://png.pngtree.com/png-clipart/20230616/ourlarge/pngtree-people-wear-work-clothes-spirit-to-work-png-image_7152327.png" width="150"/>
+                                                        <div id="show_image" style="width:150px; margin-bottom:10px">
+                                                            <img :src="this.objData.url_image" width="150"/>
+                                                            <button type="button" class="btn-delete-image" @click="deleteImage" v-if="isShowBtnDel">X</button>
                                                         </div>
+      
 
                                                         <div class="input-group input-normal">
                                                         <Field name="image" v-slot="{ field }">
-                                                            <input type="file" @change="handleChange" :ref="field.ref" />
+                                                            <input type="file" @change="handleChange" :ref="field.ref" id="uploadImage" style="display: none"/>
+                                                            <button type="button" class="btn btn-upload py-3 px-5" @click="uploadImage">Upload</button>
                                                         </Field>
                                                         </div>
                                                     </div>

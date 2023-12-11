@@ -129,16 +129,6 @@ export default {
                 localStorage.setItem('infoCart', JSON.stringify(infoCart));
             }
 
-            // sử dụng
-            // Sử dụng phương thức để xóa một mục cụ thể
-            // const itemToRemove = {
-            // product_id: 18,
-            // size_id: '5',
-            // color_id: '3',
-            // quantity: '2',
-            // };
-
-            // this.removeItemFromLocalStorage(itemToRemove);
         },
         continueBuy() {
             window.location.href = `${urlBase}/shop.html`;

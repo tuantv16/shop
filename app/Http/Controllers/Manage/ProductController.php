@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Manage;
 
+use App\Facades\Image;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Products\Product;
 use App\Http\Resources\Products\ProductCollection;
@@ -53,8 +54,10 @@ class ProductController extends Controller
     {
 
         $data = $this->productService->getInitData();
-        $data['products'] = $this->productRepository->find(intval($id));
+        $products = $this->productRepository->find(intval($id));
+        $products->url_image = Image::getImageProduct($products->image);
 
+        $data['products'] = $products;
         return view('backend.products.edit', $data);
     }
 
