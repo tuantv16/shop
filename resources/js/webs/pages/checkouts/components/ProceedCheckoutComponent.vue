@@ -6,7 +6,7 @@ import { urlBase } from '../../../../common/config/main.js';
 import {dataAction} from '../services/dataActions.js';
 import {apiMixin} from '../../../../mixins/apiMixin.js';
 import { useToast } from 'vue-toastification';
-
+import { useCartStore } from '../../carts/stores/cartStore.js';
 
 export default {
     mixins: [apiMixin],
@@ -14,16 +14,21 @@ export default {
 
     },
     setup() {
+        const storeCart = useCartStore();
         const toast = useToast();
 
     return {
-            toast
+            toast,
+            storeCart
         };
 
     },
+
+
+
     data() {
         return {
-
+            dataCarts : []
         }
     },
     props: {
@@ -35,7 +40,12 @@ export default {
 
     },
     created() {
+        let infoCartCheckout = localStorage.getItem('infoCartCheckout');
 
+        console.log(infoCartCheckout);
+        debugger;
+        this.dataCarts = JSON.parse(infoCartCheckout);
+        localStorage.removeItem('infoCartCheckout');
 
     },
     methods: {

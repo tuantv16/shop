@@ -69,7 +69,7 @@
 
 
 span[role="alert"] {
-    color: #FFA07A;
+    color: #e53637;
     /* margin-top: 5px; */
     font-style: italic;
     font-size: 14px;
@@ -116,4 +116,23 @@ span[role="alert"] {
     font-style: italic;
     font-size: 16px;
     min-height: 50px;
+}
+
+
+.is-valid-select #vs1__combobox {
+    border: 1px solid red !important;
+}
+
+.is-valid {
+    border: 1px solid red !important;
+}
+
+
+
+.item-location {
+    margin-top: 5px;
+}
+
+.item-location .required-item-location{
+    color: #e53637;
 }

@@ -3681,7 +3681,7 @@ th.fc-day-header.fc-widget-header {
 }
 
 .p-normal span {
-    color: #FFA07A;
+    color: #e53637;
 }
 
 .group-radio {
@@ -3713,7 +3713,7 @@ body {
     /* padding-bottom: 10px; */
   }
 span[role="alert"] {
-    color: #FFA07A;
+    color: #e53637;
     /* margin-top: 5px; */
     font-style: italic;
     font-size: 12px;
@@ -3751,7 +3751,7 @@ span[role="alert"] {
 }
 
 .is-invalid {
-    border: 1px #FFA07A solid;
+    border: 1px #e53637 solid;
 }
 
 

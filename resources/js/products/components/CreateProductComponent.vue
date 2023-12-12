@@ -84,7 +84,18 @@ export default {
         deleteImage() {
             this.objData.url_image = null;
             this.isImageDelete = true;
-        }
+        },
+        onInvalid(errors) {
+            try {
+                const el = document.querySelector(`[name=${Object.keys(errors.errors)[0]}]`)
+                el.scrollIntoView({behavior: 'smooth'});
+                el.focus();
+            } catch (e) {
+                console.log(errors)
+            }
+
+        },
+
     },
     props: {
         categories: {
@@ -136,7 +147,7 @@ export default {
                                 <ul id="myTab3" class="tab-review-design">
                                     <li class="active"><a href="#description"><i class="icon nalika-edit" aria-hidden="true"></i> Khu vực thêm sản phẩm</a></li>
                                 </ul>
-                                <Form @submit="onSubmit" :initial-values="this.objData" :validation-schema="schema" >
+                                <Form @submit="onSubmit" :initial-values="this.objData" :validation-schema="schema" @invalid-submit="onInvalid">
                                 <div id="myTabContent" class="tab-content custom-product-edit">
                                     <div class="product-tab-list tab-pane fade active in" id="description-product">
                                         <div class="row">

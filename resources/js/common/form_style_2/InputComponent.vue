@@ -93,11 +93,6 @@ export default {
 
 <template>
 
-    <!-- <div class="checkout__input">
-        <p>Tên tài khoản<span>*</span></p>
-        <input type="text">
-    </div> -->
-
     <div class="checkout__input">
         <p data-toggle="tooltip" :title="tooltip" v-if="title || tooltip || required || limit">
             {{ title }}

@@ -75,6 +75,7 @@ export default {
 
         // this.subTotal = this.storeCart.getTotalAmountFormat(this.dataCarts);
 
+
     },
     methods: {
         updateCart() {
@@ -83,6 +84,11 @@ export default {
                 let cartString = JSON.stringify(this.dataCarts);
 
                 localStorage.setItem('infoCart', cartString);
+
+
+                // sử dụng ở màn hình checkout
+                localStorage.setItem('infoCartCheckout', cartString);
+
 
                 this.toast.success('Cập nhật giỏ hàng thành công!');
                 // Hiển thị button loading

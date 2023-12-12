@@ -13,7 +13,6 @@ export default {
     setup() {
         const storeCart = useCartStore();
 
-
         return {
             storeCart,
             useTotal: storeCart.getTotal
@@ -33,7 +32,7 @@ export default {
             default: null
         },
         subTotal: {
-            type: String,
+            type: Number,
             default: 0
         },
         totalAmount: {
@@ -49,6 +48,7 @@ export default {
     },
     methods: {
         handleCheckout() {
+
             window.location.href = "/checkout.html"
         }
 

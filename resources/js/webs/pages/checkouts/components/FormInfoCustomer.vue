@@ -4,6 +4,9 @@
 import {Form, Field, ErrorMessage} from "vee-validate";
 import {checkoutValidator} from "../checkout.validator.js";
 import InputComponent from '../../../../common/form_style_2/InputComponent.vue';
+import TextareaComponent from '../../../../common/form_style_2/TextareaComponent.vue';
+import YesNoComponent from '../../../../common/form_style_2/YesNoComponent.vue';
+
 import * as yup from "yup";
 // import { urlBase } from '../../../../common/config/main.js';
 import {dataAction} from '../services/dataActions.js';
@@ -18,6 +21,8 @@ export default {
         Field,
         ErrorMessage,
         InputComponent,
+        TextareaComponent,
+        YesNoComponent,
         vSelect
     },
     setup() {
@@ -30,6 +35,7 @@ export default {
     },
     data() {
         return {
+            errors: [],
             initData: {
                 province: '',
                 district: '',
@@ -39,8 +45,8 @@ export default {
                 wardLabel: '',
                 address: '',
                 streetNameLabel: '',
-                apartment_street_name : ''
-
+                apartment_street_name : '',
+                agree_account: false
             },
             selectedProvince: null,
             selectedDistrict: null,
@@ -48,6 +54,8 @@ export default {
             list_provinces: [],
             list_districts: [],
             list_wards: [],
+            checkboxAgreeAccount: false,
+            apartment_street_name: ''
         }
     },
     props: {
@@ -59,18 +67,22 @@ export default {
 
     },
     created() {
+        this.errors = [];
         this.getProvinces();
-        
+
+    },
+    mounted() {
+        this.errors = [];
     },
     computed: {
         schema() {
-            let rules = checkoutValidator(this);            
+            let rules = checkoutValidator(this);
             return yup.object().shape(rules);
         },
     },
     methods: {
-        onSubmit(dataInputs) { 
-            console.log(dataInputs);   
+        onSubmit(dataInputs) {
+            console.log(dataInputs);
             debugger;
             dataAction.store(dataInputs).then((res) => {
                 //window.location.href = BASE_URL + `admin/equipments`;
@@ -81,27 +93,27 @@ export default {
         getProvinces() {
             dataAction.getApiProvinces().then((res) => {
                 let data = res.data.results;
-              
+
                 this.list_provinces = data.map(row => {
                     return { value: row.province_id, label: row.province_name };
                 });
-                
+
             }).catch((err) => {
-                
+
             })
         },
         getDistricts() {
             if (this.initData.province != '') {
                 dataAction.getApiDistricts(this.initData.province).then((res) => {
                     let data = res.data.results;
-                
+
                     this.list_districts = data.map(row => {
                         return { value: row.district_id, label: row.district_name };
                     });
-                    
+
 
                 }).catch((err) => {
-                    
+
                 })
             }
         },
@@ -111,38 +123,59 @@ export default {
                 dataAction.getApiWards(this.initData.district).then((res) => {
 
                     let data = res.data.results;
-                
+
                     this.list_wards = data.map(row => {
                         return { value: row.ward_id, label: row.ward_name };
                     });
-                    
+
                 }).catch((err) => {
-                    
+
                 })
             }
         },
         handleStreet(e) {
             // this.initData.streetLabel = val;
              this.streetNameLabel = e.target.value;
+             this.$refs.checkoutForm.setFieldValue('apartment_street_name', e.target.value);
+
              this.referAddress();
-        }, 
+        },
         referAddress() {
-            const pos1 = this.streetNameLabel ?? ''; 
-            const pos2 = this.wardLabel ? (', ' + this.wardLabel) : ''; 
+            const pos1 = this.streetNameLabel ?? '';
+            const pos2 = this.wardLabel ? (', ' + this.wardLabel) : '';
             const pos3 = this.districtLabel ? (', ' + this.districtLabel) : '';
             const pos4 = this.provinceLabel ? (', ' + this.provinceLabel) : '';
-            const addressTxt = pos1 + pos2 + pos3 + pos4;
+            let addressTxt = pos1 + pos2 + pos3 + pos4;
 
-            // addressTxt.replace(/^,/, '');
-
+            if (addressTxt.substr(0,1) == ',') {
+                addressTxt = addressTxt.replace(',','');
+            }
             this.initData.address = addressTxt;
-        }
-        
+        },
+
+        toggleAgree: function() {
+          // Trong hàm này, bạn có thể sử dụng giá trị của isChecked
+          if (this.checkboxAgreeAccount) {
+            this.initData.agree_account = 0;
+          } else {
+            this.initData.agree_account = 1;
+          }
+        },
+        onInvalid(errors) {
+            try {
+                const el = document.querySelector(`[name=${Object.keys(errors.errors)[0]}]`)
+                el.scrollIntoView({behavior: 'smooth'});
+                el.focus();
+            } catch (e) {
+                console.log(errors)
+            }
+
+        },
+
+
+
     },
     watch: {
-        apartment_street_name: function (val) {
-            console.log(val);
-        },
         // tuantv add 2023/12/05
         selectedProvince: function (obj, oldValue) {
             if(obj) {
@@ -170,7 +203,7 @@ export default {
                 this.$refs.checkoutForm.setFieldValue('ward', '');
                 this.initData.address = '';
             }
-            
+
         },
         selectedDistrict: function (obj, oldValue) {
             if(obj) {
@@ -226,107 +259,126 @@ export default {
         @invalid-submit="onInvalid"
         class="form-horizontal"
         ref="checkoutForm"
-        v-slot="{ values, setFieldValue }"
-        :validation-schema="schema"> 
+        v-slot="{ values, setFieldValue, errors }"
+        :validation-schema="schema">
+
+        {{ errors }}
     <h6 class="coupon__code">
         <span class="icon_tag_alt"></span> Have a coupon? <a href="#">Click here</a> to enter your code
     </h6>
     <h6 class="checkout__title">Chi tiết đơn hàng</h6>
-    <div class="row">
-        <div class="col-lg-6">
-            <input-component title="Tên khách hàng"
+
+
+    <div class="checkout_input">
+        <input-component title="Tên khách hàng"
                 name="customer_name"
                 placeholder=""
+                :required="true"
             />
-        </div>
     </div>
 
-    <div class="">
-        <p>Tỉnh/Thành phố<span>*</span></p>
-        <v-select :options="list_provinces" 
-                v-model="selectedProvince" 
+    <div class="item-location">
+        <p>Tỉnh / Thành phố <span class="required-item-location">(*)</span></p>
+        <v-select :options="list_provinces"
+                v-model="selectedProvince"
                 class="location"
+                :class="errors.province ? 'is-valid-select' : ''"
             >
             <template v-slot:no-options>Chưa có dữ liệu</template>
         </v-select>
+        <div class="message-error" v-if="errors.province">
+            <span role="alert">{{  errors.province }}</span>
+        </div>
     </div>
 
-    <div class="">
-        <p>Quận/Huyện<span>*</span></p>
-        <v-select :options="list_districts" v-model="selectedDistrict" class="location">
+    <div class="item-location">
+        <p>Quận / Huyện <span class="required-item-location">(*)</span></p>
+        <v-select :options="list_districts" v-model="selectedDistrict" class="location" :class="errors.district ? 'is-valid-select' : ''">
             <template v-slot:no-options>Chưa có dữ liệu</template>
         </v-select>
+        <div class="message-error" v-if="errors.district">
+            <span role="alert">{{  errors.district }}</span>
+        </div>
     </div>
 
-    <div class="">
-        <p>Phường/Xã<span>*</span></p>
-        <v-select :options="list_wards" v-model="selectedWard" class="location">
+    <div class="item-location">
+        <p>Phường / Xã <span class="required-item-location">(*)</span></p>
+        <v-select :options="list_wards" v-model="selectedWard" class="location" :class="errors.ward ? 'is-valid-select' : ''">
             <template v-slot:no-options>Chưa có dữ liệu</template>
         </v-select>
+        <div class="message-error" v-if="errors.ward">
+            <span role="alert">{{  errors.ward }}</span>
+        </div>
     </div>
 
     <div class="checkout__input">
-        <p>Đường, số nhà<span>*</span></p>
+        <p>Đường, số nhà <span>(*)</span></p>
         <input title="Số nhà, tên đường"
             name="apartment_street_name"
-            v-model="initData.apartment_street_name"
-            @change="handleStreet"
-        />
+            v-model="apartment_street_name"
+            @change="(event) => {
+                handleStreet(event)
+            }"
+            class="form-control"
+            :class="errors.apartment_street_name ? 'is-invalid' : ''"
+            />
+        <div class="message-error" v-if="errors.apartment_street_name">
+            <span role="alert">{{  errors.apartment_street_name }}</span>
+        </div>
     </div>
 
-    <div class="checkout__input">
+    <div class="checkout_input">
         <input-component title="Địa chỉ"
             name="address"
             :data="this.initData.address"
+            :required="true"
         />
     </div>
-   
+
+    <div class="checkout_input">
+        <input-component title="Điện thoại"
+            name="phone"
+            :required="true"
+        />
+    </div>
+
+    <div class="checkout_input">
+        <input-component title="Email"
+            name="email"
+            :required="true"
+        />
+    </div>
+
     <div class="checkout__input">
-        <p>Country/State<span>*</span></p>
-        <input type="text">
+        <textarea-component
+            name="memo"
+            title="Ghi chú đặt hàng"
+            placeholder="Ghi chú về đơn đặt hàng của bạn, ví dụ: ghi chú đặc biệt để giao hàng."
+        />
     </div>
-    <div class="checkout__input">
-        <p>Postcode / ZIP<span>*</span></p>
-        <input type="text">
-    </div>
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="checkout__input">
-                <p>Phone<span>*</span></p>
-                <input type="text">
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="checkout__input">
-                <p>Email<span>*</span></p>
-                <input type="text">
-            </div>
-        </div>
-    </div>
+
     <div class="checkout__input__checkbox">
         <label for="acc">
-            Chấp nhận tạo tài khoản
-            <input type="checkbox" id="acc">
+            Đồng ý tạo tài khoản
+            <input type="checkbox" id="acc" name="agree_account" v-model="checkboxAgreeAccount" @click="toggleAgree">
             <span class="checkmark"></span>
         </label>
-        <p>Create an account by entering the information below. If you are a returning customer
-        please login at the top of the page</p>
+        <p v-if="this.initData.agree_account" style="margin-bottom:0px">Tạo một tài khoản bằng cách nhập thông tin dưới đây. Nếu bạn là khách hàng cũ vui lòng đăng nhập ở đầu trang</p>
     </div>
-    <div class="checkout__input">
-        <p>Mật khẩu tài khoản<span>*</span></p>
-        <input type="text">
+
+    <div class="checkout__input" v-if="this.initData.agree_account">
+        <input-component title="Tên tài khoản"
+            name="account"
+            :required="true"
+        />
     </div>
-    <div class="checkout__input__checkbox">
-        <label for="diff-acc">
-            Lưu ý về đơn đặt hàng của bạn, ví dụ: thông báo đặc biệt về giao hàng
-            <input type="checkbox" id="diff-acc">
-            <span class="checkmark"></span>
-        </label>
-    </div>
-    <div class="checkout__input">
-        <p>Ghi chú đặt hàng<span></span></p>
-        <input type="text"
-        placeholder="Notes about your order, e.g. special notes for delivery.">
+
+    <div class="checkout__input" v-if="this.initData.agree_account">
+        <input-component title="Mật khẩu tài khoản"
+            name="password"
+            type="password"
+            :required="true"
+        />
     </div>
 
     <input type="submit" class="btn btn-primary" value="submit"/>

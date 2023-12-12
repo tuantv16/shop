@@ -15,6 +15,10 @@ export const useCartStore = defineStore('cartStore', {
         //     return this.sub_total + 100;
         // },
 
+        getCarts() {
+            return this.carts;
+        }
+
     },
     actions: {
         formatMoney(value) {
