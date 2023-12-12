@@ -15,6 +15,7 @@ export const checkoutValidator = (ctx) => {
         district: yup.string().required('Không được để trống'),      
         ward: yup.string().required('Không được để trống'),
         address: yup.string().required('Không được để trống'),
+        apartment_street_name: yup.string().required('Không được để trống'),
     }
    
     return rules;

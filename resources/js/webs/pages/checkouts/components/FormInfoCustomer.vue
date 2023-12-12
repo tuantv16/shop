@@ -38,19 +38,16 @@ export default {
                 districtLabel: '',
                 wardLabel: '',
                 address: '',
+                streetNameLabel: '',
+                apartment_street_name : ''
 
             },
-             
-            // list_provinces: [
-            //     { value: '01', label: 'Tỉnh 1' },
-            //     { value: '02', label: 'Tỉnh 2' },
-            // ],
             selectedProvince: null,
             selectedDistrict: null,
             selectedWard: null,
             list_provinces: [],
             list_districts: [],
-            list_wards: []
+            list_wards: [],
         }
     },
     props: {
@@ -124,28 +121,35 @@ export default {
                 })
             }
         },
-        handleStreet(val) {
-            console.log(val);
-            this.initData.streetLabel = val;
-            this.referAddress();
+        handleStreet(e) {
+            // this.initData.streetLabel = val;
+             this.streetNameLabel = e.target.value;
+             this.referAddress();
         }, 
-        referAddress(streetName = '') {
-            const pos1 = streetName;
+        referAddress() {
+            const pos1 = this.streetNameLabel ?? ''; 
             const pos2 = this.wardLabel ? (', ' + this.wardLabel) : ''; 
             const pos3 = this.districtLabel ? (', ' + this.districtLabel) : '';
             const pos4 = this.provinceLabel ? (', ' + this.provinceLabel) : '';
-            return pos1 + pos2 + pos3 + pos4;
+            const addressTxt = pos1 + pos2 + pos3 + pos4;
+
+            // addressTxt.replace(/^,/, '');
+
+            this.initData.address = addressTxt;
         }
         
     },
     watch: {
+        apartment_street_name: function (val) {
+            console.log(val);
+        },
         // tuantv add 2023/12/05
         selectedProvince: function (obj, oldValue) {
             if(obj) {
                 let provinceId = obj.value;
                 this.provinceLabel = obj.label;
-                this.initData.address = this.referAddress();
-                
+                this.referAddress();
+
                 this.initData.province = provinceId;
                 this.$nextTick(() => { // waiting load DOM
                     if (provinceId != null) {
@@ -172,7 +176,7 @@ export default {
             if(obj) {
                 let districtId = obj.value;
                 this.districtLabel = obj.label;
-                this.initData.address = this.referAddress();
+                this.referAddress();
 
                 this.initData.district = districtId;
                 this.$nextTick(() => {
@@ -195,7 +199,7 @@ export default {
             if(obj) {
                 let wardId = obj.value;
                 this.wardLabel = obj.label;
-                this.initData.address = this.referAddress();
+                this.referAddress();
                 this.initData.ward = wardId;
 
                 this.$nextTick(() => {
@@ -262,16 +266,11 @@ export default {
     </div>
 
     <div class="checkout__input">
-        <input-component title="Số nhà, tên đường"
+        <p>Đường, số nhà<span>*</span></p>
+        <input title="Số nhà, tên đường"
             name="apartment_street_name"
-            :data="this.initData.apartment_street_name"
-            @change="(val) => {
-                //setFieldValue('apartment_street_name', val);
-                this.referAddress(val);
-                // handleStreet(val).then(res => {
-                //     //setFieldValue('apartment_street_name', val);
-                // }); 
-            }"
+            v-model="initData.apartment_street_name"
+            @change="handleStreet"
         />
     </div>
 
