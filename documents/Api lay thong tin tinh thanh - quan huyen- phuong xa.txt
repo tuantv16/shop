@@ -1,0 +1,13 @@
+Tài liệu tham khảo: https://vapi-vnappmob.readthedocs.io/en/latest/province.html
+
+
+Api Lấy toàn bộ danh sách tỉnh thành
+https://vapi.vnappmob.com/api/province/
+
+Api Lấy toàn bộ danh sách quận huyện theo id tỉnh thành
+https://vapi.vnappmob.com/api/province/district/{province_id} 
+
+Api Lấy toàn bộ danh sách phường xã theo id quận huyện
+https://vapi.vnappmob.com/api/province/ward/{district_id}
+
+Dự án dùng thư viện v-select trong vue js

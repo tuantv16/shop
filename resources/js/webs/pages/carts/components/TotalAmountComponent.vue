@@ -3,6 +3,7 @@
 import { useCartStore } from '../stores/cartStore.js';
 
 import {apiMixin} from '../../../../mixins/apiMixin.js';
+import { handleError } from 'vue';
 
 export default {
     mixins: [apiMixin],
@@ -47,7 +48,9 @@ export default {
         this.storeCart.total = this.storeCart.total > 0 ? this.storeCart.total : this.totalAmount;
     },
     methods: {
-
+        handleCheckout() {
+            window.location.href = "/checkout.html"
+        }
 
     },
     watch: {
@@ -71,7 +74,7 @@ export default {
                     <li>Tạm tính<span>{{ this.storeCart.sub_total_format }}</span></li>
                     <li>Tổng tiền <span>{{ this.storeCart.sub_total_format }}</span></li>
                 </ul>
-                <a href="#" class="primary-btn">Tiến hành thanh toán</a>
+                <a href="#" class="primary-btn" @click.prevent="handleCheckout()">Tiến hành thanh toán</a>
             </div>
         </div>
 </template>
