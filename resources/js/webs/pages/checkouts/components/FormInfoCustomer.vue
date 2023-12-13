@@ -279,13 +279,17 @@ export default {
 
     <div class="item-location">
         <p>Tỉnh / Thành phố <span class="required-item-location">(*)</span></p>
+        <Field v-slot="{ field, errors }" name="province">
+            {{  errors }}
         <v-select :options="list_provinces"
                 v-model="selectedProvince"
                 class="location"
-                :class="errors.province ? 'is-valid-select' : ''"
+                :class="errors.length > 0 ? 'is-valid-select' : ''"
             >
             <template v-slot:no-options>Chưa có dữ liệu</template>
         </v-select>
+        </Field>
+        <ErrorMessage name="province" />
         <div class="message-error" v-if="errors.province">
             <span role="alert">{{  errors.province }}</span>
         </div>
@@ -293,9 +297,12 @@ export default {
 
     <div class="item-location">
         <p>Quận / Huyện <span class="required-item-location">(*)</span></p>
-        <v-select :options="list_districts" v-model="selectedDistrict" class="location" :class="errors.district ? 'is-valid-select' : ''">
-            <template v-slot:no-options>Chưa có dữ liệu</template>
-        </v-select>
+        <Field v-slot="{ field, errors }" name="district">
+            <v-select :options="list_districts" v-model="selectedDistrict" class="location" :class="errors.length > 0 ? 'is-invalid-select' : ''">
+                <template v-slot:no-options>Chưa có dữ liệu</template>
+            </v-select>
+        </Field>
+        <ErrorMessage name="district" />
         <div class="message-error" v-if="errors.district">
             <span role="alert">{{  errors.district }}</span>
         </div>
@@ -303,9 +310,12 @@ export default {
 
     <div class="item-location">
         <p>Phường / Xã <span class="required-item-location">(*)</span></p>
-        <v-select :options="list_wards" v-model="selectedWard" class="location" :class="errors.ward ? 'is-valid-select' : ''">
-            <template v-slot:no-options>Chưa có dữ liệu</template>
-        </v-select>
+        <Field v-slot="{ field, errors }" name="ward">
+            <v-select :options="list_wards" v-model="selectedWard" class="location" :class="errors.length > 0  ? 'is-invalid-select' : ''">
+                <template v-slot:no-options>Chưa có dữ liệu</template>
+            </v-select>
+        </Field>
+        <ErrorMessage name="ward" />
         <div class="message-error" v-if="errors.ward">
             <span role="alert">{{  errors.ward }}</span>
         </div>
@@ -320,7 +330,7 @@ export default {
                 handleStreet(event)
             }"
             class="form-control"
-            :class="errors.apartment_street_name ? 'is-invalid' : ''"
+            :class="errors.apartment_street_name ? 'is-invalid-select' : ''"
             />
         <div class="message-error" v-if="errors.apartment_street_name">
             <span role="alert">{{  errors.apartment_street_name }}</span>

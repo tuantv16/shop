@@ -133,6 +133,6 @@ span[role="alert"] {
     margin-top: 5px;
 }
 
-.item-location .required-item-location{
-    color: #e53637;
+.is-invalid-select .vs__dropdown-toggle{
+    border: 1px solid red !important;
 }
