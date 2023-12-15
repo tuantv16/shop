@@ -23,4 +23,11 @@ export const dataAction = {
             console.log(error.response);
         });
     },
+
+    saveOrder(data) {
+        return axios.post('/api-v1/webs/orders/save-order', data)
+        .catch(function (error) {
+            console.log(error.response);
+        });
+    }
 }

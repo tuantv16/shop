@@ -28,7 +28,8 @@ export default {
             subTotal: 0,
             totalAmount: 0,
             showLoadingButton: false,
-            dataCartsTmp : []
+            dataCartsTmp : [],
+            flagCheckout: ''
         }
     },
     props: {
@@ -82,33 +83,37 @@ export default {
             // Trường hợp chưa đăng nhập (khách vãng lai)
             if (this.account == '') {
                 let cartString = JSON.stringify(this.dataCarts);
-
                 localStorage.setItem('infoCart', cartString);
-
 
                 // sử dụng ở màn hình checkout
                 localStorage.setItem('infoCartCheckout', cartString);
 
+                if (this.flagCheckout != 1) {
+                    this.toast.success('Cập nhật giỏ hàng thành công!');
+                    // Hiển thị button loading
+                    this.showLoadingButton = true;
+                    setTimeout(() => {
+                        this.scrollToTop();
+                    }, 2000);
 
-                this.toast.success('Cập nhật giỏ hàng thành công!');
-                // Hiển thị button loading
-                this.showLoadingButton = true;
-                setTimeout(() => {
-                    this.scrollToTop();
-                }, 2000);
+                }
+
 
             } else { // Trường hợp đã đăng nhập
                  // call api update cart to session
                 let obj = {};
                 obj.carts = this.storeCart.carts;
+                let that = this;
                 dataAction.updateCart(obj).then(res => {
                     if (res.data.status == 'success') {
-                        this.toast.success('Cập nhật giỏ hàng thành công!');
-                        // Hiển thị button loading
-                        this.showLoadingButton = true;
-                        setTimeout(() => {
-                            this.scrollToTop();
-                        }, 2000);
+
+                        if (that.flagCheckout != 1) { // nếu flagCheckout = 1 là sự kiện trước đó được click từ button Tiến hành thanh toán
+                            this.toast.success('Cập nhật giỏ hàng thành công!');
+                            this.showLoadingButton = true;
+                            setTimeout(() => {
+                                this.scrollToTop();
+                            }, 2000);
+                        }
                     }
                 });
             }
@@ -143,6 +148,12 @@ export default {
             window.scrollTo({ top: 0, behavior: 'smooth' });
             this.showLoadingButton = false;
         },
+        moveCheckout(val) { // trigger update cart trước khi chuyển sang màn hình checkout
+
+            this.flagCheckout = val;
+            this.updateCart();
+            window.location.href = "/checkout.html"
+        }
 
     },
     mounted() {
@@ -172,13 +183,18 @@ export default {
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="continue__btn update__btn">
-                                <a href="#" @click.prevent="updateCart()"><span class="item-update-cart"><i class="fa fa-spinner"></i></span> Cập nhật giỏ hàng</a>
+                                <a href="#" id="btnUpdateCart" @click.prevent="updateCart()"><span class="item-update-cart"><i class="fa fa-spinner"></i></span> Cập nhật giỏ hàng</a>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <total-amount-component :data-carts = dataCarts :sub-total = this.subTotal :total-amount = this.totalAmount />
+                <total-amount-component
+                    :data-carts = dataCarts
+                    :sub-total = this.subTotal
+                    :total-amount = this.totalAmount
+                    @move-checkout = "moveCheckout"
+                />
             </div>
         </div>
     </section>

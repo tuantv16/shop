@@ -2722,9 +2722,10 @@ ol {
 	margin-bottom: 0;
 }
 
-.checkout__total__products li span {
+.checkout__total__products li .span-price {
 	color: #111111;
 	float: right;
+    min-width: 75px
 }
 
 .checkout__total__all {

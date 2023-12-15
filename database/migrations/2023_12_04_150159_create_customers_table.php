@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('account', 255);
             $table->string('customer_name', 255)->nullable();
+            $table->tinyInteger('type')->nullable()->comment('99: Visiting guests, "": Registered guest');;
             $table->string('password');
             $table->string('phone', 20)->nullable();
             $table->string('email', 255)->nullable();

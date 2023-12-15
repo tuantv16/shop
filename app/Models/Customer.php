@@ -15,6 +15,7 @@ class Customer extends Model
         'id',
         'account',
         'customer_name',
+        'type', // 99: Khách vãng lai
         'password',
         'phone',
         'email',

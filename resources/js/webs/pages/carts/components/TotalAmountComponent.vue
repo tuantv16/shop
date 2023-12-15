@@ -48,8 +48,8 @@ export default {
     },
     methods: {
         handleCheckout() {
-
-            window.location.href = "/checkout.html"
+            this.$emit('move-checkout', 1)
+            //window.location.href = "/checkout.html"
         }
 
     },

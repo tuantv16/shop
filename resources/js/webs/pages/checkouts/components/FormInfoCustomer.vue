@@ -13,6 +13,7 @@ import {dataAction} from '../services/dataActions.js';
 import {apiMixin} from '../../../../mixins/apiMixin.js';
 import { useToast } from 'vue-toastification';
 import vSelect from 'vue-select';
+import { useOrderStore } from '../stores/orderStore.js';
 
 export default {
     mixins: [apiMixin],
@@ -27,9 +28,10 @@ export default {
     },
     setup() {
         const toast = useToast();
-
+        const orderStore = useOrderStore();
     return {
-            toast
+            toast,
+            orderStore
         };
 
     },
@@ -55,7 +57,8 @@ export default {
             list_districts: [],
             list_wards: [],
             checkboxAgreeAccount: false,
-            apartment_street_name: ''
+            apartment_street_name: '',
+            dataCarts: []
         }
     },
     props: {
@@ -70,6 +73,10 @@ export default {
         this.errors = [];
         this.getProvinces();
 
+        let infoCartCheckout = localStorage.getItem('infoCartCheckout');
+        this.dataCarts = this.convertData(JSON.parse(infoCartCheckout));
+        this.$emit('data-carts', this.dataCarts);
+        this.$emit('sub-total', this.cacSubTotal(this.dataCarts));
     },
     mounted() {
         this.errors = [];
@@ -82,13 +89,27 @@ export default {
     },
     methods: {
         onSubmit(dataInputs) {
-            console.log(dataInputs);
+
+            // console.log(dataInputs);
+            // debugger;
+             // lưu vào store để bên ProceedCheckoutComponent lấy dữ liệu
+            // this.orderStore.setFormCustomers(dataInputs);
+
+            let obj = {};
+            obj.infoOrders = this.dataCarts;
+            obj.infoCustomers = dataInputs;
+
+            console.log(obj);
             debugger;
-            dataAction.store(dataInputs).then((res) => {
-                //window.location.href = BASE_URL + `admin/equipments`;
+            dataAction.saveOrder(obj).then((res) => {
+                //let data = res.data.results;
+                console.log(res);
+                debugger;
+
             }).catch((err) => {
-                this.msgAlert(MSG_UPDATE_FAIL);
+
             })
+
         },
         getProvinces() {
             dataAction.getApiProvinces().then((res) => {
@@ -170,6 +191,35 @@ export default {
                 console.log(errors)
             }
 
+        },
+        submitCustomerForm() {
+            $("body #checkoutCustomerForm").trigger('click');
+        },
+        convertData(carts) {
+            return carts.map(row => {
+                return {
+                    product_id : row.product_id,
+                    quantity : parseInt(row.quantity),
+                    color_id : parseInt(row.color_id),
+                    size_id : parseInt(row.size_id),
+                    price: parseInt(row.product_details.price),
+                    color_name: row.product_details.color_name,
+                    product_code: row.product_details.product_code,
+                    product_name: row.product_details.product_name,
+                    size_name: row.product_details.size_name,
+                    total_amount: parseInt(row.product_details.total_amount),
+                    total_amount_label: this.formatPrice(row.product_details.total_amount),
+                }
+            });
+        },
+        cacSubTotal(data) {
+            // tính tổng tiền luôn
+            this.subTotal = data.reduce((initResult, item) => initResult + item.total_amount, 0);
+            this.subTotal = this.formatPrice(this.subTotal);
+        },
+        formatPrice(value) {
+            let val = (value/1).toFixed(0).replace('.', ',')
+            return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+' đ';
         },
 
 
@@ -262,12 +312,12 @@ export default {
         v-slot="{ values, setFieldValue, errors }"
         :validation-schema="schema">
 
-        {{ errors }}
+    <button type="submit" id="checkoutCustomerForm" style="display: none">Submit</button>
+
     <h6 class="coupon__code">
         <span class="icon_tag_alt"></span> Have a coupon? <a href="#">Click here</a> to enter your code
     </h6>
     <h6 class="checkout__title">Chi tiết đơn hàng</h6>
-
 
     <div class="checkout_input">
         <input-component title="Tên khách hàng"
@@ -391,7 +441,7 @@ export default {
         />
     </div>
 
-    <input type="submit" class="btn btn-primary" value="submit"/>
+
     </Form>
 </div>
 </template>

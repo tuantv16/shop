@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\Backend\ProductControler;
 use App\Http\Controllers\Api\Backend\ProductDetailController;
 use App\Http\Controllers\Api\Web\CartController;
 use App\Http\Controllers\Api\Web\CustomerController;
+use App\Http\Controllers\Api\Web\OrderController;
 use App\Http\Controllers\Api\Web\ShopController;
 use App\Http\Controllers\Api\Web\TestController;
 use App\Http\Resources\ProductDetails\ProductDetail;
@@ -55,6 +56,11 @@ Route::prefix('webs')->group(function () {
     Route::post('/carts/update-cart', [CartController::class, 'updateCart'])->name('cart.update_to_cart');
     Route::post('/carts/get-cart-by-local-storage', [CartController::class, 'getCartByLocalStorage'])->name('cart.get_cart_by_localstorage');
     Route::post('/carts/get-full-info-cart-api', [CartController::class, 'getFullInfoCartApi'])->name('cart.get_full_info_cart_api');
+
+
+    Route::prefix('orders')->group(function () {
+        Route::post('/save-order', [OrderController::class, 'saveOrder'])->name('order.save_order');
+    });
 
 
 

@@ -49,6 +49,7 @@ export default {
             let cartLocal = localStorage.getItem('infoCart');
             if (cartLocal != null) {
                 cartLocal = JSON.parse(cartLocal);
+
                 let obj = {};
                 obj.carts = cartLocal;
                 obj.isLogin = false;
@@ -58,7 +59,7 @@ export default {
                     }
                 });
             }
-            
+
         }
 
     },
