@@ -38,6 +38,8 @@ export default {
     },
     created() {
 
+        // console.log(this.account());
+        // debugger;
         // lấy localStorage xong gán vào dataCarts rồi xóa luôn localStorage
         let infoCartCheckout = localStorage.getItem('infoCartCheckout');
         this.dataCarts = this.convertData(JSON.parse(infoCartCheckout));
@@ -50,7 +52,7 @@ export default {
 
             this.$emit('notify-checkout', this.dataCarts);
             $("body #sendFormCustomer").trigger('click');
-            //obj.infoCustomers = this.orderStore.formCustomers;
+
             console.log(obj);
             debugger;
 

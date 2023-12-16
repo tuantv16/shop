@@ -58,8 +58,6 @@ export default {
                 dataAction.getCartByLocalStorage(obj).then(res => {
                     if (res.data.status == 'success') {
                         this.dataCarts = res.data.data; // set kết quả localstore vào data cart
-                        this.subTotal = this.storeCart.getTotalAmountFormatTest(this.dataCarts);
-
                         //localStorage.setItem('infoCart', this.dataCarts);
 
                     }
@@ -98,15 +96,15 @@ export default {
 
                 }
 
-
             } else { // Trường hợp đã đăng nhập
                  // call api update cart to session
                 let obj = {};
                 obj.carts = this.storeCart.carts;
+
                 let that = this;
                 dataAction.updateCart(obj).then(res => {
-                    if (res.data.status == 'success') {
 
+                    if (res.data.status == 'success') {
                         if (that.flagCheckout != 1) { // nếu flagCheckout = 1 là sự kiện trước đó được click từ button Tiến hành thanh toán
                             this.toast.success('Cập nhật giỏ hàng thành công!');
                             this.showLoadingButton = true;

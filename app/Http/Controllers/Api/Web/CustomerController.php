@@ -62,7 +62,7 @@ class CustomerController extends ApiController
          $cartDatabases = $this->cartRepository->getCartByCustomerId($customers->id);
          $cartDatabases = $cartDatabases->isNotEmpty() ? $cartDatabases->toArray() : [];
          //set data carts into session
-         $this->setCart($dataCartLocalStorages, $cartDatabases);
+         $this->setCart($dataCartLocalStorages, $cartDatabases); // SESSION CART
 
         return $this->responseSuccess(new Customer($customers), null );
     }
@@ -93,7 +93,7 @@ class CustomerController extends ApiController
         }
 
 
-        Session::put('dataCarts', $dataResults);
+        Session::put('dataCarts', $dataResults);  // SESSION CART
     }
 
     public function logout()
@@ -109,7 +109,7 @@ class CustomerController extends ApiController
 
         // xóa session thông tin tài khoản
         session()->forget('account');
-
+        session()->forget('accountLogin');
          // xóa session giỏ hàng
         session()->forget('dataCarts');
 

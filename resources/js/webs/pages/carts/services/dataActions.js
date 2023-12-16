@@ -1,6 +1,8 @@
 import axios from 'axios';
 
 export const dataAction = {
+
+    // update cart trường hợp khách đã login
     updateCart(cartData) {
         return axios.post('/api-v1/webs/carts/update-cart', cartData)
         .catch(function (error) {

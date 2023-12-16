@@ -56,10 +56,6 @@ export const useCartStore = defineStore('cartStore', {
             return this.formatMoney(money);
         },
 
-        getTotalAmountFormatTest(carts) {
-            return 7777;
-        },
-
         updateCart(val) {
             this.carts = val;
         }

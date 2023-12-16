@@ -29,6 +29,8 @@
     <div id="checkout-page">
         <checkout-component
             :account='@json($account)'
+            :customer-login='@json($customerLogin)'
+            :data-cart-session='@json($dataCartSession)'
         />
     </div>
 @endsection

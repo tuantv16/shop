@@ -33,33 +33,33 @@ export default {
         }
     },
     props: {
-
         account: {
             type: String,
             default: ''
         },
-
+        customerLogin: {
+            type: Array,
+            default: []
+        },
+        dataCartSession: {
+            type: Array,
+            default: []
+        }
     },
     created() {
 
-
     },
     methods: {
-        handleFormSubmitted(formData) {
-        // Xử lý dữ liệu từ component con khi form được submit
-        console.log(formData);
-        debugger;
-        // Xử lý dữ liệu ở đây
-        },
 
         hanldeOrder() {
-            // Kiểm tra xem form đã hợp lệ trước khi gọi submitForm()
             this.$refs.formInfoRef.submitCustomerForm();
         },
 
+        // trường hợp chưa login
         getDataCart(val) {
             this.dataCarts = val
         },
+        // trường hợp chưa login
         getSubTotal(val) {
             this.subTotal = val
         }
@@ -76,7 +76,12 @@ export default {
     <div class="container">
         <div class="checkout__form">
             <div class="row">
-                <form-info-customer ref="formInfoRef" @data-carts="getDataCart" @sub-total="getSubTotal"/>
+                <form-info-customer ref="formInfoRef"
+                 @data-carts="getDataCart"
+                 @sub-total="getSubTotal"
+                 :customer-login = this.customerLogin
+                 :data-cart-session = this.dataCartSession
+                 />
 
                 <div class="col-lg-4 col-md-6">
                     <div class="checkout__order">
@@ -84,7 +89,7 @@ export default {
                         <div class="checkout__order__products">Product <span>Total</span></div>
                         <ul class="checkout__total__products">
                             <li v-for="(item, key) in this.dataCarts" :key="key" style="display:flex; justify-content:space-between">
-                                <div>{{ key + 1 }}. {{ item.product_name }}</div>
+                                <div>{{ key + 1 }}. {{ item.product_name }} ({{ item.color_name  }}) {{  item.size_name }}</div>
                                 <div class="span-price">{{ item.total_amount_label }}</div>
                             </li>
                         </ul>

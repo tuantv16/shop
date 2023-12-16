@@ -17,14 +17,14 @@ return new class extends Migration
             $table->string('customer_name', 255)->nullable();
             $table->tinyInteger('type')->nullable()->comment('99: Visiting guests, "": Registered guest');;
             $table->string('password');
-            $table->string('phone', 20)->nullable();
+            $table->string('phone', 50)->nullable();
             $table->string('email', 255)->nullable();
             $table->date('birthday')->nullable();
             $table->tinyInteger('gender')->nullable();
             $table->string('country', 50)->nullable();
             $table->string('city', 255)->nullable(); // thành phố
             $table->string('district', 255)->nullable(); // quận huyện
-            $table->string('wards', 255)->nullable(); // phường xã
+            $table->string('ward', 255)->nullable(); // phường xã
             $table->string('address1', 255)->nullable();
             $table->string('address2', 255)->nullable();
             $table->string('address3', 255)->nullable();

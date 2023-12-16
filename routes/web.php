@@ -34,6 +34,9 @@ use Illuminate\Support\Facades\Route;
     Route::get('/shopping-cart.html', [CartController::class, 'index'])->name('cart.index');
 
     Route::get('/checkout.html', [CheckoutController::class, 'index'])->name('checkout.index');
+    Route::get('/checkout-success.html', [CheckoutController::class, 'checkoutSuccess'])->name('checkout.success');
+
+
 //});
 
 Route::get('/login.html', [CustomerController::class, 'login'])->name('customer.get_login');

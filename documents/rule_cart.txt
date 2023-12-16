@@ -30,3 +30,9 @@ Rule về order, cart
         - Sang đến màn hình checkout ở hàm created lấy thông tin cart ở localStorage tên là infoCartCheckout, set vào 1 biến tên là dataCart rồi xóa localStorage (infoCartCheckout)
         - Viết Midderware chỉ cho phép truy cập vào màn hình checkout đi từ màn hình giỏ hàng, nếu cố tình nhập tay url trên trình duyệt thì tự động redirect về màn hình giỏ hàng
 		->Sau khi order xong thì xóa localStorage, xóa session (toàn bộ thông tin liên quan đến cart)
+
+- Thông tin lưu trữ cart localStorage
+let cart = localStorage.getItem('infoCart');
+
+- Thông tin lưu trữ cart ở session
+Session::put('dataCarts', $dataResults);  

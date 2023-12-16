@@ -6,6 +6,7 @@ import {checkoutValidator} from "../checkout.validator.js";
 import InputComponent from '../../../../common/form_style_2/InputComponent.vue';
 import TextareaComponent from '../../../../common/form_style_2/TextareaComponent.vue';
 import YesNoComponent from '../../../../common/form_style_2/YesNoComponent.vue';
+import { urlBase } from '../../../../common/config/main.js';
 
 import * as yup from "yup";
 // import { urlBase } from '../../../../common/config/main.js';
@@ -56,27 +57,38 @@ export default {
             list_provinces: [],
             list_districts: [],
             list_wards: [],
-            checkboxAgreeAccount: false,
+            checkboxAgreeAccount: true,
+            displayAccount: true,
             apartment_street_name: '',
             dataCarts: []
         }
     },
     props: {
-
-        account: {
-            type: String,
-            default: ''
+        customerLogin: {
+            type: Array,
+            default: []
         },
-
+        dataCartSession: {
+            type: Array,
+            default: []
+        },
     },
     created() {
+
         this.errors = [];
         this.getProvinces();
 
         let infoCartCheckout = localStorage.getItem('infoCartCheckout');
         this.dataCarts = this.convertData(JSON.parse(infoCartCheckout));
+
+        //Trường hợp đã login
+        if(this.dataCartSession.length > 0) {
+            this.dataCarts = this.convertData(this.dataCartSession);
+        }
+
         this.$emit('data-carts', this.dataCarts);
         this.$emit('sub-total', this.cacSubTotal(this.dataCarts));
+
     },
     mounted() {
         this.errors = [];
@@ -89,10 +101,9 @@ export default {
     },
     methods: {
         onSubmit(dataInputs) {
-
             // console.log(dataInputs);
             // debugger;
-             // lưu vào store để bên ProceedCheckoutComponent lấy dữ liệu
+            // lưu vào store để bên ProceedCheckoutComponent lấy dữ liệu
             // this.orderStore.setFormCustomers(dataInputs);
 
             let obj = {};
@@ -103,11 +114,14 @@ export default {
             debugger;
             dataAction.saveOrder(obj).then((res) => {
                 //let data = res.data.results;
-                console.log(res);
-                debugger;
+                if (res.data.status == 'success' && res.data.data != '') {
+                    const orderCode = res.data.data;
+                    window.location.href = `${urlBase}/checkout-success.html?code=${orderCode}`;
+                }
 
             }).catch((err) => {
-
+                this.toast.error('Đã có lỗi xảy ra');
+                this.scrollToTop();
             })
 
         },
@@ -118,6 +132,15 @@ export default {
                 this.list_provinces = data.map(row => {
                     return { value: row.province_id, label: row.province_name };
                 });
+
+
+                // selected khi người dùng login
+                if (this.customerLogin.city) {
+                    this.selectedProvince = this.list_provinces.find(row => {
+                        return row.value == this.customerLogin.city;
+                    });
+                }
+
 
             }).catch((err) => {
 
@@ -132,9 +155,17 @@ export default {
                         return { value: row.district_id, label: row.district_name };
                     });
 
+                     // selected khi người dùng login
+                    if (this.customerLogin.district) {
+                        this.selectedDistrict = this.list_districts.find(row => {
+                            return row.value == this.customerLogin.district;
+                        });
+                    }
+
 
                 }).catch((err) => {
-
+                    this.toast.error('Đã có lỗi xảy ra');
+                    this.scrollToTop();
                 })
             }
         },
@@ -144,13 +175,20 @@ export default {
                 dataAction.getApiWards(this.initData.district).then((res) => {
 
                     let data = res.data.results;
-
                     this.list_wards = data.map(row => {
                         return { value: row.ward_id, label: row.ward_name };
                     });
 
-                }).catch((err) => {
+                      // selected khi người dùng login
+                    if (this.customerLogin.ward) {
+                        this.selectedWard = this.list_wards.find(row => {
+                            return row.value == this.customerLogin.ward;
+                        });
+                    }
 
+                }).catch((err) => {
+                    this.toast.error('Đã có lỗi xảy ra');
+                    this.scrollToTop();
                 })
             }
         },
@@ -174,14 +212,6 @@ export default {
             this.initData.address = addressTxt;
         },
 
-        toggleAgree: function() {
-          // Trong hàm này, bạn có thể sử dụng giá trị của isChecked
-          if (this.checkboxAgreeAccount) {
-            this.initData.agree_account = 0;
-          } else {
-            this.initData.agree_account = 1;
-          }
-        },
         onInvalid(errors) {
             try {
                 const el = document.querySelector(`[name=${Object.keys(errors.errors)[0]}]`)
@@ -195,39 +225,80 @@ export default {
         submitCustomerForm() {
             $("body #checkoutCustomerForm").trigger('click');
         },
+        // convertData(carts) {
+        //     return carts.map(row => {
+        //         return {
+        //             product_id : row.product_id,
+        //             quantity : parseInt(row.quantity),
+        //             color_id : parseInt(row.color_id),
+        //             size_id : parseInt(row.size_id),
+        //             price: parseInt(row.product_details.price),
+        //             color_name: row.product_details.color_name,
+        //             product_code: row.product_details.product_code,
+        //             product_name: row.product_details.product_name,
+        //             size_name: row.product_details.size_name,
+        //             total_amount: parseInt(row.product_details.total_amount),
+        //             total_amount_label: this.formatPrice(row.product_details.total_amount),
+        //         }
+        //     });
+        // },
         convertData(carts) {
-            return carts.map(row => {
-                return {
-                    product_id : row.product_id,
-                    quantity : parseInt(row.quantity),
-                    color_id : parseInt(row.color_id),
-                    size_id : parseInt(row.size_id),
-                    price: parseInt(row.product_details.price),
-                    color_name: row.product_details.color_name,
-                    product_code: row.product_details.product_code,
-                    product_name: row.product_details.product_name,
-                    size_name: row.product_details.size_name,
-                    total_amount: parseInt(row.product_details.total_amount),
-                    total_amount_label: this.formatPrice(row.product_details.total_amount),
+            const groupedCarts = {};
+
+            carts.forEach(row => {
+                const key = `${row.product_id}_${row.color_id}_${row.size_id}`;
+                if (!groupedCarts[key]) {
+                    // Nếu chưa có bản ghi với key này, tạo mới
+                    groupedCarts[key] = {
+                        product_id: row.product_id,
+                        quantity: parseInt(row.quantity),
+                        color_id: parseInt(row.color_id),
+                        size_id: parseInt(row.size_id),
+                        price: parseInt(row.product_details.price),
+                        color_name: row.product_details.color_name,
+                        product_code: row.product_details.product_code,
+                        product_name: row.product_details.product_name,
+                        size_name: row.product_details.size_name,
+                        total_amount: parseInt(row.product_details.total_amount),
+                        total_amount_label: this.formatPrice(row.product_details.total_amount),
+                    };
+                } else {
+                    // Nếu đã có bản ghi, cập nhật số lượng và total_amount
+                    groupedCarts[key].quantity += parseInt(row.quantity);
+                    groupedCarts[key].total_amount += parseInt(row.product_details.total_amount);
+                    groupedCarts[key].total_amount_label = this.formatPrice(groupedCarts[key].total_amount);
                 }
             });
+
+            return Object.values(groupedCarts);
         },
+
         cacSubTotal(data) {
             // tính tổng tiền luôn
             this.subTotal = data.reduce((initResult, item) => initResult + item.total_amount, 0);
             this.subTotal = this.formatPrice(this.subTotal);
+
+            return this.subTotal;
         },
         formatPrice(value) {
             let val = (value/1).toFixed(0).replace('.', ',')
             return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")+' đ';
         },
 
-
-
     },
     watch: {
+        checkboxAgreeAccount(val) {
+            this.initData.agree_account = val;
+            this.$refs.checkoutForm.setFieldValue('agree_account', val);
+            if(!val) {
+                this.displayAccount = false
+            } else {
+                this.displayAccount = true
+            }
+        },
         // tuantv add 2023/12/05
         selectedProvince: function (obj, oldValue) {
+
             if(obj) {
                 let provinceId = obj.value;
                 this.provinceLabel = obj.label;
@@ -323,6 +394,7 @@ export default {
         <input-component title="Tên khách hàng"
                 name="customer_name"
                 placeholder=""
+                :data="this.customerLogin.customer_name ?? ''"
                 :required="true"
             />
     </div>
@@ -330,7 +402,6 @@ export default {
     <div class="item-location">
         <p>Tỉnh / Thành phố <span class="required-item-location">(*)</span></p>
         <Field v-slot="{ field, errors }" name="province">
-            {{  errors }}
         <v-select :options="list_provinces"
                 v-model="selectedProvince"
                 class="location"
@@ -398,6 +469,7 @@ export default {
     <div class="checkout_input">
         <input-component title="Điện thoại"
             name="phone"
+            :data="this.customerLogin.phone ?? ''"
             :required="true"
         />
     </div>
@@ -405,6 +477,7 @@ export default {
     <div class="checkout_input">
         <input-component title="Email"
             name="email"
+            :data="this.customerLogin.email ?? ''"
             :required="true"
         />
     </div>
@@ -413,32 +486,35 @@ export default {
         <textarea-component
             name="memo"
             title="Ghi chú đặt hàng"
+            :data="this.customerLogin.memo ?? ''"
             placeholder="Ghi chú về đơn đặt hàng của bạn, ví dụ: ghi chú đặc biệt để giao hàng."
         />
     </div>
 
-    <div class="checkout__input__checkbox">
-        <label for="acc">
-            Đồng ý tạo tài khoản
-            <input type="checkbox" id="acc" name="agree_account" v-model="checkboxAgreeAccount" @click="toggleAgree">
-            <span class="checkmark"></span>
-        </label>
-        <p v-if="this.initData.agree_account" style="margin-bottom:0px">Tạo một tài khoản bằng cách nhập thông tin dưới đây. Nếu bạn là khách hàng cũ vui lòng đăng nhập ở đầu trang</p>
-    </div>
+    <div id="agree-create-account" v-if="this.customerLogin.length == 0" >
+        <div class="checkout__input__checkbox">
+            <label for="acc">
+                Đồng ý tạo tài khoản
+                <input type="checkbox" id="acc" name="agree_account" v-model="checkboxAgreeAccount">
+                <span class="checkmark"></span>
+            </label>
+            <p v-if="this.displayAccount" style="margin-bottom:0px">Tạo một tài khoản bằng cách nhập thông tin dưới đây. Nếu bạn là khách hàng cũ vui lòng đăng nhập ở đầu trang</p>
+        </div>
 
-    <div class="checkout__input" v-if="this.initData.agree_account">
-        <input-component title="Tên tài khoản"
-            name="account"
-            :required="true"
-        />
-    </div>
+        <div class="checkout__input" v-if="this.displayAccount">
+            <input-component title="Tên tài khoản"
+                name="account"
+                :required="true"
+            />
+        </div>
 
-    <div class="checkout__input" v-if="this.initData.agree_account">
-        <input-component title="Mật khẩu tài khoản"
-            name="password"
-            type="password"
-            :required="true"
-        />
+        <div class="checkout__input" v-if="this.displayAccount">
+            <input-component title="Mật khẩu tài khoản"
+                name="password"
+                type="password"
+                :required="true"
+            />
+        </div>
     </div>
 
 

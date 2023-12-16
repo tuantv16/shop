@@ -16,7 +16,7 @@ class OrderController extends ApiController
 
     public function saveOrder(Request $request) {
         $params = $request->all();
-        $this->orderService->handleOrder($params); // create new order and can create new customer
-
+        $orderCode = $this->orderService->handleOrder($params); // create new order and can create new customer
+        return $this->responseSuccess($orderCode, null);
     }
 }

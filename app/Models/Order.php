@@ -12,7 +12,12 @@ class Order extends Model
     protected $table = 'orders';
 
     protected $fillable = [
-        'id', 'product_id', 'product_code', 'customer_id', 'size_id', 'color_id', 'quantity', 'price', 'total_amount'
+        'id', 'order_code', 'customer_id', 'total', 'address', 'email', 'phone', 'quantity', 'price', 'total_amount'
     ];
+
+    public function orderDetails()
+    {
+        return $this->hasMany(OrderDetail::class);
+    }
 
 }

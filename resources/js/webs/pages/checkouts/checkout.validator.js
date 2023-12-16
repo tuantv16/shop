@@ -48,7 +48,6 @@ export const checkoutValidator = (ctx) => {
                 return !specialCharactersRegex.test(value);
                 }
             )
-            .min(20, 'Vui lòng nhập ít nhất 20 ký tự')
             .max(255, 'Vui lòng nhập tối đa 255 ký tự'),
         phone: yup.string().required('Điện thoại không được để trống')
             .test("", "Ký tự nhập phải là các ký tự chữ số", (value) => {

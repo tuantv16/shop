@@ -131,6 +131,7 @@ span[role="alert"] {
 
 .item-location {
     margin-top: 5px;
+    min-height: 100px;
 }
 
 .is-invalid-select .vs__dropdown-toggle{
