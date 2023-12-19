@@ -92,7 +92,6 @@ export default {
                                     <th>Danh mục</th>
                                     <th>Thương hiệu</th>
                                     <th>Hình ảnh</th>
-                                    <th>Mô tả</th>
                                     <th>Trạng thái</th>
                                     <th>Ngày tạo</th>
                                     <th>Ngày cập nhật</th>
@@ -104,7 +103,6 @@ export default {
                                     <td>{{  item.category.category_name }}</td>
                                     <td>{{  item.brand.name }}</td>
                                     <td>{{  item.image }}</td>
-                                    <td>{{  item.description }}</td>
                                     <td>
                                         <span class="pd-setting" v-if="item.disp == 1">Active</span>
                                         <button class="ds-setting" v-if="item.disp == 0">Disabled</button>

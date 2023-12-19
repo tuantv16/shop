@@ -3811,3 +3811,15 @@ span[role="alert"] {
     z-index: 99;
 }
 
+
+
+.manager-editor .ck-editor__editable {
+    height: 300px; 
+    width: 100%;
+   
+}
+
+.manager-editor .ck-content {
+    color: #000;
+    font-family: Arial, sans-serif;
+}

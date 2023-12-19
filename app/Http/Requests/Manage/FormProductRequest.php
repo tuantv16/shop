@@ -33,7 +33,7 @@ class FormProductRequest extends FormRequest
             'category_id'       => 'integer|required',
             'brand_id'          => 'integer|required',
             'product_name'      => 'string|nullable|max:255',
-            'description'       => 'string|nullable|max:500',
+            'description'       => 'string|nullable',
             'price'             => 'string|numeric|between:1,99999999999999',
             'disp'              => 'integer|nullable|in:0,1',
             'is_image_deleted'  => 'string'

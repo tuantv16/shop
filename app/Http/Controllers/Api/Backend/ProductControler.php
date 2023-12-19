@@ -45,10 +45,7 @@ class ProductControler extends ApiController
      */
     public function update(FormProductRequest $request, $id)
     {
-        // $inputDatas = $request->validated();
-
-        // $data = $this->productService->saveData($inputDatas, $request);
-        // return $this->responseSuccess(new Product($data));
+       
     }
 
     /**

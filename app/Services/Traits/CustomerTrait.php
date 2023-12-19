@@ -9,16 +9,17 @@ use Illuminate\Support\Facades\Log;
 trait CustomerTrait
 {
 
-    CONST PREFIX_ACCOUNT_NAME = 'guest';
-
+    //CONST PREFIX_ACCOUNT_NAME = 'guest';
+   
     // Tạo tên account cho khách vãng lai
     public function createAccountNameGuest() {
+        $prefixAccountName = 'guest';
         $accountName = '';
-        $count = Customer::whereRaw('SUBSTRING(account, 1, 5) = ?', [self::PREFIX_ACCOUNT_NAME])->count();
+        $count = Customer::whereRaw('SUBSTRING(account, 1, 5) = ?', [$prefixAccountName])->count();
         if ($count > 0) {
-            $accountName = self::PREFIX_ACCOUNT_NAME.(string) $count + 1;
+            $accountName = $prefixAccountName.(string) $count + 1;
         } else {
-            $accountName = self::PREFIX_ACCOUNT_NAME.'1';
+            $accountName = $prefixAccountName.'1';
         }
 
         return $accountName;

@@ -75,8 +75,7 @@ export default {
 <template>
     <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-            <p>Tổng bản ghi : {{ this.totalRecords }}</p>
-            <p>Dữ liệu hiển thị : {{ this.data_range }}</p>
+            <p>Tổng {{ this.totalRecords }} bản ghi ({{ this.data_range }})</p>
         </div>
 
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">

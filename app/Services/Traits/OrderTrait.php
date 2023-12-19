@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Log;
 
 trait OrderTrait
 {
-    CONST PREFIX_ORDER = 'DHSHOP000';
+    // CONST PREFIX_ORDER = 'DHSHOP000';
 
     public function getMaxOrderId() {
         $maxId = Order::max('id');
@@ -22,7 +22,7 @@ trait OrderTrait
     }
 
     public function createOrderCode() {
-        return self::PREFIX_ORDER.(string)$this->getMaxOrderId();
+        return 'DHSHOP000'.(string)$this->getMaxOrderId();
     }
 
 }
