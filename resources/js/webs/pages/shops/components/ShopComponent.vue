@@ -93,6 +93,8 @@ export default {
         getProducts(currentUrl); // thực hiện query dữ liệu
     });
 
+
+
     return {
         shopStore,
         // sizeId: shopStore.size_id,
@@ -142,7 +144,7 @@ export default {
 
     },
     methods: {
-    
+
         handleSetSortPrice(e) {
             this.shopStore.setSortPrice(e.target.value);
         },
@@ -198,7 +200,7 @@ export default {
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="shop__product__option__left">
-                                    <p>Showing 1–12 of 126 results</p>
+                                    <p>Hiển thị 1–12 of 126 kết quả</p>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6">
@@ -249,6 +251,7 @@ export default {
                             </div>
                         </div>
                     </div>
+
 
                     <!-- phân trang -->
                     <pagination-component

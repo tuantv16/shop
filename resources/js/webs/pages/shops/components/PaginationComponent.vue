@@ -32,6 +32,13 @@ export default {
         // }
 
     },
+    watch: {
+        totalPage: function (val) { // case show screen edit
+            alert(val);
+            this.value = val;
+        }
+
+    },
     methods: {
         handlePageClick(page) {
             this.$emit('handle-click-number-page', page);

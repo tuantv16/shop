@@ -7,6 +7,7 @@ use App\Models\Brand;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Prettus\Repository\Exceptions\RepositoryException;
 use App\Constants\Constant;
+use App\Models\Category;
 use App\Models\Product;
 use App\Repositories\Interfaces\BrandRepository;
 use App\Repositories\Interfaces\ProductRepository;
@@ -248,12 +249,9 @@ class ProductRepositoryEloquent extends BaseRepositoryEloquent implements Produc
     }
 
     public function getProductCode($categoryId) {
-        $data = $this->model->with(['category' => function($query) use ($categoryId) {
-            $query->where('categories.id', (int)$categoryId);
-        }])
-        ->first();
+        $data = Category::find($categoryId);
 
-        $prefix = $data->category->prefix;
+        $prefix = $data->prefix;
         $maxId = (int) Product::max('id') + 1;
         $productCode = $prefix . (string) $maxId;
         return $productCode;
