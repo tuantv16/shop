@@ -70,6 +70,7 @@ export default {
                                 <tr>
                                     <th>ID</th>
                                     <th>Tên danh mục</th>
+                                    <th>Tiền tố</th>
                                     <th>Status</th>
                                     <th>Cấp độ</th>
                                     <th>Ngày tạo</th>

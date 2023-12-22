@@ -76,4 +76,46 @@ class OrderRepositoryEloquent extends BaseRepositoryEloquent implements OrderRep
         return $data;
     }
 
+    public function getList($params) {
+        $columns = [
+             '*'
+        ];
+
+        $query = $this->model->select($columns);
+
+        $columnCustomers = ['id', 'customer_name'];
+        $columnOrderDetails = ['order_id','order_code', 'product_id', 'size_id', 'color_id', 'quantity'];
+        //$columnProducts = ['product_name', 'category_id'];
+
+        $columnProducts = ['id', 'product_name'];
+
+        $arrWiths = [
+            'customer' => function ($q) use ($columnCustomers) {
+                $q->select($columnCustomers);
+            },
+
+            'orderDetails' => function ($q) use ($columnOrderDetails) {
+                $q->select($columnOrderDetails);
+            },
+
+            'orderDetails.product' => function ($q) use ($columnProducts) {
+                $q->select($columnProducts);
+            },
+        ];
+
+        $query->with($arrWiths);
+
+        // // search by product_name
+        // $query->when($params['product_name'] ?? null, function ($q, $keywords) {
+        //     $q->where(function ($q) use ($keywordfs) {
+        //         $q->where('v_product_pro.product', 'like', "%{$keywords}%")
+        //             ->orWhere('v_product_pro.product_name', 'like', "%{$keywords}%");
+        //     });
+        // });
+       
+        $query->orderBy('created_at','DESC');
+
+        return $this->buildForDatatable($query, $params, $columns);
+    }
+
 }

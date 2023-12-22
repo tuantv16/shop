@@ -1,6 +1,6 @@
 @extends('layout.manage')
 
-@section('title', 'Thêm nhãn hàng')
+@section('title', 'Danh sách đơn hàng')
 
 @section('sidebar')
     @parent
@@ -19,8 +19,8 @@
                                     <i class="icon nalika-home"></i>
                                 </div>
                                 <div class="breadcomb-ctn">
-                                    <h2>Thêm nhãn hàng</h2>
-                                    <p>Mô tả nhãn hàng</p>
+                                    <h2>Danh sách đơn hàng</h2>
+                                    <p>Mô tả danh sách đơn hàng</p>
                                 </div>
                             </div>
                         </div>
@@ -37,11 +37,12 @@
 </div>
 @stop
 @section('content')
-<div id="brand_form">
-    <form-brand-component :brands='@json($brands ?? '')'/>
-</div>
+    <div id="order-list">
+        <list-order-component :orders='@json($orders)'/>
+    </div>
 @stop
 
 @section('vite-manage')
-    @vite('resources/js/brands/brand-form.js')
+    @vite('resources/js/orders/order-list.js')
 @stop
+

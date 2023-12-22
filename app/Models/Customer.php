@@ -31,4 +31,8 @@ class Customer extends Model
         'memo',
         'disp'
     ];
+
+    public function orders() {
+        return $this->hasMany(Order::class);
+    }
 }

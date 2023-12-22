@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('category_name', 255);
+            $table->string('prefix', 30);
             $table->unsignedBigInteger('parent_id');
             $table->integer('level');
             $table->integer('disp');

@@ -30,15 +30,6 @@ class ProductRepositoryEloquent extends BaseRepositoryEloquent implements Produc
         return Product::class;
     }
 
-    /**
-     * Boot up the repository, pushing criteria
-     * @throws RepositoryException
-     */
-    // public function boot(): void
-    // {
-    //     $this->pushCriteria(app(RequestCriteria::class));
-    // }
-
     public function getList($params) {
         $columns = [
             //'products.id',
@@ -80,7 +71,6 @@ class ProductRepositoryEloquent extends BaseRepositoryEloquent implements Produc
         // dd($data->toArray());
         return $this->buildForDatatable($query, $params, $columns);
     }
-
 
     public function search($params) {
 
@@ -257,4 +247,15 @@ class ProductRepositoryEloquent extends BaseRepositoryEloquent implements Produc
         return $this->model->whereIn('id', $productIds)->get();
     }
 
+    public function getProductCode($categoryId) {
+        $data = $this->model->with(['category' => function($query) use ($categoryId) {
+            $query->where('categories.id', (int)$categoryId);
+        }])
+        ->first();
+
+        $prefix = $data->category->prefix;
+        $maxId = (int) Product::max('id') + 1;
+        $productCode = $prefix . (string) $maxId;
+        return $productCode;
+     }
 }

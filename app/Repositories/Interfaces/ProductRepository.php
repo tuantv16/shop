@@ -18,4 +18,6 @@ interface ProductRepository extends BaseRepository
 
     public function getProductByIds($productIds);
 
+    public function getProductCode($categoryId);
+
 }

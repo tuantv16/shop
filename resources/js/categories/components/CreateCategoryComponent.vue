@@ -72,22 +72,13 @@ export default {
             let msg = 'Đây là trường bắt buộc';
             let obj = {
                 category_name: yup.string().max(150).required(msg),
+                prefix: yup.string().max(30).required(msg),
                 parent_id: yup.string().nullable(),
                 level: yup.string().nullable(),
                 disp: yup.string().max(1),
 
             };
 
-            // let ruleMaxLength = yup.string().nullable(true);
-            // if (this.statusLimitCharacters) { // show item will check validate
-            //     ruleMaxLength = yup.string().nullable(true).test('len', '5000以内で入力してください', val => val <= 5000);
-            // }
-
-            // let validateCustoms = {
-            //    maxlength: ruleMaxLength
-            // };
-
-            //Object.assign(obj, validateCustoms);
             return yup.object(obj);
         }
     }
@@ -117,6 +108,14 @@ export default {
                                                         id="category_name"
                                                         :limit="255"
                                                         name="category_name"
+                                                        :required="true"
+                                                        placeholder=""
+                                                    />
+
+                                                    <input-component title="Tiền tố"
+                                                        id="prefix"
+                                                        :limit="30"
+                                                        name="prefix"
                                                         :required="true"
                                                         placeholder=""
                                                     />

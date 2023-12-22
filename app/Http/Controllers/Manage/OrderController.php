@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Manage;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Orders\OrderCollection;
 use App\Repositories\Interfaces\OrderRepository;
 use App\Services\OrderService;
+use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
@@ -20,14 +22,15 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // $configs = config('web.config.sizes');
-        // $data = $this->brandRepository->all();
+        $params = $request->all();
+        $data = $this->orderRepository->getList($params);
+        $data = new OrderCollection($data);
+        return view('backend.orders.list', [
+            'orders' => $data
+        ]);
 
-        // return view('backend.brands.list', [
-        //     'brands' => $data
-        // ]);
     }
 
     /**

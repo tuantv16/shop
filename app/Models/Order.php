@@ -20,4 +20,18 @@ class Order extends Model
         return $this->hasMany(OrderDetail::class);
     }
 
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
+    // public function products()
+    // {
+    //     return $this->belongsTo(Product::class);
+    // }
+
+    // public function product_codes()
+    // {
+    //     return $this->belongsTo(Product::class,'' );
+    // }
 }

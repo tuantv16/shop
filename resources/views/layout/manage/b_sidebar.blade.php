@@ -1,4 +1,4 @@
-<div class="left-custom-menu-adp-wrap comment-scrollbar">
+<div class="left-custom-menu-adp-wrap comment-scrollbar" style="height: 2000px">
     <nav class="sidebar-nav left-sidebar-menu-pro">
         <ul class="metismenu" id="menu1">
             <li class="active">
@@ -71,7 +71,7 @@
                     <li><a title="Danh sách khảo sát" href="{{ url('/manage/surveys')}}"><span class="mini-sub-pro">Danh sách khảo sát</span></a></li>
                 </ul>
             </li>
-
+         
             <!--
             <li>
                 <a class="has-arrow" href="mailbox.html" aria-expanded="false"><i class="icon nalika-mail icon-wrap"></i> <span class="mini-click-non">Mailbox</span></a>

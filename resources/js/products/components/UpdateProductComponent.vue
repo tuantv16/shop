@@ -63,7 +63,7 @@ export default {
 
         onSubmit(dataInputs) {
 
-           
+
             let formData = new FormData();
             // Thêm các trường dữ liệu vào formData
             for (let key in dataInputs) {
@@ -149,7 +149,8 @@ export default {
                                 <li class="active"><a href="#description-pro"><i class="icon nalika-edit"
                                             aria-hidden="true"></i> Khu vực thêm sản phẩm</a></li>
                             </ul>
-                            <Form @submit="onSubmit" ref="productForm" :initial-values="this.objData" :validation-schema="schema" v-slot="{setFieldValue}">
+                            <Form @submit="onSubmit" ref="productForm" :initial-values="this.objData"
+                                :validation-schema="schema" v-slot="{ setFieldValue }">
                                 <div id="myTabContent" class="tab-content custom-product-edit">
                                     <div class="product-tab-list tab-pane fade active in" id="description-product">
                                         <div class="row">
@@ -158,6 +159,10 @@ export default {
                                                     <input-component title="Tên sản phẩm" id="product_name" :limit="255"
                                                         name="product_name" :required="true" placeholder=""
                                                         :data="this.objData.product_name" />
+
+                                                    <div class="group-item">
+                                                        <p class="p-normal" data-toggle="tooltip" title="">Mã sản phẩm: {{ this.objData.product_code }} </p>
+                                                    </div>
 
                                                     <select-box-component title="Danh mục sản phẩm" :required="true"
                                                         id="category_id" name="category_id"
@@ -200,7 +205,7 @@ export default {
                                                         :limit="500"
                                                         name="description"
                                                         :data="this.objData.description"
-                                                   /> -->       
+                                                   /> -->
 
                                                 </div>
                                             </div>
@@ -228,7 +233,9 @@ export default {
                                                 <div class="group-item">
                                                     <p class="p-normal" data-toggle="tooltip" title="Mô tả">Mô tả</p>
                                                     <div class="input-group input-normal manager-editor">
-                                                        <ckeditor :editor="editor" name="description" v-model="this.objData.description" @change="updateDescription"></ckeditor>
+                                                        <ckeditor :editor="editor" name="description"
+                                                            v-model="this.objData.description" @change="updateDescription">
+                                                        </ckeditor>
                                                         <div class="message-error">
 
                                                         </div>
@@ -250,13 +257,12 @@ export default {
 
 
                                 </div>
-                            </Form>
-                        </div>
+                        </Form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</template>
+</div></template>
 
 <style>/* CSS cho component ở đây */</style>

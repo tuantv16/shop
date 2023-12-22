@@ -38,8 +38,8 @@ class OrderService extends BaseService
 
         $orderCode = '';
 
-        try {
-           DB::beginTransaction();
+        //try {
+           //DB::beginTransaction();
                 if (!empty($params['infoCustomers'])) {
                     // create customer
                     $infoCustomers = $params['infoCustomers'];
@@ -78,10 +78,10 @@ class OrderService extends BaseService
                     }
 
                 }
-            DB::commit();
-        } catch (Exception $e) {
-            DB::rollBack();
-        }
+        //     DB::commit();
+        // } catch (Exception $e) {
+        //     DB::rollBack();
+        // }
 
         return $orderCode;
 

@@ -53,9 +53,16 @@ class ProductService extends BaseService
             $file = $request->file('image');
             $nameImage = $this->uploads($file, $folderName) ; // upload (local or S3) and get name file image
             $data['image'] = $nameImage;
+            
         }
+        $data['product_code'] = $this->getProductCode($data['category_id']); 
 
         return $this->productRepository->create($data);
+    }
+
+    // return string
+    public function getProductCode($categoryId) {
+        return $this->productRepository->getProductCode($categoryId);
     }
 
     public function updateData($data, $request) {
