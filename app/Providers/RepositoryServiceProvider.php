@@ -14,11 +14,13 @@ use App\Repositories\Interfaces\CustomerRepository;
 use App\Repositories\Interfaces\FeedbackRepository;
 use App\Repositories\Interfaces\OrderDetailRepository;
 use App\Repositories\Interfaces\OrderRepository;
+use App\Repositories\Interfaces\PostRepository;
 use App\Repositories\Interfaces\ProductDetailRepository;
 use App\Repositories\Interfaces\ProductRepository;
 use App\Repositories\Interfaces\SurveyRepository;
 use App\Repositories\OrderDetailRepositoryEloquent;
 use App\Repositories\OrderRepositoryEloquent;
+use App\Repositories\PostRepositoryEloquent;
 use App\Repositories\ProductDetailRepositoryEloquent;
 use App\Repositories\ProductRepositoryEloquent;
 use App\Repositories\SurveyRepositoryEloquent;
@@ -41,7 +43,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(SurveyRepository::class, SurveyRepositoryEloquent::class);
         $this->app->bind(FeedbackRepository::class, FeedbackRepositoryEloquent::class);
         $this->app->bind(OrderDetailRepository::class, OrderDetailRepositoryEloquent::class);
-
+        $this->app->bind(PostRepository::class, PostRepositoryEloquent::class);
     }
 
 
