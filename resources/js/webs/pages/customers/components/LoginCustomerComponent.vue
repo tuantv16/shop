@@ -31,8 +31,7 @@ export default {
         onSubmit(dataInputs) {
             // send info cart
             dataInputs.infoCart = localStorage.getItem('infoCart');
-            // console.log(dataInputs);
-            // debugger;
+
             dataAction.login(dataInputs).then(res => {
                 if (res.data.status === 'success') {
                     //this.setCookieLogin(res.data.data.account);

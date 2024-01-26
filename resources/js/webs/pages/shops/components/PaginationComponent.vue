@@ -27,17 +27,11 @@ export default {
     },
     created() {
 
-        // if (this.currentPage instanceof Proxy && Array.isArray(this.currentPage)) {
-        //     this.currentPage = 1;
-        // }
-
     },
     watch: {
         totalPage: function (val) { // case show screen edit
-            alert(val);
             this.value = val;
         }
-
     },
     methods: {
         handlePageClick(page) {
