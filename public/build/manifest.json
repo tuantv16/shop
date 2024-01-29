@@ -1,8 +1,22 @@
 {
+  "_pinia-37c82e66.js": {
+    "file": "assets/pinia-37c82e66.js"
+  },
   "resources/js/app.js": {
-    "file": "assets/app-d8430776.js",
+    "file": "assets/app-b08d6e71.js",
+    "imports": [
+      "_pinia-37c82e66.js"
+    ],
     "isEntry": true,
     "src": "resources/js/app.js"
+  },
+  "resources/js/webs/pages/shops/shop.js": {
+    "file": "assets/shop-2c60eb5b.js",
+    "imports": [
+      "_pinia-37c82e66.js"
+    ],
+    "isEntry": true,
+    "src": "resources/js/webs/pages/shops/shop.js"
   },
   "resources/sass/app.scss": {
     "file": "assets/app-041e359a.css",

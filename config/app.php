@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://shop.local'),
+    'url' => env('APP_URL', 'http://tuantv.link'),
 
     'asset_url' => env('ASSET_URL'),
 
