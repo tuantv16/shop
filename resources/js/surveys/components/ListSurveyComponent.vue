@@ -5,9 +5,7 @@ import InputComponent from '../../common/form/InputComponent.vue';
 import PaginationComponent from '../../common/Pagination/PaginationComponent.vue';
 import SelectBoxComponent from '../../common/form/SelectBoxComponent.vue';
 import YesNoComponent from '../../common/form/YesNoComponent.vue';
-import {
-    URI
-} from '../../common/config/main.js';
+
 import moment from 'moment';
 
 export default {

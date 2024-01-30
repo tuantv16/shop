@@ -41,7 +41,6 @@ class CustomerController extends ApiController
     public function login(LoginCustomerRequest $request)
     {
         $params = $request->validated();
-
         $customers = $this->customerRepository->login($params);
         Session::put('account', $customers->account);
 

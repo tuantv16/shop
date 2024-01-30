@@ -108,6 +108,10 @@ class CartService extends BaseService
     }
 
     private function getAttributeIds($data, $fieldName) {
+        if(empty($data)) {
+            return [];
+        }
+
         $sizeIds = array_map(function($item) use ($fieldName) {
             return (int) $item[$fieldName];
         }, $data);
@@ -175,32 +179,36 @@ class CartService extends BaseService
 
         $productDetails = []; //Khởi tạo chi tiết mỗi sản phẩm trong giỏ hàng
         $dataCarts = [];
-        foreach($cartInputs as $key => $row) {
+        
+        if (!empty($cartInputs)) {
+            foreach($cartInputs as $key => $row) {
 
-            if ($statusLogin) { // trường hợp khách login thì set customer_id = session login
-                $row['customer_id'] = session()->get('accountLogin')['customer_id'];
+                if ($statusLogin) { // trường hợp khách login thì set customer_id = session login
+                    $row['customer_id'] = session()->get('accountLogin')['customer_id'];
+                }
+    
+                $dataCarts[$key] = $row;
+                $keyPro = $row['product_id'];
+    
+                $productDetails['product_name'] = isset($products[$keyPro]) && isset($products[$keyPro]['product_name']) ? $products[$keyPro]['product_name'] : '';
+    
+                $price = 0;
+                if (isset($products[$keyPro]) && !empty($products[$keyPro]['price'])) {
+                    $price = (int) $products[$keyPro]['price'];
+                }
+    
+                $productDetails['price'] = $price;
+                $productDetails['price_label'] = format_vnd($price);
+                $productDetails['product_code'] = isset($products[$keyPro]) && !empty($products[$keyPro]['product_code']) ? $products[$keyPro]['product_code'] : '';
+                $productDetails['quantity'] = $row['quantity'];
+                $productDetails['total_amount'] = $row['quantity'] * $productDetails['price'];
+                $productDetails['size_name'] = $sizes[$row['size_id']] ?? '';
+                $productDetails['color_name'] = $colorNames[$row['color_id']] ?? '';
+    
+                $dataCarts[$key]['product_details'] = $productDetails;
             }
-
-            $dataCarts[$key] = $row;
-            $keyPro = $row['product_id'];
-
-            $productDetails['product_name'] = isset($products[$keyPro]) && isset($products[$keyPro]['product_name']) ? $products[$keyPro]['product_name'] : '';
-
-            $price = 0;
-            if (isset($products[$keyPro]) && !empty($products[$keyPro]['price'])) {
-                $price = (int) $products[$keyPro]['price'];
-            }
-
-            $productDetails['price'] = $price;
-            $productDetails['price_label'] = format_vnd($price);
-            $productDetails['product_code'] = isset($products[$keyPro]) && !empty($products[$keyPro]['product_code']) ? $products[$keyPro]['product_code'] : '';
-            $productDetails['quantity'] = $row['quantity'];
-            $productDetails['total_amount'] = $row['quantity'] * $productDetails['price'];
-            $productDetails['size_name'] = $sizes[$row['size_id']] ?? '';
-            $productDetails['color_name'] = $colorNames[$row['color_id']] ?? '';
-
-            $dataCarts[$key]['product_details'] = $productDetails;
         }
+        
 
         return $dataCarts;
     }

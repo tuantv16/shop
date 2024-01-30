@@ -1,1 +1,1 @@
-export const urlBase = 'http://shop.local';
+export const urlBase = 'http://tuantv.link';
