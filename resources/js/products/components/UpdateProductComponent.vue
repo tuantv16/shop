@@ -73,15 +73,9 @@ export default {
             formData.append('image', this.imageFile); // append dữ liệu this.imageFile vào item imâge
             formData.append('is_image_deleted', this.isImageDelete);
             formData.append('description', this.objData.description);
-
-            console.log(formData);
-            debugger;
-
             dataAction.updateData(formData, this.products.id).then(res => {
                 if (res.data.status == 'success') {
                     window.location.href = '/manage/products';
-                    //location.reload();
-
                 }
             });
         },
